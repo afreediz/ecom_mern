@@ -5,7 +5,6 @@ import CreateCategory from './CreateCategory';
 import { toast } from 'react-toastify';
 
 const AllCategories = () => {
-  // Fake categories data
   const [displayAdd, setDisplayAdd] = useState(false)
   const [categories, setCategories] = useState()
   const navigate = useNavigate()

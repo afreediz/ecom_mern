@@ -10,7 +10,7 @@ router.get('/category/:slug/count', categoryProductsCount)
 router.get('/category/:slug/:page', categoryProducts)
 router.get('/', getAllProducts)
 
-// admin operations
+// admin
 router.get('/dashboard', isAuthenticated, isAdmin, dashboardDetails)
 router.post('/', isAuthenticated, isAdmin, createProduct)
 router.put('/:id', isAuthenticated, isAdmin, updateProduct)

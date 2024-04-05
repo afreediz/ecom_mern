@@ -13,7 +13,6 @@ module.exports = (err, req, res, next)=> {
         case "JsonWebTokenError":
             err.message = "Signin required"
         default:
-            // do nothing
     }
 
     return res.status(err.statusCode || 500).json({

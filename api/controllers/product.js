@@ -164,7 +164,7 @@ const dashboardDetails = asyncErrorHandler(async(req, res)=>{
         },
         {
             $lookup: {
-                from: "categories", // the collection name for Category model
+                from: "categories",
                 localField: "_id",
                 foreignField: "_id",
                 as: "categoryDetails"

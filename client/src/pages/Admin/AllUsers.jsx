@@ -17,7 +17,6 @@ const AllUsers = () => {
     getUsers()
   },[])
   const handlUserStatus = async(userId, newStatus) => {
-    // Update the orders state with the new shipping status
     if (newStatus == "Delete"){
       try{
         await API.delete(`users/${userId}`)
@@ -70,7 +69,6 @@ const AllUsers = () => {
                 <select
                   value={user.status}
                   onChange={(e)=>{handlUserStatus(user._id, e.target.value)}}
-                  // onChange={(e) => handleStatusChange(user.id, e.target.value)}
                   className="block w-full py-2 px-4 border border-gray-300 bg-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 >
                   <option value="active">Active</option>

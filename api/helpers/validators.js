@@ -51,12 +51,10 @@ const registerValidation = [
     body('email').isEmail(),
     body('phone').isMobilePhone(),
     body('password').isLength({ min: 8 }),
-    // Middleware to handle the validation results
     asyncErrorHandler((req, res, next) => {
         const errors = validationResult(req);
         console.log("found ", errors);
         if (!errors.isEmpty()) {
-            // Check for specific errors and throw custom errors
             errors.array().forEach(error => {
                 if (error.path === 'name') {
                     throw new CustomError('Name must be at least 3 characters', 400);
@@ -84,7 +82,6 @@ const orderValidation = [
     asyncErrorHandler((req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            // Check for specific errors and throw custom errors
             errors.array().forEach(error => {
                 if (error.path === 'cart.*.id') {
                     throw new CustomError('Product ID must not be empty', 400);

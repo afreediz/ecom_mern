@@ -18,9 +18,7 @@ const AllOrders = () => {
   },[])
   console.log("orders ", orders);
 
-  // Function to handle updating shipping status
   const handleShippingStatusChange = async(orderId, newStatus) => {
-    // Update the orders state with the new shipping status
     if (newStatus == "Delete"){
       try{
         await API.delete(`orders/${orderId}`)
