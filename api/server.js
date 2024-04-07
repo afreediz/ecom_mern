@@ -16,7 +16,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cors())
 app.use(logger('dev'))
-app.use(route)
+app.use('/api', route)
 
 app.get('/test',(req, res)=>{
     return res.status(200).json({"message":"working"});
