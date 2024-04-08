@@ -1,4 +1,5 @@
 const asyncErrorHandler = require("express-async-handler")
+const CustomError = require('../utils/CustomError')
 
 const User = require('../models/user')
 

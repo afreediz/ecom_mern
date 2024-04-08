@@ -11,7 +11,7 @@ module.exports = (err, req, res, next)=> {
         case "TokenExpiredError":
             err.message = "jwt expired"
         case "JsonWebTokenError":
-            err.message = "jwt malformed"
+            err.message = "Signin required"
         default:
             // do nothing
     }

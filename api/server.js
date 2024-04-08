@@ -16,6 +16,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cors())
 app.use(logger('dev'))
+
 app.use('/api', route)
 
 app.get('/test',(req, res)=>{
