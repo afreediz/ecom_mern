@@ -54,7 +54,7 @@ const updateCategory = asyncErrorHandler(async(req, res)=>{
     })
 })
 const deleteCategory = asyncErrorHandler(async(req, res)=>{
-    const { id } = req.body
+    const { id } = req.params
     await Category.findByIdAndDelete(id)
 
     res.status(200).json({

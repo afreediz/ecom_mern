@@ -37,11 +37,9 @@ const createProduct = asyncErrorHandler(async(req, res)=>{
     })
 })
 const updateProduct = asyncErrorHandler(async(req, res)=>{
-    const id = req.params.pid
-    const { name, description, price, category, quantity, photo, shipping } = req.body
-    if( !name || !description || !price) throw new CustomError('Necessary details are not filled', 404)
+    const id = req.params.id
 
-    const product = await Product.findByIdAndUpdate(id, {$set:{name, des}}, {runValidators:true})
+    const product = await Product.findByIdAndUpdate(id, {$set:{...req.body}}, {runValidators:true, new:true})
 
     res.status(200).json({
         success:true,
@@ -50,7 +48,7 @@ const updateProduct = asyncErrorHandler(async(req, res)=>{
     })
 })
 const deleteProduct = asyncErrorHandler(async(req, res)=>{
-    const id = req.params.pid
+    const id = req.params.id
     await Product.findByIdAndDelete(id).select('-photo')
 
     res.status(200).json({

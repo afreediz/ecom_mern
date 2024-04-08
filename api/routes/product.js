@@ -2,8 +2,8 @@ const { getAllProducts, getProduct, createProduct, updateProduct, deleteProduct,
 const { isAdmin, isAuthenticated } = require('../middlewares/isAuth')
 const router = require('express').Router()
 
-router.get('/', getAllProducts)
-router.get('/:slug', getProduct)
+router.get('/', getAllProducts) // done
+router.get('/:slug', getProduct) // done
 
 router.get('/filters', filterProducts)
 router.get('/count', getProductCount)
@@ -13,9 +13,9 @@ router.get('/related-products/:pid/:cid', productsRelated)
 router.get('/category/:slug', categoryProducts)
 
 // admin operations
-router.post('/', isAuthenticated, isAdmin, createProduct)
-router.put('/:id', isAuthenticated, isAdmin, updateProduct)
-router.delete('/:id', isAuthenticated, isAdmin, deleteProduct)
+router.post('/', isAuthenticated, isAdmin, createProduct) // done
+router.put('/:id', isAuthenticated, isAdmin, updateProduct) // done
+router.delete('/:id', isAuthenticated, isAdmin, deleteProduct) // done
 router.put('/order-status/:id', isAuthenticated, isAdmin, orderStatus)
 
 // payment routes
