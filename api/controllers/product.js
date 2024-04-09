@@ -4,6 +4,7 @@ const slugify = require('slugify')
 
 const Product = require('../models/product')
 const Category = require("../models/category")
+const Order = require("../models/order")
 
 const getAllProducts = asyncErrorHandler(async(req, res)=>{
     const products = await Product.find({}).populate('category').select('-photo').sort({createdAt:-1})
@@ -132,7 +133,16 @@ const categoryProducts = asyncErrorHandler(async(req, res)=>{
     })
 })
 const orderStatus = asyncErrorHandler(async(req, res)=>{
-    //
+    const { orderId } = req.params
+    const { status } = req.body
+
+    const order = await Order.findByIdAndUpdate(orderId, {status}, {new:true, runValidators:true})
+
+    res.status(200).json({
+        success:true,
+        message:"Order updated succesfully",
+        order
+    })
 })
 
 module.exports = { 

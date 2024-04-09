@@ -10,6 +10,6 @@ router.get('/orders', isAuthenticated, orders)
 
 // admin routes
 router.get('/get-admin', isAuthenticated, isAdmin, getAdmin) // done
-router.get('/all-orders', isAuthenticated, isAdmin,allOrders) // done
+router.get('/all-orders', isAuthenticated, isAdmin, allOrders) // done
 
 module.exports = router
