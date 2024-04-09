@@ -71,6 +71,7 @@ const filterProducts = asyncErrorHandler(async(req, res)=>{
 })
 const getProductCount = asyncErrorHandler(async(req, res)=>{
     const total = await Product.find({}).estimatedDocumentCount()
+    console.log('total',total);
     res.status(200).json({
         success:true,
         message:"Total count",
