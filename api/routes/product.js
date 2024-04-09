@@ -9,8 +9,8 @@ router.get('/filters', filterProducts)
 router.get('/count', getProductCount)
 router.get('/list/:page', productList)
 router.get('/search/:keyword', productSearch)
-router.get('/related-products/:pid/:cid', productsRelated)
-router.get('/category/:slug', categoryProducts)
+router.get('/related-products/:pid/:cid', productsRelated) // done
+router.get('/category/:slug', categoryProducts) // done
 
 // admin operations
 router.post('/', isAuthenticated, isAdmin, createProduct) // done

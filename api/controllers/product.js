@@ -3,6 +3,7 @@ const CustomError = require('../utils/CustomError')
 const slugify = require('slugify')
 
 const Product = require('../models/product')
+const Category = require("../models/category")
 
 const getAllProducts = asyncErrorHandler(async(req, res)=>{
     const products = await Product.find({}).populate('category').select('-photo').sort({createdAt:-1})
@@ -56,25 +57,80 @@ const deleteProduct = asyncErrorHandler(async(req, res)=>{
         message:"Product deleted successfully"
     })
 })
-const orderStatus = asyncErrorHandler(async(req, res)=>{
-    //
-})
 const filterProducts = asyncErrorHandler(async(req, res)=>{
-    //
+    const { checked, radio } = req.body;
+    let args = {}
+    if(checked.length > 0) args.category = checked
+    if(radio.length) args.price = {$gte:radio[0], $lte:radio[1]}
+    const products = await Product.find(args)
+    res.status(200).json({
+        success:true,
+        message:"Filtered products",
+        products
+    })
 })
 const getProductCount = asyncErrorHandler(async(req, res)=>{
-    //
+    const total = await Product.find({}).estimatedDocumentCount()
+    res.status(200).json({
+        success:true,
+        message:"Total count",
+        total
+    })
 })
 const productList = asyncErrorHandler(async(req, res)=>{
-    //
+    const perPage = 6
+    const page = req.params.page? req.params.page : 1
+    const products = await Product.find({})
+    .select('-photo')
+    .skip((page - 1)*perPage)
+    .limit(perPage)
+    .sort({createdAt:-1})
+    
+    res.status(200).json({
+        success:true,
+        message:`Products of page ${page}`,
+        products
+    })
 })
 const productSearch = asyncErrorHandler(async(req, res)=>{
-    //
+    const { keyword } = req.params
+    const products = await Product.find({
+        $or:[
+                {name:{$regex:keyword, $options:'i'}},
+                {description:{$regex:keyword, $options:'i'}}
+        ]
+    })
+    res.status(200).json({
+        success:true,
+        message:"Result",
+        products
+    })
 })
 const productsRelated = asyncErrorHandler(async(req, res)=>{
-    //
+    const { pid, cid } = req.params
+    const products = await Product.find({
+        category:cid,
+        _id:{$ne:pid}
+    }).limit(5)
+    res.status(200).json({
+        success:true,
+        message:"Related Products",
+        products
+    })
 })
 const categoryProducts = asyncErrorHandler(async(req, res)=>{
+    const { slug } = req.params
+    const category = await Category.findOne({slug})
+    console.log(category);
+    const products = await Product.find({category:category._id}).populate('category')
+
+    res.status(200).json({
+        success:true,
+        message:`Products of category : ${category.name}`,
+        products
+    })
+})
+const orderStatus = asyncErrorHandler(async(req, res)=>{
     //
 })
 
