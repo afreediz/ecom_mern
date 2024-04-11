@@ -1,6 +1,3 @@
-import { useEffect } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/ReactToastify.css'
 import { Route, Routes} from 'react-router-dom'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
