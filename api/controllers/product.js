@@ -144,6 +144,10 @@ const orderStatus = asyncErrorHandler(async(req, res)=>{
         order
     })
 })
+const testCreateOrder = asyncErrorHandler(async(req, res)=>{
+    const { cart } = req.body
+    res.status(200).json({success:true})
+})
 
 module.exports = { 
     getAllProducts, 
@@ -157,5 +161,6 @@ module.exports = {
     productList,
     productSearch,
     productsRelated,
-    categoryProducts
+    categoryProducts,
+    testCreateOrder
 }
