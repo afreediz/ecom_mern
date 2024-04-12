@@ -7,7 +7,7 @@ export const ProductContextProvider = ({children}) => {
     const [products, setProducts] = useState()
 
     return (<productContext.Provider value={{}}>
-
+        {children}
     </productContext.Provider>)
 }
 
