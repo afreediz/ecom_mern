@@ -8,6 +8,8 @@ export const categories = [{
         name:"kids"
 }]
 
-export const user = []
-
 export const products = []
+
+export const cart = [
+    {},{}
+]
