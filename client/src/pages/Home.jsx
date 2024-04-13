@@ -4,7 +4,7 @@ import ProductCard from '../components/utilities/ProductCard'
 
 const Home = () => {
   return (
-    <div className='grid grid-cols-6 h-screen'>
+    <div className='grid grid-cols-6'>
       <div className="sidebar col-span-1">
         <h1 className='inline border-b-2 border-slate-500 text-4xl'>Filters</h1>
         <h2 className='text-2xl font-medium py-2'>Categories</h2>
