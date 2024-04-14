@@ -15,7 +15,7 @@ import AllOrders from './pages/Admin/AllOrders'
 import AllUsers from './pages/Admin/AllUsers'
 import CreateCategory from './pages/Admin/CreateCategory'
 import CreateProduct from './pages/Admin/CreateProduct'
-
+import UserDashboard from './pages/Dashboard'
 const App = () => {
   return (
     <div className="">
@@ -28,9 +28,10 @@ const App = () => {
           <Route path='products/:slug' element={<ProductDetails />} />
           <Route path='category/:slug' element={<Home />} />
           <Route path='cart' element={<Cart />} />
-          <Route path='dashboard' element={<Private />} >
-            <Route path='orders' element={<Orders />} />
+          <Route path='/dashboard' element={<Private />} >
+            <Route index element={<UserDashboard />} />
             <Route path='profile' element={<Profile />} />
+            <Route path='orders' element={<Orders />} />
           </Route>
         </Route>
         <Route path='/admin' element={<AdminPrivate />}>

@@ -33,6 +33,7 @@ const register = asyncErrorHandler(async(req, res)=>{
     })
 })
 const login = asyncErrorHandler(async(req, res)=>{
+    console.log("body ",req.body);
     const {email, password} = req.body
     if(!email || !password) throw new CustomError("Necessary details are not filled", 404)
 

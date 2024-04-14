@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const logger = require('morgan')
 const errorHandler = require('./middlewares/errorHandler')
+const bodyParser = require('body-parser')
 
 require('dotenv').config({
     path:"./config/.env"
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 3001
 const route = require('./routes/index')
 
 app.use(express.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.json())
 app.use(cors())
 app.use(logger('dev'))
