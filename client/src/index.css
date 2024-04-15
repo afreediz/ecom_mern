@@ -8,3 +8,6 @@ h1{
 input{
     @apply border-b-2 border-slate-300 p-2 mb-2
 }
+img{
+    @apply w-full
+}
