@@ -6,7 +6,7 @@ const Layout = () => {
   return (
     <div>
       <Header />
-      <div className="py-12 px-16 h-80vh">
+      <div className="py-12 px-16 min-h-80vh h-auto">
         <Outlet/>
       </div>
       <Footer />
