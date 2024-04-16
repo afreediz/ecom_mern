@@ -27,7 +27,7 @@ const Login = () => {
       })
       toast.success("User Login successfull")
       localStorage.setItem('token',response.data.token)
-      navigate('/register')
+      navigate('/')
       window.location.reload()
     }catch(error){
       console.log(error);
