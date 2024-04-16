@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { api_url } from '../../datas';
 import {useNavigate} from 'react-router-dom'
+import {toast} from 'react-toastify'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -24,10 +25,11 @@ const Login = () => {
       const response = await axios.post(api_url+'auth/login',{
         ...data
       })
-      navigate('/')
+      toast.success("User Login successfull")
       console.log(response);
-    }catch(error){
-      throw error;
+      navigate('/')
+    }catch({response}){
+      toast.error(response.data.message)
     }
   }
   return (

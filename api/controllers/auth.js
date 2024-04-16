@@ -7,9 +7,9 @@ const { generateToken } = require("../helpers/jwt")
 
 const register = asyncErrorHandler(async(req, res)=>{
     console.log(req.body);
-    const { name, email, password, address, phone, answer } = req.body
-    if(!name || !email || !password || !phone || !address || !answer){
-        console.log(name, email, password, phone, address, answer);
+    const { name, email, password, address, phone } = req.body
+    if(!name || !email || !password || !phone || !address ){
+        console.log(name, email, password, phone, address);
         throw new CustomError('Necessary details are not filled', 404)
     }
 
@@ -19,7 +19,7 @@ const register = asyncErrorHandler(async(req, res)=>{
     const hashedPassword = await hashPassword(password)
 
     const user = await new User({
-        name, email, password:hashedPassword, phone, address, answer
+        name, email:email.toLowerCase(), password:hashedPassword, phone, address
     }).save()
 
     res.status(200).json({success:true, message:"User registration successfull",

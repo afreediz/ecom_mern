@@ -16,6 +16,8 @@ import AllUsers from './pages/Admin/AllUsers'
 import CreateCategory from './pages/Admin/CreateCategory'
 import CreateProduct from './pages/Admin/CreateProduct'
 import UserDashboard from './pages/Dashboard'
+import {ToastContainer, toast} from 'react-toastify'
+
 const App = () => {
   return (
     <div className="">
@@ -44,6 +46,7 @@ const App = () => {
         </Route>
         <Route path='*' element={<div className=''>Not found</div>} />
       </Routes>
+      <ToastContainer position='bottom-center' />
     </div>
   )
 }
