@@ -6,7 +6,9 @@ const CustomError = require('../utils/CustomError')
 const isAuthenticated = asyncErrorHandler(async(req, res, next) => {
     const token = req.headers.authorization
     const decoded = validateToken(token)
-    req.user = decoded
+    const user = await User.findById(decoded._id).select('_id name role')
+    if(!user) throw new CustomError("User not found")
+    req.user = user
     next()
 })
 

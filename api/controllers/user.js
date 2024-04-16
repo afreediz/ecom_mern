@@ -8,7 +8,7 @@ const getUser = asyncErrorHandler(async(req, res)=>{
     res.status(200).json({
         success:true,
         message:"Authorized",
-        authorized:true
+        user:req.user
     })
 })
 const profile = asyncErrorHandler(async(req, res)=>{
