@@ -1,15 +1,29 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { userContext } from '../context/user'
+import { api_url } from '../datas'
+import axios from 'axios'
 
 const Header = () => {
   const {user, setUser} = useContext(userContext)
+  const [categories, setCategories] = useState()
   const navigate = useNavigate()
   const logout = () => {
     localStorage.removeItem('token')
     setUser(null)
     navigate('/login')
   }
+  useEffect(()=>{
+    async function getCategory(){
+      try{
+        const {data} = await axios.get(api_url+'category')
+        setCategories(data.categories)
+      }catch({response}){
+        console.log(response);
+      }
+    }
+    getCategory()
+  },[])
   const options = ['Womens', 'Mens', 'Children', 'Cloths']; // Your list of options
   return (
     <div className='flex px-16 py-4 text-xl items-center justify-between bg-black text-white border-2 border-slate-800'>
@@ -24,9 +38,9 @@ const Header = () => {
             className="text-white bg-black block appearance-none px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
           >
             <option className='' to="/" value=""><Link to="/">All categories</Link></option>
-            {options.map((option, index) => (
-              <option className='bg-white text-black font-normal' key={index} value={option}>
-                {option}
+            {categories && categories.map((category, index) => (
+              <option className='bg-white text-black font-normal' key={index} value={category.slug}>
+                {category.name}
               </option>
             ))}
           </select>

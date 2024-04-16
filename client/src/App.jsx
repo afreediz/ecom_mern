@@ -36,10 +36,9 @@ const App = () => {
         })
         setUser(data.user)
         setLoading(false)
-        console.log(data);
       }catch({response}){
+        setLoading(false)
         console.log(response);
-        toast.error(response.data.message)
       }   
     }
     checkAuth()
@@ -55,13 +54,14 @@ const App = () => {
           <Route path='products/:slug' element={<ProductDetails />} />
           <Route path='category/:slug' element={<Home />} />
           <Route path='cart' element={<Cart />} />
-          {user?<>
+          {user && <>
             <Route path='dashboard' element={<UserDashboard />} />
             <Route path='profile' element={<Profile />} />
             <Route path='orders' element={<Orders />} />
-            </>:<></>
+            </>
           }
         </Route>
+        {user && user.role == 'admin'?
         <Route path='/admin' element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path='create-category' element={<CreateCategory />} />
@@ -69,7 +69,8 @@ const App = () => {
           <Route path='products' element={<Home />} />
           <Route path='orders' element={<AllOrders />} />
           <Route path='users' element={<AllUsers />} />
-        </Route>
+        </Route>:<></>
+        }
         <Route path='*' element={<div className=''>Not found</div>} />
       </Routes>
       <ToastContainer position='bottom-center' />
