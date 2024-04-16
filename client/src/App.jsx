@@ -23,9 +23,8 @@ import { api_url } from './datas'
 import axios from 'axios'
 
 const App = () => {
-  const {setUser} = useContext(userContext);
-  const bool = localStorage.getItem('token') ? true:false;
-  const [auth, setAuth] = useState(bool)
+  const [loading, setLoading] = useState(true)
+  const {user, setUser} = useContext(userContext);
   useEffect(()=>{
     async function checkAuth(){
       try{
@@ -35,10 +34,9 @@ const App = () => {
           }
         })
         setUser(data.user)
-        setAuth(true)
+        setLoading(false)
         console.log(data);
       }catch({response}){
-        setAuth(false)
         console.log(response);
         toast.error(response.data.message)
       }   
@@ -56,11 +54,12 @@ const App = () => {
           <Route path='products/:slug' element={<ProductDetails />} />
           <Route path='category/:slug' element={<Home />} />
           <Route path='cart' element={<Cart />} />
-          <Route path='/' element={<Private />} >
+          {user?<>
             <Route path='dashboard' element={<UserDashboard />} />
             <Route path='profile' element={<Profile />} />
             <Route path='orders' element={<Orders />} />
-          </Route>
+            </>:<></>
+          }
         </Route>
         <Route path='/admin' element={<AdminPrivate />}>
           <Route index element={<Dashboard />} />
@@ -73,6 +72,7 @@ const App = () => {
         <Route path='*' element={<div className=''>Not found</div>} />
       </Routes>
       <ToastContainer position='bottom-center' />
+      {loading && <div className="laoder absolute top-0 right-0 left-0 bottom-0 bg-white flex justify-center items-center">Loading...</div>}
     </div>
   )
 }
