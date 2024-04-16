@@ -21,6 +21,7 @@ import { userContext } from './context/user'
 import { useContext, useEffect, useState } from 'react'
 import { api_url } from './datas'
 import axios from 'axios'
+import AdminLayout from './components/AdminLayout'
 
 const App = () => {
   const [loading, setLoading] = useState(true)
@@ -61,7 +62,7 @@ const App = () => {
             </>:<></>
           }
         </Route>
-        <Route path='/admin' element={<AdminPrivate />}>
+        <Route path='/admin' element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path='create-category' element={<CreateCategory />} />
           <Route path='create-product' element={<CreateProduct />} />
