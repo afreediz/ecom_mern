@@ -26,10 +26,12 @@ const Login = () => {
         ...data
       })
       toast.success("User Login successfull")
-      console.log(response);
-      navigate('/')
-    }catch({response}){
-      toast.error(response.data.message)
+      localStorage.setItem('token',response.data.token)
+      navigate('/register')
+      window.location.reload()
+    }catch(error){
+      console.log(error);
+      toast.error(error.response.data.message)
     }
   }
   return (

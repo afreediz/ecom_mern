@@ -1,19 +1,14 @@
-import React from 'react'
-import {Outlet} from 'react-router-dom'
-import Sidebar from '../utilities/Sidebar';
+import React, { useContext, useEffect, useState } from 'react'
+import {Outlet, Navigate} from 'react-router-dom'
+import axios from 'axios'
+import { api_url } from '../../datas'
+import { toast } from 'react-toastify'
+import { userContext } from '../../context/user'
 
 const Private = () => {
+  const {user} = useContext(userContext)
   console.log('on private routes');
-  return (
-    <div className=' grid grid-cols-5'>
-      <div className=" col-span-1">
-        <Sidebar />
-      </div>
-      <div className=" col-span-4 p-8">
-        <Outlet />
-      </div>
-    </div>
-  )
+  return (user?<Outlet />:<Navigate to="/login" />)
 }
 
 export default Private

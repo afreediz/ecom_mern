@@ -1,9 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import { api_url } from '../../datas'
 import {useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify'
+import {userContext} from '../../context/user'
+
 const Register = () => {
+  const {user} = useContext(userContext)
+  console.log(user);
   const navigate = useNavigate()
   const [data, setData] = useState({
     name:"",

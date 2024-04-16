@@ -1,9 +1,12 @@
 import React from 'react'
+import SidebarLayout from '../components/user/SidebarLayout'
 
 const Dashboard = () => {
   return (
     <div>
-      user dashboard
+      <SidebarLayout>
+        dashboard
+      </SidebarLayout>
     </div>
   )
 }

@@ -1,8 +1,9 @@
 import React from 'react'
+import SidebarLayout from '../components/user/SidebarLayout'
 
 const Profile = () => {
   return (
-    <div className=' text-2xl'>
+    <SidebarLayout className=' text-2xl'>
       <div className=" my-2">
         <label className='block' htmlFor="name">Name</label>
         <input type="text" id='name' value="afreedi" placeholder='Enter your name' />
@@ -20,7 +21,7 @@ const Profile = () => {
         <input type="text" id="address" value="5/1 house" placeholder='Enter your Address' />
       </div>
       <button className='py-2 px-5 bg-green-600 text-white font-medium'>Update</button>
-    </div>
+    </SidebarLayout>
   )
 }
 

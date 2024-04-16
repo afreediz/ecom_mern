@@ -1,9 +1,10 @@
 import React from 'react'
 import OrdersCard from '../components/utilities/OrdersCard'
+import SidebarLayout from '../components/user/SidebarLayout'
 
 const Orders = () => {
   return (
-    <div>
+    <SidebarLayout>
       <h1>Your Orders : </h1>
       <div className="table w-full p-4">
         <table className='w-full border-2 border-black sketc'>
@@ -31,7 +32,7 @@ const Orders = () => {
         <OrdersCard />
         <OrdersCard />
       </div>
-    </div>
+    </SidebarLayout>
   )
 }
 
