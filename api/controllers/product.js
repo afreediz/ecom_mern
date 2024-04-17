@@ -123,7 +123,7 @@ const productsRelated = asyncErrorHandler(async(req, res)=>{
 const categoryProducts = asyncErrorHandler(async(req, res)=>{
     const { slug } = req.params
     const category = await Category.findOne({slug})
-    if(!category) throw CustomError("Invalid category", 404)
+    if(!category) throw new CustomError("Invalid category", 404)
     console.log(category);
     const products = await Product.find({category:category._id}).populate('category')
 
