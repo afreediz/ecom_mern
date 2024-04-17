@@ -1,6 +1,7 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-const ProductCard = () => {
+const ProductCard = ({data}) => {
   return (
     <div className='card outline max-w-3/12 w-64 outline-1 outline-slate-500'>
       <div className="image">
@@ -8,12 +9,12 @@ const ProductCard = () => {
       </div>
       <div className="body">
         <div className="title">
-          <span>Name</span>
-          <span>price</span>
+          <h3 className='my-0'>{data.name}</h3>
+          <h3 className='my-0'>{data.price}</h3>
         </div>
-        <p className='desc'>Lorem ipsum dolor sit amet consectetur adipisicing elit. distinctio?</p>
+        <p className='desc'>{data.shortdesc}</p>
         <div className="buttons flex text-sm">
-          <button className='w-1/2 py-4 bg-green-700 text-white'>More details</button>
+          <Link to={`/products/${data.slug}`} className='text-center w-1/2 py-4 bg-green-700 text-white' >More details</Link>
           <button className='w-1/2 py-4 bg-blue-700 text-whit'>Add to Cart</button>
         </div>
       </div>

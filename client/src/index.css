@@ -3,10 +3,13 @@
 @tailwind utilities;
 
 h1{
-    @apply font-bold my-4 text-4xl
+    @apply font-bold my-4 text-4xl block
 }
 h2{
-    @apply font-normal my-2 text-3xl
+    @apply font-normal my-2 text-3xl block
+}
+h3{
+    @apply font-light my-2 text-2xl block
 }
 input{
     @apply border-b-2 border-slate-300 p-2 mb-2

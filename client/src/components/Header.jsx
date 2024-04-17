@@ -24,6 +24,11 @@ const Header = () => {
     }
     getCategory()
   },[])
+  const navigateCategory = (e) => {
+    console.log('doing');
+    const selectedCategory = e.target.value;
+    navigate(`/category/${selectedCategory}`)
+  }
   const options = ['Womens', 'Mens', 'Children', 'Cloths']; // Your list of options
   return (
     <div className='flex px-16 py-4 text-xl items-center justify-between bg-black text-white border-2 border-slate-800'>
@@ -35,6 +40,7 @@ const Header = () => {
         <Link to="/"><li className='px-3'>Home</li></Link>
         <div className="relative">
           <select
+            onChange={navigateCategory}
             className="text-white bg-black block appearance-none px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
           >
             <option className='' to="/" value=""><Link to="/">All categories</Link></option>

@@ -22,6 +22,8 @@ import { useContext, useEffect, useState } from 'react'
 import { api_url } from './datas'
 import axios from 'axios'
 import AdminLayout from './components/AdminLayout'
+import API from './services/api'
+import CategoryProducts from './pages/CategoryProducts'
 
 const App = () => {
   const [loading, setLoading] = useState(true)
@@ -29,11 +31,7 @@ const App = () => {
   useEffect(()=>{
     async function checkAuth(){
       try{
-        const {data} = await axios.get(api_url+'user/get-user',{
-          headers:{
-            "Authorization":localStorage.getItem('token')
-          }
-        })
+        const {data} = await API.get('user/get-user')
         setUser(data.user)
         setLoading(false)
       }catch({response}){
@@ -52,7 +50,7 @@ const App = () => {
           <Route path='register' element={<Register />}/>
           <Route path='forget-password' element={<ForgetPassword />}/>
           <Route path='products/:slug' element={<ProductDetails />} />
-          <Route path='category/:slug' element={<Home />} />
+          <Route path='category/:slug' element={<CategoryProducts />} />
           <Route path='cart' element={<Cart />} />
           {user && <>
             <Route path='dashboard' element={<UserDashboard />} />

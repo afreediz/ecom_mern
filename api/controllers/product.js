@@ -7,7 +7,7 @@ const Category = require("../models/category")
 const Order = require("../models/order")
 
 const getAllProducts = asyncErrorHandler(async(req, res)=>{
-    const products = await Product.find({}).populate('category').select('-photo').sort({createdAt:-1})
+    const products = await Product.find({}).populate('category').select('name shortdesc price slug').sort({createdAt:-1})
 
     res.status(200).json({
         success:true,
@@ -27,10 +27,10 @@ const getProduct = asyncErrorHandler(async(req, res)=>{
     })
 })
 const createProduct = asyncErrorHandler(async(req, res)=>{
-    const { name, description, price, category, quantity, photo, shipping } = req.body
-    if( !name || !description || !price || !category) throw new CustomError('Necessary details are not filled', 404)
+    const { name, description, price, category, quantity, photo, shipping, shortdesc } = req.body
+    if( !name || !description || !price || !category || !shortdesc) throw new CustomError('Necessary details are not filled', 404)
 
-    const product = await new Product({name, slug:slugify(name), description, price, category, quantity, photo, shipping}).save()
+    const product = await new Product({name, slug:slugify(name), shortdesc,description, price, category, quantity, photo, shipping}).save()
 
     res.status(200).json({
         success:true,
@@ -123,6 +123,7 @@ const productsRelated = asyncErrorHandler(async(req, res)=>{
 const categoryProducts = asyncErrorHandler(async(req, res)=>{
     const { slug } = req.params
     const category = await Category.findOne({slug})
+    if(!category) throw CustomError("Invalid category", 404)
     console.log(category);
     const products = await Product.find({category:category._id}).populate('category')
 

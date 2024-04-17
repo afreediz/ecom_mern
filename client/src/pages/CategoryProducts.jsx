@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/utilities/ProductCard'
 import API from '../services/api'
 import FilterSidebar from '../components/utilities/FilterSidebar'
+import { useParams } from 'react-router-dom'
 
-const Home = () => {
+const CategoryProducts = () => {
   const [products, setProducts] = useState()
-  
+  const {slug} = useParams()
   useEffect(()=>{
     async function getProducts(){
       try{
-        const {data} = await API.get("products")
+        const {data} = await API.get(`products/category/${slug}`)
         setProducts(data.products)
       }catch(error){
         throw error
       }
     }
     getProducts()
-  },[])
+  },[slug])
   return (
     <div className='grid grid-cols-6'>
       <div className="sidebar col-span-1">
@@ -34,4 +35,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default CategoryProducts
