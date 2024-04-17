@@ -20,7 +20,7 @@ const Home = () => {
   return (
     <div className='grid grid-cols-6'>
       <div className="sidebar col-span-1">
-        <FilterSidebar />
+        <FilterSidebar productHandler={setProducts} />
       </div>
       <div className=" col-span-5">
         <h1 className=' text-4xl  border-b-2 border-slate-500 inline'>All Products</h1>
