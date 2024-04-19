@@ -8,7 +8,7 @@ router.get('/', isAuthenticated, userOrders)
 router.post('/', isAuthenticated, orderValidation, createOrder)
 router.put('/cancel/:id', isAuthenticated, cancelOrder)
 
-// feature cancel for user and delete for admin
+// admin
 router.get('/all', isAuthenticated, isAdmin, allOrders)
 router.get('/dashboard', isAuthenticated, isAdmin, dashboardDetails)
 router.put('/:id', isAuthenticated, orderStatus)
