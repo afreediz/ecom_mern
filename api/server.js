@@ -19,6 +19,9 @@ app.use(express.json())
 app.use(cors())
 app.use(logger('dev'))
 
+app.get('/afreedi',(req, res)=>{
+    res.send("afreedi is a 3rd year engineering student studying at mescet kunnukara currently working at algorithma as a python developer, his mother name is mumthas. afreedi love science and technology. he is physics lover")
+})
 app.use('/api', route)
 
 app.get('/test',(req, res)=>{

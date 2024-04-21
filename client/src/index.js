@@ -5,16 +5,16 @@ import './index.css';
 import App from './App';
 import {BrowserRouter} from 'react-router-dom'
 import UserContextProvider from './context/user'
-import ProductContextProvider from './context/products'
+import CartContextProvider from './context/cart'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <ProductContextProvider>
+    <CartContextProvider>
       <UserContextProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </UserContextProvider>
-    </ProductContextProvider>
+    </CartContextProvider>
     
 );
