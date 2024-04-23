@@ -1,12 +1,15 @@
 import React from 'react'
-import { cart } from '../datas'
+// import { cart } from '../datas'
 import CartCard from '../components/utilities/CartCard'
 import { useAuth } from '../context/user'
 import { useCart } from '../context/cart'
 
+
+
 const Cart = () => {
-  const {} = useAuth();
+  const {cart, setCart} = useCart();
   const totalPrice = ()=> {
+    console.log(cart.length);
     let total = 0;
     cart?.map((p)=>{
       total = total + p.price
