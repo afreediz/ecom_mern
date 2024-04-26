@@ -1,6 +1,8 @@
 import React from 'react'
+import { useCart, cartOperations } from '../../context/cart'
 
 const CartCard = ({product}) => {
+  const context = useCart()
   return (
     <div className='grid grid-cols-5 m-8 p-4 gap-4 outline outline-slate-300'>
       <div className="image col-span-1">
@@ -10,7 +12,9 @@ const CartCard = ({product}) => {
         <h2 className='text-3xl'>{product.name}</h2>
         <h3 className='text-2xl'>{product.shortdesc}</h3> 
         <div className="options">
-          <button className='p-4 bg-red-600 text-white font-medium'>-</button> {product.quantity} <button className='p-4 bg-green-600 text-white font-medium'>+</button>
+          <button onClick={()=>cartOperations.removeCart(product, context)} className='p-4 bg-red-600 text-white font-medium'>-</button> 
+          {product.cart_quantity} 
+          <button onClick={()=>cartOperations.addToCart(product, context)} className='p-4 bg-green-600 text-white font-medium'>+</button>
         </div>
       </div>
     </div>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import API from '../services/api'
+import {cartOperations, useCart} from '../context/cart'
 
 const ProductDetails = () => {
   const [product, setProduct] = useState()
+  const context = useCart()
   const { slug } = useParams()
   useEffect(()=>{
     async function getProduct(){
@@ -28,7 +30,11 @@ const ProductDetails = () => {
         <p>{product && product.description}</p>
         <div className="button-container flex gap-4">
           <button>Buy Now</button>
-          <button>Add to cart</button>
+          <button onClick={()=>{
+            cartOperations.addToCart(
+              {name:product.name, price:product.price, shortdesc:product.shortdesc}
+              , context)
+            }}>Add to cart</button>
         </div>
       </div>
     </div>

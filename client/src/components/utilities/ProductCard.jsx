@@ -1,21 +1,9 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { useCart } from '../../context/cart'
+import { useCart, cartOperations } from '../../context/cart'
 
 const ProductCard = ({data}) => {
-  const {cart, setCart} = useCart()
-
-  const add_to_cart = ()=> {
-    setCart((old_cart)=>{
-      return [
-        ...old_cart,
-        {
-          quantity:1,
-          ...data
-        }
-      ]
-    })
-  }
+  const context = useCart()
   return (
     <div className='card outline max-w-3/12 w-64 outline-1 outline-slate-500'>
       <div className="image">
@@ -29,7 +17,7 @@ const ProductCard = ({data}) => {
         <p className='desc'>{data.shortdesc}</p>
         <div className="buttons flex text-sm">
           <Link to={`/products/${data.slug}`} className='text-center w-1/2 py-4 bg-green-700 text-white' >More details</Link>
-          <button onClick={add_to_cart} className='w-1/2 py-4 bg-blue-700 text-whit'>Add to Cart</button>
+          <button onClick={()=>{cartOperations.addToCart(data, context)}} className='w-1/2 py-4 bg-blue-700 text-whit'>Add to Cart</button>
         </div>
       </div>
     </div>
