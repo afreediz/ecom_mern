@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart, cartOperations } from '../../context/cart'
+import {toast} from 'react-toastify'
 
 const ProductCard = ({data}) => {
   const context = useCart()
@@ -17,7 +18,10 @@ const ProductCard = ({data}) => {
         <p className='desc'>{data.shortdesc}</p>
         <div className="buttons flex text-sm">
           <Link to={`/products/${data.slug}`} className='text-center w-1/2 py-4 bg-green-700 text-white' >More details</Link>
-          <button onClick={()=>{cartOperations.addToCart(data, context)}} className='w-1/2 py-4 bg-blue-700 text-whit'>Add to Cart</button>
+          <button onClick={()=>{
+            cartOperations.addToCart(data, context)
+            toast.success('Added to cart')
+            }} className='w-1/2 py-4 bg-blue-700 text-whit'>Add to Cart</button>
         </div>
       </div>
     </div>

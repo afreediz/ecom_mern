@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import API from '../services/api'
 import {cartOperations, useCart} from '../context/cart'
-
+import {toast} from 'react-toastify'
 const ProductDetails = () => {
   const [product, setProduct] = useState()
   const context = useCart()
@@ -34,6 +34,7 @@ const ProductDetails = () => {
             cartOperations.addToCart(
               {name:product.name, price:product.price, shortdesc:product.shortdesc}
               , context)
+            toast.success('Added to cart')
             }}>Add to cart</button>
         </div>
       </div>

@@ -3,10 +3,13 @@ import React from 'react'
 import CartCard from '../components/utilities/CartCard'
 import { useAuth } from '../context/user'
 import { useCart } from '../context/cart'
-
-
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import { api_url } from '../datas'
+import API from '../services/api'
 
 const Cart = () => {
+  const {user} = useAuth()
   const {cart, setCart} = useCart();
   const shipping_charge = 500
   console.log(cart)
@@ -21,7 +24,22 @@ const Cart = () => {
       currency:'USD'
     })
   }
-  // const {cart, setCart} = useCart();
+  const checkout = async()=>{
+    try{
+      const {data} = await API.post(api_url+'products/test-order',{
+        cart:cart.map((product)=>{
+          return {
+            product:product._id,
+            cart_quantity:product.cart_quantity
+          }
+        })
+      })
+      toast.success(data.message)
+      setCart([])
+    }catch({response}){
+      toast.error(response.data.message)
+    }
+  }
   return (
     <div className='grid grid-cols-8'>
       <div className="products col-span-5">
@@ -41,15 +59,16 @@ const Cart = () => {
             {cart?.map((p, index)=>{
               return(
                 <div key={index}>
-                  <span>{p.name} * {p.cart_quantity} : {p.price}</span> 
+                  <span>{p.name} * {p.cart_quantity} : {p.price*p.cart_quantity}</span> 
                 </div>
               )})
             }  
           </div>
-          <h3>Shipping charge : {shipping_charge}</h3>
-          <h2>Grand total : {totalPrice()}</h2>
+          <h3>Shipping charge : {cart.length > 0 ? shipping_charge : 0}</h3>
+          <h2>Grand total : {cart.length > 0 ? totalPrice() : 0}</h2>
         </div>
-        <button className='p-4 bg-green-700 text-white'>PAY</button>
+        {!user && "login to checkout"} <br />
+        <button disabled={cart.length == 0 ? true:false && user?false:true} onClick={checkout} className={`p-4 ${cart.length == 0?'bg-slate-500':user?'bg-green-500':'bg-slate-500'} text-white`}>PAY</button>
       </div>
     </div>
   )

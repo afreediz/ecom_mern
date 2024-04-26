@@ -7,7 +7,7 @@ const Category = require("../models/category")
 const Order = require("../models/order")
 
 const getAllProducts = asyncErrorHandler(async(req, res)=>{
-    const products = await Product.find({}).populate('category').select('name shortdesc price slug').sort({createdAt:-1})
+    const products = await Product.find({}).populate('category').select('_id name shortdesc price slug').sort({createdAt:-1})
 
     res.status(200).json({
         success:true,
@@ -145,9 +145,22 @@ const orderStatus = asyncErrorHandler(async(req, res)=>{
         order
     })
 })
+
 const testCreateOrder = asyncErrorHandler(async(req, res)=>{
     const { cart } = req.body
-    res.status(200).json({success:true})
+    console.log(cart);
+    await Order.create({user:req.user._id,products:cart})
+    res.status(200).json({success:true, message:"Order placed successfully"})
+})
+
+const getAllOrders = asyncErrorHandler(async(req, res)=>{
+    const user = req.user._id
+    const orders = await Order.find({user}).populate({
+        path:'products.product',
+        select:'name shortdesc price'
+    })
+    console.log("orders ",orders)
+    res.status(200).json({success:true, orders:orders})
 })
 
 module.exports = { 
@@ -163,5 +176,6 @@ module.exports = {
     productSearch,
     productsRelated,
     categoryProducts,
-    testCreateOrder
+    testCreateOrder,
+    getAllOrders
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { useCart, cartOperations } from '../../context/cart'
+import {toast} from 'react-toastify'
 
 const CartCard = ({product}) => {
   const context = useCart()
@@ -10,11 +11,18 @@ const CartCard = ({product}) => {
       </div>
       <div className="body col-span-4">
         <h2 className='text-3xl'>{product.name}</h2>
+        <h2 className='text-3xl'>{product.price}</h2>
         <h3 className='text-2xl'>{product.shortdesc}</h3> 
         <div className="options">
-          <button onClick={()=>cartOperations.removeCart(product, context)} className='p-4 bg-red-600 text-white font-medium'>-</button> 
+          <button onClick={()=>{
+            cartOperations.removeCart(product, context)
+            toast.success('Removed from cart')
+          }} className='p-4 bg-red-600 text-white font-medium'>-</button> 
           {product.cart_quantity} 
-          <button onClick={()=>cartOperations.addToCart(product, context)} className='p-4 bg-green-600 text-white font-medium'>+</button>
+          <button onClick={()=>{
+            cartOperations.addToCart(product, context)
+            toast.success('Added to cart')
+            }} className='p-4 bg-green-600 text-white font-medium'>+</button>
         </div>
       </div>
     </div>
