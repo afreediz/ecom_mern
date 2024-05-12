@@ -163,36 +163,7 @@ const getAllOrders = asyncErrorHandler(async(req, res)=>{
     res.status(200).json({success:true, orders:orders})
 })
 
-// fake
-const orderStatus = asyncErrorHandler(async(req, res)=>{
-    const { orderId } = req.params
-    const { status } = req.body
 
-    const order = await Order.findByIdAndUpdate(orderId, {status}, {new:true, runValidators:true})
-
-    res.status(200).json({
-        success:true,
-        message:"Order updated succesfully",
-        order
-    })
-})
-
-const testCreateOrder = asyncErrorHandler(async(req, res)=>{
-    const { cart } = req.body
-    console.log(cart);
-    await Order.create({user:req.user._id,products:cart})
-    res.status(200).json({success:true, message:"Order placed successfully"})
-})
-
-const getAllOrders = asyncErrorHandler(async(req, res)=>{
-    const user = req.user._id
-    const orders = await Order.find({user}).populate({
-        path:'products.product',
-        select:'name shortdesc price'
-    })
-    console.log("orders ",orders)
-    res.status(200).json({success:true, orders:orders})
-})
 module.exports = { 
     getAllProducts, 
     getProduct, 

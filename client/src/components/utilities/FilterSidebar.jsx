@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { categories } from '../../datas'
 
-const FilterSidebar = ({productHandler}) => {
+const FilterSidebar = ({productHandler, allProducts}) => {
   const [price, setPrice] = useState({
     min:null,
     max:null
@@ -16,8 +16,8 @@ const FilterSidebar = ({productHandler}) => {
     })
   }
   const apply = ()=> {
-    productHandler((old_products)=>{
-      return old_products.filter((product)=>{
+    productHandler(()=>{
+      return allProducts.filter((product)=>{
         if(product.price > price.min && product.price < price.max){
           return product
         }
