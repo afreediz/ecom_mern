@@ -34,15 +34,6 @@ const Dashboard = () => {
     }
     fetchData();
   }, []);
-  console.log(products, users, orders);
-
-  // const data = [
-  //   { index: 1, orderid: 'ORD001', user: 'John Doe', products: 'Product A, Product B', paymentStatus: 'Paid' },
-  //   { index: 2, orderid: 'ORD002', user: 'Jane Smith', products: 'Product C', paymentStatus: 'Pending' },
-  //   { index: 3, orderid: 'ORD003', user: 'Alice Johnson', products: 'Product D, Product E', paymentStatus: 'Failed' },
-  //   // Add more rows as needed
-  // ];
-
   return (
     <div className="mx-4">
       <h1 className="text-3xl font-semibold mb-8">Dashboard</h1>
@@ -107,7 +98,7 @@ const Dashboard = () => {
             {orders && orders.recent_orders.map((order, index)=>{
               return (
                 <tr key={order.orderid}>
-                <td className="px-6 py-4 whitespace-nowrap">{index}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{index+1}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{order.user.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{

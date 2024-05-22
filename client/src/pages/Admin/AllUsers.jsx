@@ -61,7 +61,7 @@ const AllUsers = () => {
           <tbody className="divide-y divide-gray-600">
           {users && users.map((user,index) => (
             <tr key={user.id}>
-              <td className="px-6 py-4 whitespace-nowrap">{index}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{index+1}</td>
               <td className="px-6 py-4 whitespace-nowrap">{user._id}</td>
               <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
               <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>

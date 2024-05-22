@@ -47,26 +47,27 @@ const loginValidation = [
 
 const registerValidation = [
     sanitizeAllFields,
-    body('name').isLength({ min: 3 }).withMessage('Name must be at least 3 characters'),
-    body('email').isEmail().withMessage('Email is not valid'),
-    body('phone').matches(/^\+?[1-9]\d{1,14}$/),
-    body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
+    body('name').isLength({ min: 3 }),
+    body('email').isEmail(),
+    body('phone').isMobilePhone(),
+    body('password').isLength({ min: 8 }),
     // Middleware to handle the validation results
     asyncErrorHandler((req, res, next) => {
         const errors = validationResult(req);
+        console.log("found ", errors);
         if (!errors.isEmpty()) {
             // Check for specific errors and throw custom errors
             errors.array().forEach(error => {
-                if (error.param === 'name') {
+                if (error.path === 'name') {
                     throw new CustomError('Name must be at least 3 characters', 400);
                 }
-                if (error.param === 'email') {
+                if (error.path === 'email') {
                     throw new CustomError('Email is not valid', 400);
                 }
-                if (error.param === 'password') {
+                if (error.path === 'password') {
                     throw new CustomError('Password must be at least 8 characters', 400);
                 }
-                if (error.param === 'phone') {
+                if (error.path === 'phone') {
                     throw new CustomError('Phone number is not valid', 400);
                 }
             });

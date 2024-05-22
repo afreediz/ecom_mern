@@ -57,7 +57,7 @@ const Orders = () => {
           <tbody>
             {orders && orders.map((order, index) => (
               <tr key={index} className='border-b border-gray-200'>
-                <td className='py-2 px-4 border-r border-gray-300'>{index}</td>
+                <td className='py-2 px-4 border-r border-gray-300'>{index+1}</td>
                 <td className='py-2 px-4 border-r border-gray-300'>{order._id}</td>
                 <td className='py-2 px-4 border-r border-gray-300'>{format_date(order.createdAt)}</td>
                 <td className='py-2 px-4 border-r border-gray-300'>{order.payment}</td>

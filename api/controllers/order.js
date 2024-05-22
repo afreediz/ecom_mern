@@ -20,7 +20,7 @@ const userOrders = asyncErrorHandler(async(req, res)=>{
     const orders = await Order.find({user}).populate({
         path:'products.product',
         select:'name shortdesc price'
-    })
+    }).sort({createdAt:-1})
     res.status(200).json({success:true, message:"Orders", orders:orders})
 })
 

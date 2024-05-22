@@ -49,7 +49,7 @@ const AllCategories = () => {
           {/* Map through categories data */}
           {categories && categories.map((category, index) => (
             <tr key={index} className="">
-              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{index}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{index+1}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm ">{category._id}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm ">
                 <form action="" onSubmit={async(e)=>{

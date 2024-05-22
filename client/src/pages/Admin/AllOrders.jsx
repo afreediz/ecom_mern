@@ -2,13 +2,6 @@ import React, { useState, useEffect } from 'react';
 import API, { format_date }  from '../../services/api';
 import {toast} from 'react-toastify'
 const AllOrders = () => {
-  // // Sample orders data (replace with actual data from your backend)
-  // const [orders, setOrders] = useState([
-  //   { index: 1, orderid: 'ORD001', user: 'John Doe', product: 'Product A', quantity: 2, paymentStatus: 'Paid', shippingStatus: 'Shipped' },
-  //   { index: 2, orderid: 'ORD002', user: 'Jane Smith', product: 'Product B', quantity: 1, paymentStatus: 'Pending', shippingStatus: 'Pending' },
-  //   // Add more orders as needed
-  // ]);
-
   const [orders, setOrders] = useState()
 
   useEffect(()=>{
@@ -70,7 +63,7 @@ const AllOrders = () => {
           {orders && orders.map((order, index)=>{
             return (
               <tr key={order.orderid}>
-              <td className="px-6 py-4 whitespace-nowrap">{index}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{index+1}</td>
               <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
               <td className="px-6 py-4 whitespace-nowrap">{order.user.name}</td>
               <td className="px-6 py-4 whitespace-nowrap">{
