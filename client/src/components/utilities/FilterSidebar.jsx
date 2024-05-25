@@ -3,8 +3,8 @@ import { categories } from '../../datas'
 
 const FilterSidebar = ({productHandler, allProducts}) => {
   const [price, setPrice] = useState({
-    min:null,
-    max:null
+    min:"",
+    max:""
   })
   const onchange = (e) => {
     const { name, value } = e.target;
@@ -15,10 +15,11 @@ const FilterSidebar = ({productHandler, allProducts}) => {
       }
     })
   }
-  const apply = ()=> {
+  const apply = (e)=> {
+    e.preventDefault()
     productHandler(()=>{
       return allProducts.filter((product)=>{
-        if(product.price > price.min && product.price < price.max){
+        if(product.price >= price.min && product.price <= price.max){
           return product
         }
       })
@@ -36,15 +37,15 @@ const FilterSidebar = ({productHandler, allProducts}) => {
             })}
         </div> */}
         <h2 className='text-2xl font-medium py-2'>Price</h2>
-        <div className="price">
+        <form className="price" onSubmit={apply}>
             <div className="my-2">
-            min : <input value={price.min} name='min' onChange={onchange} type="text" className='p-2 w-4/12 border-b-2 border-slate-300'/>
+            min : <input value={price.min} name='min' onChange={onchange} type="number" required className='p-2 w-4/12 border-b-2 border-slate-300'/>
             </div>
             <div className="my-2">
-            max : <input value={price.max} name='max' onChange={onchange} type="text" className='p-2 w-4/12 border-b-2 border-slate-300'/>
+            max : <input value={price.max} name='max' onChange={onchange} type="number" required className='p-2 w-4/12 border-b-2 border-slate-300'/>
             </div>
-        </div>
-        <button onClick={apply} className='py-2 px-4 bg-green-600 text-white font-semibold'>apply</button>
+            <button type='submit' className='py-2 px-4 bg-green-600 text-white font-semibold'>apply</button>
+        </form>
     </div>
   )
 }
