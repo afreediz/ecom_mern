@@ -63,7 +63,7 @@ const App = () => {
           <Route path='products' element={<Home />} />
           <Route path='orders' element={<AllOrders />} />
           <Route path='users' element={<AllUsers />} />
-        </Route>:<></>
+        </Route>:<>Sorry, You dont have access to this page.</>
         }
         <Route path='*' element={<div className=''>Not found</div>} />
       </Routes>

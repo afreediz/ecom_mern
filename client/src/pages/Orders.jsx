@@ -43,7 +43,7 @@ const Orders = () => {
             </thead>
             <tbody>
               { orders && orders.map((order, index)=>{
-                return <tr className=' border-b-2 border-slate-500'>
+                return <tr className=' border-b-2 border-slate-500' key={index}>
                  <td className=' border-r border-black'>{index}</td>
                  <td className=' border-r border-black'>{order._id}</td>
                  <td className=' border-r border-black'>{format_date(order.createdAt)}</td>

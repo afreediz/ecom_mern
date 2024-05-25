@@ -40,7 +40,7 @@ const Login = () => {
       <div className="inputs p-4">
         <form onSubmit={login}>
           <input type="text" className='w-full' placeholder='Email' name='email' value={data.email} onChange={onchange} />
-          <input type="text" className='w-full' placeholder='Password' name='password' value={data.password} onChange={onchange} />
+          <input type="password" className='w-full' placeholder='Password' name='password' value={data.password} onChange={onchange} />
           <button className='w-full py-2 bg-green-600 text-white font-normal'>Login</button>
         </form>
       </div>

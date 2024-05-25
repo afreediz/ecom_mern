@@ -25,6 +25,7 @@ const Cart = () => {
     })
   }
   const checkout = async()=>{
+    console.log('checkout');
     try{
       const {data} = await API.post(api_url+'products/test-order',{
         cart:cart.map((product)=>{
@@ -40,6 +41,7 @@ const Cart = () => {
       toast.error(response.data.message)
     }
   }
+  console.log(cart.length);
   return (
     <div className='grid grid-cols-8'>
       <div className="products col-span-5">
@@ -68,7 +70,7 @@ const Cart = () => {
           <h2>Grand total : {cart.length > 0 ? totalPrice() : 0}</h2>
         </div>
         {!user && "login to checkout"} <br />
-        <button disabled={cart.length == 0 ? true:false && user?false:true} onClick={checkout} className={`p-4 ${cart.length == 0?'bg-slate-500':user?'bg-green-500':'bg-slate-500'} text-white`}>PAY</button>
+        <button disabled={!user || cart.length == 0?true:false} onClick={checkout} className={`p-4 ${cart.length == 0?'bg-slate-500':user?'bg-green-500':'bg-slate-500'} text-white`}>PAY</button>
       </div>
     </div>
   )
