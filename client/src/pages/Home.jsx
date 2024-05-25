@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/utilities/ProductCard'
 import API from '../services/api'
 import FilterSidebar from '../components/utilities/FilterSidebar'
+import { useLocation } from 'react-router-dom'
+
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search)
+}
 
 const Home = () => {
+  const location = useLocation()
+  const query = useQuery()
+  console.log(query.get('search'));
   const [products, setProducts] = useState()
   const [allProducts, setAllProducts] = useState()
   useEffect(()=>{
@@ -19,6 +27,20 @@ const Home = () => {
     getProducts()
   },[])
   console.log(products);
+  useEffect(()=>{
+    async function getSearchResults(){
+      if(query.get('search')){
+        try{
+          const {data} = await API.get(`products/search/${query.get('search')}`)
+          console.log("search result",data);
+          setProducts(data.products)
+        }catch(error){
+          console.log(error);
+        }
+      }
+    }
+    getSearchResults()
+  },[location])
   return (
     <div className='grid grid-cols-6'>
       <div className="sidebar col-span-1">
