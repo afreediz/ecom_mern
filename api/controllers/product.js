@@ -98,8 +98,8 @@ const productSearch = asyncErrorHandler(async(req, res)=>{
     const { keyword } = req.params
     const products = await Product.find({
         $or:[
-                {name:{$regex:keyword, $options:'i'}},
-                {description:{$regex:keyword, $options:'i'}}
+            {name:{$regex:keyword, $options:'i'}},
+            {description:{$regex:keyword, $options:'i'}}
         ]
     })
     res.status(200).json({

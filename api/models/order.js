@@ -13,16 +13,19 @@ const orderSchema = mongoose.Schema({
         },
         cart_quantity:{
             type:Number,
-            reqired:true
+            reqired:true,
+            min:[1, "Product quantity can't be less than 1"]
         }
     }],
     payment:{
-        type:String
+        type:String,
+        default:"Not paid",
+        enum:["Not paid", "Paid"]
     },
     status:{
         type:String,
         default:"Not processed",
-        enum:["Not processed", "Processing", "Shipped", "Delivered", "Cancel"]
+        enum:["Not processed", "Processing", "Shipped", "Delivered", "Canceled"]
     }
 }, {timestamps:true})
 

@@ -33,6 +33,7 @@ const Home = () => {
         try{
           const {data} = await API.get(`products/search/${query.get('search')}`)
           console.log("search result",data);
+          setAllProducts(data.products)
           setProducts(data.products)
         }catch(error){
           console.log(error);
@@ -40,7 +41,7 @@ const Home = () => {
       }
     }
     getSearchResults()
-  },[location])
+  },[query.get('search')])
   return (
     <div className='grid grid-cols-6'>
       <div className="sidebar col-span-1">
