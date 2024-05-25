@@ -35,7 +35,6 @@ const updateProfile = asyncErrorHandler(async(req, res)=>{
 })
 const deleteProfile = asyncErrorHandler(async(req, res)=>{
     const id = req.user._id
-    console.log(req.user);
     await User.findByIdAndDelete(id)
     
     res.status(200).json({

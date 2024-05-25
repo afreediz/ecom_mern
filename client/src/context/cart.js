@@ -7,7 +7,6 @@ export const CartContextProvider = ({children}) => {
     const [cart, setCart] = useState([])
 
     useEffect(()=>{
-        console.log(localStorage.getItem("cart"));
         setCart(localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [])
     },[])
     

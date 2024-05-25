@@ -12,7 +12,6 @@ const Cart = () => {
   const {user} = useAuth()
   const {cart, setCart} = useCart();
   const shipping_charge = 500
-  console.log(cart)
   const totalPrice = ()=> {
     let total = 0;
     cart?.map((p)=>{
@@ -25,7 +24,6 @@ const Cart = () => {
     })
   }
   const checkout = async()=>{
-    console.log('checkout');
     try{
       const {data} = await API.post(api_url+'products/test-order',{
         cart:cart.map((product)=>{
@@ -41,7 +39,6 @@ const Cart = () => {
       toast.error(response.data.message)
     }
   }
-  console.log(cart.length);
   return (
     <div className='grid grid-cols-8'>
       <div className="products col-span-5">

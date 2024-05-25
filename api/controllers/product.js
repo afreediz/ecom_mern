@@ -72,7 +72,6 @@ const filterProducts = asyncErrorHandler(async(req, res)=>{
 })
 const getProductCount = asyncErrorHandler(async(req, res)=>{
     const total = await Product.find({}).estimatedDocumentCount()
-    console.log('total',total);
     res.status(200).json({
         success:true,
         message:"Total count",
@@ -124,7 +123,6 @@ const categoryProducts = asyncErrorHandler(async(req, res)=>{
     const { slug } = req.params
     const category = await Category.findOne({slug})
     if(!category) throw new CustomError("Invalid category", 404)
-    console.log(category);
     const products = await Product.find({category:category._id}).populate('category')
 
     res.status(200).json({
@@ -148,7 +146,6 @@ const orderStatus = asyncErrorHandler(async(req, res)=>{
 
 const testCreateOrder = asyncErrorHandler(async(req, res)=>{
     const { cart } = req.body
-    console.log(cart);
     await Order.create({user:req.user._id,products:cart})
     res.status(200).json({success:true, message:"Order placed successfully"})
 })
@@ -159,7 +156,6 @@ const getAllOrders = asyncErrorHandler(async(req, res)=>{
         path:'products.product',
         select:'name shortdesc price'
     })
-    console.log("orders ",orders)
     res.status(200).json({success:true, orders:orders})
 })
 

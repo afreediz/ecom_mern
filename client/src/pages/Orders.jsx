@@ -11,7 +11,6 @@ const Orders = () => {
     async function getOrders(){
       try{
         const {data} = await API.get(api_url+"products/test-getorder")
-        console.log(data);
         setOrders(data.orders)
       }catch({response}){
         toast.error(response.data.message)
@@ -26,7 +25,6 @@ const Orders = () => {
 
     return `${day}/${month}/${year}`
   }
-  console.log(orders);
   return (
     <SidebarLayout>
       <h1>Your Orders : </h1>

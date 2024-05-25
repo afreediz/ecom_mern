@@ -11,7 +11,6 @@ const useQuery = () => {
 const Home = () => {
   const location = useLocation()
   const query = useQuery()
-  console.log(query.get('search'));
   const [products, setProducts] = useState()
   const [allProducts, setAllProducts] = useState()
   useEffect(()=>{
@@ -26,13 +25,11 @@ const Home = () => {
     }
     getProducts()
   },[])
-  console.log(products);
   useEffect(()=>{
     async function getSearchResults(){
       if(query.get('search')){
         try{
           const {data} = await API.get(`products/search/${query.get('search')}`)
-          console.log("search result",data);
           setAllProducts(data.products)
           setProducts(data.products)
         }catch(error){

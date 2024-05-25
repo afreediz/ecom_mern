@@ -7,7 +7,6 @@ import { userContext } from '../../context/user'
 
 const Private = () => {
   const {user} = useContext(userContext)
-  console.log('on private routes');
   return (user?<Outlet />:<Navigate to="/login" />)
 }
 

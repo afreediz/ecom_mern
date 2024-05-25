@@ -19,16 +19,14 @@ const Header = () => {
       try{
         const {data} = await axios.get(api_url+'category')
         setCategories(data.categories)
-      }catch({response}){
-        console.log(response);
+      }catch(error){
+        console.log(error);
       }
     }
     getCategory()
   },[])
   const navigateCategory = (e) => {
-    console.log('doing');
     const selectedCategory = e.target.value;
-    console.log(selectedCategory);
     if(selectedCategory == "home"){
       navigate('/')
     }else{

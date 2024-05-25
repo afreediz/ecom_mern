@@ -5,7 +5,6 @@ const Category = require('../models/category')
 
 const getCategory = asyncErrorHandler(async(req, res)=>{
     const { slug } = req.params
-    console.log(slug);
     const category = await Category.findOne({slug})
 
     res.status(200).json({

@@ -30,9 +30,9 @@ const App = () => {
         const {data} = await API.get('user/get-user')
         setUser(data.user)
         setLoading(false)
-      }catch({response}){
+      }catch(error){
         setLoading(false)
-        console.log(response);
+        console.log(error);
       }   
     }
     checkAuth()
