@@ -31,7 +31,7 @@ const ProductDetails = () => {
           <button>Buy Now</button>
           <button onClick={()=>{
             cartOperations.addToCart(
-              {name:product.name, price:product.price, shortdesc:product.shortdesc}
+              {_id:product._id, name:product.name, price:product.price, shortdesc:product.shortdesc}
               , context)
             toast.success('Added to cart')
             }}>Add to cart</button>

@@ -9,7 +9,6 @@ const useQuery = () => {
 }
 
 const Home = () => {
-  const location = useLocation()
   const query = useQuery()
   const [products, setProducts] = useState()
   const [allProducts, setAllProducts] = useState()
