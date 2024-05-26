@@ -12,6 +12,7 @@ const Home = () => {
   const query = useQuery()
   const [products, setProducts] = useState()
   const [allProducts, setAllProducts] = useState()
+
   useEffect(()=>{
     async function getProducts(){
       try{
@@ -22,9 +23,6 @@ const Home = () => {
         throw error
       }
     }
-    getProducts()
-  },[])
-  useEffect(()=>{
     async function getSearchResults(){
       if(query.get('search')){
         try{
@@ -36,7 +34,11 @@ const Home = () => {
         }
       }
     }
-    getSearchResults()
+    if (!query.get('search')){
+      getProducts()
+    } else {
+      getSearchResults()
+    }
   },[query.get('search')])
   return (
     <div className='grid grid-cols-6'>
