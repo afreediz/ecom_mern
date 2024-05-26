@@ -39,7 +39,7 @@ const Home = () => {
       </div>
       <div className=" col-span-5">
         <h1 className=' text-4xl  border-b-2 border-slate-500 inline'>All Products</h1>
-        <div className="py-4 flex flex-wrap gap-8">
+        <div className="py-4 grid grid-cols-8 gap-4">
           {products && products.length == 0 && <div className='text-black font-bold text-3xl'>No products</div>}
           {products && products.map((product, index)=>{
             return <ProductCard data={product} key={index} />

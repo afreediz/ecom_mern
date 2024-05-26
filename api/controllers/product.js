@@ -80,7 +80,7 @@ const getProductCount = asyncErrorHandler(async(req, res)=>{
     })
 })
 const productList = asyncErrorHandler(async(req, res)=>{
-    const perPage = 6
+    const perPage = 8
     const page = req.params.page? req.params.page : 1
     const products = await Product.find({})
     .select('-photo')
@@ -122,7 +122,7 @@ const productsRelated = asyncErrorHandler(async(req, res)=>{
 })
 const categoryProducts = asyncErrorHandler(async(req, res)=>{
     const { slug } = req.params
-    const perPage = 6
+    const perPage = 8
     const page = req.params.page? req.params.page : 1
 
     const category = await Category.findOne({slug})
