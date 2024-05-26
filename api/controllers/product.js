@@ -26,6 +26,7 @@ const getProduct = asyncErrorHandler(async(req, res)=>{
         product
     })
 })
+
 const createProduct = asyncErrorHandler(async(req, res)=>{
     const { name, description, price, category, quantity, photo, shipping, shortdesc } = req.body
     if( !name || !description || !price || !category || !shortdesc) throw new CustomError('Necessary details are not filled', 404)
@@ -86,7 +87,7 @@ const productList = asyncErrorHandler(async(req, res)=>{
     .skip((page - 1)*perPage)
     .limit(perPage)
     .sort({createdAt:-1})
-    
+    console.log("products", products);
     res.status(200).json({
         success:true,
         message:`Products of page ${page}`,
@@ -132,6 +133,18 @@ const categoryProducts = asyncErrorHandler(async(req, res)=>{
         products
     })
 })
+const categoryProductsCount = asyncErrorHandler(async(req, res)=>{
+    const { slug } = req.params
+    const category = await Category.findOne({slug}).estimatedDocumentCount()
+    if(!category) throw new CustomError("Invalid category", 404)
+    const total = await Product.find({category:category._id}).populate('category')
+
+    res.status(200).json({
+        success:true,
+        message:`number of products of category : ${category.name}`,
+        total
+    })
+})
 const orderStatus = asyncErrorHandler(async(req, res)=>{
     const { orderId } = req.params
     const { status } = req.body
@@ -174,6 +187,7 @@ module.exports = {
     productSearch,
     productsRelated,
     categoryProducts,
+    categoryProductsCount,
     testCreateOrder,
     getAllOrders
 }

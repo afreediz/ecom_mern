@@ -27,20 +27,23 @@ const Header = () => {
   },[])
   const navigateCategory = (e) => {
     const selectedCategory = e.target.value;
-    if(selectedCategory == "home"){
+    if(selectedCategory == "all"){
       navigate('/')
     }else{
     navigate(`/category/${selectedCategory}`)
     }
   }
-  const options = ['Womens', 'Mens', 'Children', 'Cloths']; // Your list of options
   return (
     <div className='flex px-16 py-4 text-xl items-center justify-between bg-black text-white border-2 border-slate-800'>
       <div className="font-medium logo text-4xl ">ECOM</div>
       <form className="search" onSubmit={
         (e)=>{
           e.preventDefault()
-          navigate(`/?search=${searchQuery}`)
+          if (searchQuery == "") {
+            navigate('/')
+            return
+          }
+          navigate(`/search/${searchQuery}`)
         }
       }>
         <input onChange={(e)=>setSearchQuery(e.target.value)} value={searchQuery} type="text" className='p-2 text-black' placeholder='search products' />
@@ -52,7 +55,7 @@ const Header = () => {
             onChange={navigateCategory}
             className="text-white bg-black block appearance-none px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option className='' to="/" value="home">All categories</option>
+            <option className='' to="/" value="all">All categories</option>
             {categories && categories.map((category, index) => (
               <option className='bg-white text-black font-normal' key={index} value={category.slug}>
                 {category.name}

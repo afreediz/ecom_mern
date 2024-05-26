@@ -1,7 +1,6 @@
-const { getAllProducts, testCreateOrder, getProduct, createProduct, updateProduct, deleteProduct, orderStatus, filters, filterProducts, getProductCount, productList, productSearch, relatedProducts, productsRelated, categoryProducts, getAllOrders } = require('../controllers/product')
+const { getAllProducts, testCreateOrder, getProduct, createProduct, updateProduct, deleteProduct, orderStatus, filters, filterProducts, getProductCount, productList, productSearch, productsRelated, categoryProducts, getAllOrders, categoryProductsCount } = require('../controllers/product')
 const { isAdmin, isAuthenticated } = require('../middlewares/isAuth')
 const router = require('express').Router()
-
 
 router.get('/filters', filterProducts) // done
 router.get('/count', getProductCount) // done
@@ -9,6 +8,7 @@ router.get('/list/:page', productList) // done
 router.get('/search/:keyword', productSearch) // done
 router.get('/related-products/:pid/:cid', productsRelated) // done
 router.get('/category/:slug', categoryProducts) // done
+router.get('/category/:slug/count', categoryProductsCount) // done
 router.get('/', getAllProducts) // done
 
 // admin operations

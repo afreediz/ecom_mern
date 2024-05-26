@@ -4,42 +4,35 @@ import API from '../services/api'
 import FilterSidebar from '../components/utilities/FilterSidebar'
 import { useLocation } from 'react-router-dom'
 
-const useQuery = () => {
-  return new URLSearchParams(useLocation().search)
-}
-
 const Home = () => {
-  const query = useQuery()
-  const [products, setProducts] = useState()
-  const [allProducts, setAllProducts] = useState()
-
+  const [products, setProducts] = useState([])
+  const [allProducts, setAllProducts] = useState([])
+  const [page, setPage] = useState(1)
+  const [totalProducts, setTotalProducts] = useState(0)
+  console.log(totalProducts);
   useEffect(()=>{
     async function getProducts(){
+      console.log('getting');
       try{
-        const {data} = await API.get("products")
-        setAllProducts(data.products)
-        setProducts(data.products)
+        const {data} = await API.get(`products/list/${page}`)
+        const res = await API.get(`products/count`)
+        console.log(data);
+        setProducts([
+          ...products,
+          ...data.products
+        ])
+        setAllProducts([
+          ...allProducts,
+          ...data.products
+        ])
+        setTotalProducts(res.data.total)
       }catch(error){
-        throw error
+        console.log(error);
       }
     }
-    async function getSearchResults(){
-      if(query.get('search')){
-        try{
-          const {data} = await API.get(`products/search/${query.get('search')}`)
-          setAllProducts(data.products)
-          setProducts(data.products)
-        }catch(error){
-          console.log(error);
-        }
-      }
-    }
-    if (!query.get('search')){
-      getProducts()
-    } else {
-      getSearchResults()
-    }
-  },[query.get('search')])
+    getProducts()
+  },[page])
+  console.log(products);
   return (
     <div className='grid grid-cols-6'>
       <div className="sidebar col-span-1">
@@ -53,6 +46,11 @@ const Home = () => {
             return <ProductCard data={product} key={index} />
           })}
         </div>
+        {products && products.length < totalProducts && <div className='flex justify-center'>
+          <button onClick={()=>{
+            setPage(page+1)
+          }} className=' text-blue-500 text-2xl py-2 px-4 rounded-lg'>Load more</button>
+        </div>}
       </div>
     </div>
   )

@@ -20,6 +20,7 @@ import { useContext, useEffect, useState } from 'react'
 import AdminLayout from './components/AdminLayout'
 import API from './services/api'
 import CategoryProducts from './pages/CategoryProducts'
+import SearchProducts from './pages/SearchProducts'
 
 const App = () => {
   const [loading, setLoading] = useState(true)
@@ -47,6 +48,7 @@ const App = () => {
           <Route path='forget-password' element={<ForgetPassword />}/>
           <Route path='products/:slug' element={<ProductDetails />} />
           <Route path='category/:slug' element={<CategoryProducts />} />
+          <Route path='search/:query' element={<SearchProducts />} />
           <Route path='cart' element={<Cart />} />
           {user && <>
             <Route path='dashboard' element={<UserDashboard />} />
