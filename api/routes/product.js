@@ -7,8 +7,8 @@ router.get('/count', getProductCount) // done
 router.get('/list/:page', productList) // done
 router.get('/search/:keyword', productSearch) // done
 router.get('/related-products/:pid/:cid', productsRelated) // done
-router.get('/category/:slug', categoryProducts) // done
 router.get('/category/:slug/count', categoryProductsCount) // done
+router.get('/category/:slug/:page', categoryProducts) // done
 router.get('/', getAllProducts) // done
 
 // admin operations

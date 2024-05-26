@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/utilities/ProductCard'
 import API from '../services/api'
 import FilterSidebar from '../components/utilities/FilterSidebar'
-import { useLocation } from 'react-router-dom'
 
 const Home = () => {
   const [products, setProducts] = useState([])

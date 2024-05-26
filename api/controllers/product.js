@@ -87,7 +87,6 @@ const productList = asyncErrorHandler(async(req, res)=>{
     .skip((page - 1)*perPage)
     .limit(perPage)
     .sort({createdAt:-1})
-    console.log("products", products);
     res.status(200).json({
         success:true,
         message:`Products of page ${page}`,
@@ -123,9 +122,18 @@ const productsRelated = asyncErrorHandler(async(req, res)=>{
 })
 const categoryProducts = asyncErrorHandler(async(req, res)=>{
     const { slug } = req.params
+    const perPage = 6
+    const page = req.params.page? req.params.page : 1
+
     const category = await Category.findOne({slug})
     if(!category) throw new CustomError("Invalid category", 404)
-    const products = await Product.find({category:category._id}).populate('category')
+
+    const products = await Product.find({category:category._id})
+    .populate('category')
+    .select('-photo')
+    .skip((page - 1)*perPage)
+    .limit(perPage)
+    .sort({createdAt:-1})
 
     res.status(200).json({
         success:true,
@@ -135,13 +143,12 @@ const categoryProducts = asyncErrorHandler(async(req, res)=>{
 })
 const categoryProductsCount = asyncErrorHandler(async(req, res)=>{
     const { slug } = req.params
-    const category = await Category.findOne({slug}).estimatedDocumentCount()
+    const category = await Category.findOne({slug})
     if(!category) throw new CustomError("Invalid category", 404)
-    const total = await Product.find({category:category._id}).populate('category')
-
+    const total = await Product.find({category:category._id}).count()
     res.status(200).json({
         success:true,
-        message:`number of products of category : ${category.name}`,
+        message:`number of products of category : ${slug}`,
         total
     })
 })
