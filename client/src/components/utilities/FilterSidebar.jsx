@@ -26,20 +26,23 @@ const FilterSidebar = ({productHandler, allProducts}) => {
     })
   }
   return (
-    <div className=''>
-        <h1 className='inline border-b-2 border-slate-500 text-4xl'>Filters</h1>
-        <h2 className='text-2xl font-medium py-0'>Price</h2>
-        <form className="price" onSubmit={apply}>
-            <div className="my-2">
-            min : <input value={price.min} name='min' onChange={onchange} type="number" required className='p-2 w-4/12 border-b-2 border-slate-300'/>
-            </div>
-            <div className="my-2">
-            max : <input value={price.max} name='max' onChange={onchange} type="number" required className='p-2 w-4/12 border-b-2 border-slate-300'/>
-            </div>
-            <button type='submit' className='py-2 px-4 bg-green-600 text-white font-semibold'>apply</button>
-        </form>
+    <div className="bg-white p-4 rounded-lg shadow-lg">
+      <h1 className="text-3xl font-bold text-gray-800 border-b-2 border-gray-300 pb-2 mb-4">Filters</h1>
+      <h2 className="text-xl font-semibold text-gray-700 mb-2">Price</h2>
+      <form className="price" onSubmit={apply}>
+        <div className="my-2">
+          <label className="block text-gray-700">Min:</label>
+          <input value={price.min} name="min" onChange={onchange} type="number" required className="p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div className="my-2">
+          <label className="block text-gray-700">Max:</label>
+          <input value={price.max} name="max" onChange={onchange} type="number" required className="p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <button type="submit" className="w-full py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700">Apply</button>
+      </form>
     </div>
-  )
+  );
+  
 }
 
 export default FilterSidebar

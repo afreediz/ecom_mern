@@ -17,3 +17,6 @@ input{
 img{
     @apply w-full
 }
+li{
+    @apply list-none
+}

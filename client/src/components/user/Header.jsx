@@ -34,30 +34,36 @@ const Header = () => {
     }
   }
   return (
-    <div className='flex px-16 py-4 text-xl items-center justify-between bg-black text-white border-2 border-slate-800'>
-      <div className="font-medium logo text-4xl ">ECOM</div>
-      <form className="search" onSubmit={
-        (e)=>{
-          e.preventDefault()
-          if (searchQuery == "") {
-            navigate('/')
-            return
-          }
-          navigate(`/search/${searchQuery}`)
+    <div className='flex px-8 sm:px-16 py-4 text-xl items-center justify-between bg-black text-white border-b-2 border-slate-800'>
+      <div className="font-bold logo text-4xl">
+        <Link to="/">ECOM</Link>
+      </div>
+      <form className="search flex-grow mx-4" onSubmit={(e) => {
+        e.preventDefault();
+        if (searchQuery === "") {
+          navigate('/');
+          return;
         }
-      }>
-        <input onChange={(e)=>setSearchQuery(e.target.value)} value={searchQuery} type="text" className='p-2 text-black' placeholder='search products' />
+        navigate(`/search/${searchQuery}`);
+      }}>
+        <input
+          onChange={(e) => setSearchQuery(e.target.value)}
+          value={searchQuery}
+          type="text"
+          className='w-full p-2 text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+          placeholder='Search products'
+        />
       </form>
-      <div className='list flex list-none items-center'>
-        <Link to="/"><li className='px-3'>Home</li></Link>
+      <div className='list flex items-center space-x-4'>
+        <Link to="/"><li className='hover:text-gray-400'>Home</li></Link>
         <div className="relative">
           <select
             onChange={navigateCategory}
-            className="text-white bg-black block appearance-none px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline"
+            className="bg-black text-white appearance-none px-4 py-2 pr-8 rounded-lg leading-tight focus:outline-none focus:shadow-outline"
           >
-            <option className='' to="/" value="all">All categories</option>
+            <option value="all">All categories</option>
             {categories && categories.map((category, index) => (
-              <option className='bg-white text-black font-normal' key={index} value={category.slug}>
+              <option className='bg-white text-black' key={index} value={category.slug}>
                 {category.name}
               </option>
             ))}
@@ -76,21 +82,22 @@ const Header = () => {
             </svg>
           </div>
         </div>
-        {user?
-        <>
-          <Link to="/dashboard"><li className='px-3'>Dashboard</li></Link>
-          <button onClick={logout} className=' py-2 px-4 bg-red-500 text-white font-normal rounded-sm'> Logout </button>
-        </>
-        :
-        <>
-          <Link to="/register"><li className='px-3'>Register</li></Link>
-          <Link to="/login"><li className='px-3'>Login</li></Link>
-        </>
-        }
-        <Link to="/cart"><li className='px-3'>Cart</li></Link>
+        {user ? (
+          <>
+            <Link to="/dashboard"><li className='hover:text-gray-400'>Dashboard</li></Link>
+            <button onClick={logout} className='px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600'>Logout</button>
+          </>
+        ) : (
+          <>
+            <Link to="/register"><li className='hover:text-gray-400'>Register</li></Link>
+            <Link to="/login"><li className='hover:text-gray-400'>Login</li></Link>
+          </>
+        )}
+        <Link to="/cart"><li className='hover:text-gray-400'>Cart</li></Link>
       </div>
     </div>
-  )
+  );
+  
 }
 
 export default Header
