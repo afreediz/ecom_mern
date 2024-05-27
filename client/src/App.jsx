@@ -21,6 +21,7 @@ import AdminLayout from './components/AdminLayout'
 import API from './services/api'
 import CategoryProducts from './pages/CategoryProducts'
 import SearchProducts from './pages/SearchProducts'
+import AllProducts from './pages/Admin/AllProducts'
 
 const App = () => {
   const [loading, setLoading] = useState(true)
@@ -62,7 +63,7 @@ const App = () => {
           <Route index element={<Dashboard />} />
           <Route path='create-category' element={<CreateCategory />} />
           <Route path='create-product' element={<CreateProduct />} />
-          <Route path='products' element={<Home />} />
+          <Route path='products' element={<AllProducts />} />
           <Route path='orders' element={<AllOrders />} />
           <Route path='users' element={<AllUsers />} />
         </Route>:<>Sorry, You dont have access to this page.</>
