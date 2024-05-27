@@ -15,6 +15,13 @@ const Register = () => {
     phone:"",
     address:""
   })
+  if(user){
+    if(user.role == "admin"){
+      return navigate('/admin')
+    }else{
+      return navigate('/')
+    }
+  }
   const onchange = (e) => {
     const {name, value} = e.target;
     setData((old_data)=>{
@@ -27,13 +34,11 @@ const Register = () => {
   const register = async(e)=> {
     e.preventDefault()
     try{
-      const response = await axios.post(api_url+'auth/register',{
-        ...data
-      })
+      await axios.post(api_url+'auth/register',{...data})
       toast.success("User Registration successfull")
       navigate('/login')
     }catch({response}){
-      toast.error(response.data.message)
+      console.log(response?.data.message)
       // throw error;
     }
   }

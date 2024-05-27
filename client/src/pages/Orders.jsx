@@ -13,7 +13,7 @@ const Orders = () => {
         const {data} = await API.get(api_url+"products/test-getorder")
         setOrders(data.orders)
       }catch({response}){
-        toast.error(response.data.message)
+        console.log(response?.data.message)
       }
     }
     getOrders()

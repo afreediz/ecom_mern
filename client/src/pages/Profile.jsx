@@ -18,7 +18,7 @@ const Profile = () => {
         })
         setData(response.data.user)
       }catch({response}){
-        toast.error(response.data.error)
+        console.log(response?.data.error)
       }
     }
     getData()
@@ -29,7 +29,7 @@ const Profile = () => {
       const response = await API.put('user/profile', {
         ...data
       })
-      toast.success(response.data.message)
+      toast.success(response?.data.message)
       setUpdated(false)
     }catch(error){
       throw error

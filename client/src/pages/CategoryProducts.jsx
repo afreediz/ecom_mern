@@ -17,8 +17,8 @@ const CategoryProducts = () => {
         console.log(res);
         setProducts(data.products)
         setAllProducts(data.products)
-      }catch(error){
-        throw error
+      }catch({response}){
+        console.log(response?.data.message);
       }
     }
     getProducts()

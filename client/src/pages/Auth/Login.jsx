@@ -1,15 +1,24 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { api_url } from '../../datas';
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
+import { userContext } from '../../context/user';
 
 const Login = () => {
   const navigate = useNavigate()
+  const {user, setUser} = useContext(userContext)
   const [data, setData] = useState({
     email:"",
     password:""
   })
+  if(user){
+    if(user.role == "admin"){
+      return navigate('/admin')
+    }else{
+      return navigate('/')
+    }
+  }
   const onchange = (e) => {
     const {name, value} = e.target;
     setData((old_data)=>{
@@ -25,12 +34,16 @@ const Login = () => {
       const response = await axios.post(api_url+'auth/login',{
         ...data
       })
+      setUser(response.data.user)
       toast.success("User Login successfull")
       localStorage.setItem('token',response.data.token)
-      navigate('/')
-      window.location.reload()
+      if(response.data.user.role == 'admin'){
+        navigate('/admin')
+      }else{
+        navigate('/')
+      }
     }catch(error){
-      toast.error(error.response.data.message)
+      console.log(error.response?.data.message)
     }
   }
   return (
