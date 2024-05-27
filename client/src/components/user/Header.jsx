@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { userContext } from '../context/user'
-import { api_url } from '../datas'
+import { userContext } from '../../context/user'
+import { api_url } from '../../datas'
 import axios from 'axios'
 
 const Header = () => {
