@@ -20,3 +20,7 @@ img{
 li{
     @apply list-none
 }
+
+body{
+    @apply bg-slate-100
+}

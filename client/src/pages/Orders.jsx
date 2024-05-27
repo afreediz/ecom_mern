@@ -27,42 +27,46 @@ const Orders = () => {
   }
   return (
     <SidebarLayout>
-      <h1>Your Orders : </h1>
-      <div className="table w-full p-4">
-        <table className='w-full border-2 border-black sketc'>
-            <thead>
-              <tr>
-                <th className=' border border-black'>index</th>
-                <th className=' border border-black'>order id</th>
-                <th className=' border border-black'>date</th>
-                <th className=' border border-black'>payment</th>
-                <th className=' border border-black'>status</th>
+      <h1 className='text-4xl font-bold text-gray-800 mb-4'>Your Orders</h1>
+      <div className="overflow-x-auto">
+        <table className='w-full bg-white shadow-lg rounded-lg'>
+          <thead>
+            <tr className='bg-gray-200 text-gray-700'>
+              <th className='py-2 px-4 border border-gray-300'>Index</th>
+              <th className='py-2 px-4 border border-gray-300'>Order ID</th>
+              <th className='py-2 px-4 border border-gray-300'>Date</th>
+              <th className='py-2 px-4 border border-gray-300'>Payment</th>
+              <th className='py-2 px-4 border border-gray-300'>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders && orders.map((order, index) => (
+              <tr key={index} className='border-b border-gray-200'>
+                <td className='py-2 px-4 border-r border-gray-300'>{index}</td>
+                <td className='py-2 px-4 border-r border-gray-300'>{order._id}</td>
+                <td className='py-2 px-4 border-r border-gray-300'>{format_date(order.createdAt)}</td>
+                <td className='py-2 px-4 border-r border-gray-300'>{order.payment}</td>
+                <td className='py-2 px-4 border-r border-gray-300'>{order.status}</td>
               </tr>
-            </thead>
-            <tbody>
-              { orders && orders.map((order, index)=>{
-                return <tr className=' border-b-2 border-slate-500' key={index}>
-                 <td className=' border-r border-black'>{index}</td>
-                 <td className=' border-r border-black'>{order._id}</td>
-                 <td className=' border-r border-black'>{format_date(order.createdAt)}</td>
-                 <td className=' border-r border-black'>{order.payment}</td>
-                 <td className=' border-r border-black'>{order.status}</td>
-                </tr>
-              })
-
-              }
-            </tbody>
+            ))}
+          </tbody>
         </table>
       </div>
-      <div className="p-4">
-        {orders && orders.map((order, index)=>{
-          return order.products.map((product_data, index)=>{
-            return <OrdersCard product={product_data.product} quantity={product_data.cart_quantity} order_id={order._id} order_date={format_date(order.createdAt)} key={index} />
-          })
-        })}
+      <div className="mt-8 space-y-4">
+        {orders && orders.map((order, index) => (
+          order.products.map((product_data, idx) => (
+            <OrdersCard
+              key={idx}
+              product={product_data.product}
+              quantity={product_data.cart_quantity}
+              order_id={order._id}
+              order_date={format_date(order.createdAt)}
+            />
+          ))
+        ))}
       </div>
     </SidebarLayout>
-  )
+  );
 }
 
 export default Orders

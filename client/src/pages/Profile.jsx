@@ -46,28 +46,30 @@ const Profile = () => {
     })
   }
   return (
-    <SidebarLayout className=' text-2xl'>
-      <form onSubmit={onsubmit}>
-        <div className=" my-2">
-          <label className='block' htmlFor="name">Name</label>
-          <input name='name' onChange={onchange} type="text" id='name' value={data && data.name } placeholder='Enter your name' />
+    <SidebarLayout className='text-xl'>
+      <form onSubmit={onsubmit} className="space-y-4 bg-white p-6 shadow-lg rounded-lg">
+        <div className="my-2">
+          <label className='block text-gray-700' htmlFor="name">Name</label>
+          <input name='name' onChange={onchange} type="text" id='name' value={data && data.name} placeholder='Enter your name' className="w-full p-2 border border-gray-300 rounded-lg" />
         </div>
-        <div className=" my-2">
-          <label className="block" htmlFor="email">Email</label>
-          <input name='email' onChange={onchange} type="text" id="email" value={data && data.email} placeholder='Enter your email' />
+        <div className="my-2">
+          <label className="block text-gray-700" htmlFor="email">Email</label>
+          <input name='email' onChange={onchange} type="text" id="email" value={data && data.email} placeholder='Enter your email' className="w-full p-2 border border-gray-300 rounded-lg" />
         </div>
-        <div className=" my-2">
-          <label className="block" htmlFor="phone">Phone</label>
-          <input name='phone' onChange={onchange} type="text" id="phone" value={data && data.phone} placeholder='Enter your Phone' />
+        <div className="my-2">
+          <label className="block text-gray-700" htmlFor="phone">Phone</label>
+          <input name='phone' onChange={onchange} type="text" id="phone" value={data && data.phone} placeholder='Enter your phone' className="w-full p-2 border border-gray-300 rounded-lg" />
         </div>
-        <div className=" my-2">
-          <label className="block" htmlFor="address">Address</label>
-          <input name='address' onChange={onchange} type="text" id="address" value={data && data.address} placeholder='Enter your Address' />
+        <div className="my-2">
+          <label className="block text-gray-700" htmlFor="address">Address</label>
+          <input name='address' onChange={onchange} type="text" id="address" value={data && data.address} placeholder='Enter your address' className="w-full p-2 border border-gray-300 rounded-lg" />
         </div>
-        <button type='submit' disabled={!updated} className={`py-2 px-5 ${updated?"bg-green-600":"bg-gray-300"} text-white font-medium`} >Update</button>
+        <button type='submit' disabled={!updated} className={`py-2 px-5 ${updated ? "bg-green-600" : "bg-gray-300"} text-white font-medium rounded-lg`} >
+          Update
+        </button>
       </form>
     </SidebarLayout>
-  )
+  );
 }
 
 export default Profile
