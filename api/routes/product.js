@@ -1,4 +1,4 @@
-const { getAllProducts, testCreateOrder, getProduct, createProduct, getOrders, updateProduct, deleteProduct, orderStatus, filters, filterProducts, getProductCount, productList, productSearch, productsRelated, categoryProducts, getAllOrders, categoryProductsCount } = require('../controllers/product')
+const { getAllProducts, testCreateOrder, getProduct, createProduct, getOrders, updateProduct, deleteProduct, orderStatus, filters, filterProducts, getProductCount, productList, productSearch, productsRelated, categoryProducts, categoryProductsCount } = require('../controllers/product')
 const { isAdmin, isAuthenticated } = require('../middlewares/isAuth')
 const router = require('express').Router()
 
@@ -19,8 +19,6 @@ router.put('/:id', isAuthenticated, isAdmin, updateProduct) // done
 router.delete('/:id', isAuthenticated, isAdmin, deleteProduct) // done
 
 router.put('/order-status/:id', isAuthenticated, isAdmin, orderStatus)
-
-router.get('/get-all-orders', isAuthenticated, isAdmin, getAllOrders)
 
 router.get('/:slug', getProduct) // done
 // payment routes

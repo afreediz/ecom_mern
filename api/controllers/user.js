@@ -63,13 +63,19 @@ const getAdmin = asyncErrorHandler(async(req, res)=>{
     })
 })
 const allOrders = asyncErrorHandler(async(req, res)=>{
-    const orders = await Order.find({}).populate("user","name").populate("products","-photo").sort({createdAt:-1})
-
+    const orders = await Order.find({}).populate({
+        path:'products.product user',
+        select:'name shortdesc price'
+    }).sort({createdAt:-1})
+    res.status(200).json({success:true, message:"All orders",orders:orders})
+})
+const getAllUsers = asyncErrorHandler(async(req, res)=>{
+    const users = await User.find({}).sort({createdAt:-1})
     res.status(200).json({
         success:true,
-        message:"All orders",
-        orders
+        message:"All users",
+        users
     })
 })
 
-module.exports = {getUser, getAdmin, profile, orders, allOrders, updateProfile, deleteProfile }
+module.exports = {getUser, allOrders, getAdmin, profile, orders, allOrders, updateProfile, deleteProfile, getAllUsers }

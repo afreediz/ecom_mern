@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import API from '../../services/api';
-
+import API, { format_date }  from '../../services/api';
 const AllOrders = () => {
   // // Sample orders data (replace with actual data from your backend)
   // const [orders, setOrders] = useState([
@@ -9,13 +8,12 @@ const AllOrders = () => {
   //   // Add more orders as needed
   // ]);
 
-  const [orders, setOrders] = useState([])
-  let index = 0;
+  const [orders, setOrders] = useState()
 
   useEffect(()=>{
     async function getOrders(){
       try{
-        const res = await API.get("products/get-all-orders")
+        const res = await API.get("user/all-orders")
         console.log(res);
         setOrders(res.data.orders)
       }catch({response}){
@@ -25,13 +23,6 @@ const AllOrders = () => {
     getOrders()
   },[])
   console.log("orders ", orders);
-  const format_date = (date)=> {
-    const day = new Date(date).getDate()
-    const month = new Date(date).getMonth()
-    const year = new Date(date).getFullYear()
-
-    return `${day}/${month}/${year}`
-  }
 
   // Function to handle updating shipping status
   const handleShippingStatusChange = (orderId, newStatus) => {
@@ -61,7 +52,7 @@ const AllOrders = () => {
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-600">
-          {orders.map((order)=>{
+          {orders && orders.map((order, index)=>{
             // let products = ""
             // order.products.map(({product})=>{
             //   products = product.name + " "
