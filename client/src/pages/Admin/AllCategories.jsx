@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import API from '../../services/api';
 
 const AllCategories = () => {
   // Fake categories data
-  const categories = [
-    { id: 1, name: "Electronics" },
-    { id: 2, name: "Clothing" },
-    { id: 3, name: "Home & Kitchen" },
-    { id: 4, name: "Books" },
-    { id: 5, name: "Toys & Games" },
-  ];
-
+  const [categories, setCategories] = useState()
+  useEffect(()=>{
+    async function getCategory(){
+      try{
+        const res = await API.get("/category")
+        console.log(res);
+        setCategories(res.data.categories)
+      }catch({response}){
+        console.log(response?.data.message)
+      }
+    }
+    getCategory()
+  },[])
   return (
     <div>
       <h1 className="text-3xl font-semibold mb-4">Categories</h1>
@@ -32,10 +38,10 @@ const AllCategories = () => {
         </thead>
         <tbody className="divide-y divide-gray-200">
           {/* Map through categories data */}
-          {categories.map((category, index) => (
+          {categories && categories.map((category, index) => (
             <tr key={index} className="">
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{index}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm ">{category.id}</td>
+              <td className="px-6 py-4 whitespace-nowrap text-sm ">{category._id}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm ">{category.name}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 <button className="text-indigo-600 hover:text-indigo-900 mr-2">Edit</button>

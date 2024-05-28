@@ -10,7 +10,7 @@ const AllUsers = () => {
   const [users, setUsers] = useState()
 
   useEffect(()=>{
-    async function getOrders(){
+    async function getUsers(){
       try{
         const res = await API.get("user/all-users")
         console.log(res);
@@ -19,7 +19,7 @@ const AllUsers = () => {
         console.log(response?.data.message)
       }
     }
-    getOrders()
+    getUsers()
   },[])
 
   // // Function to handle updating user status
