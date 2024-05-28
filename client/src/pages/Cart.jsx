@@ -5,7 +5,6 @@ import { useAuth } from '../context/user'
 import { useCart } from '../context/cart'
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import { api_url } from '../datas'
 import API from '../services/api'
 
 const Cart = () => {
@@ -25,7 +24,7 @@ const Cart = () => {
   }
   const checkout = async()=>{
     try{
-      const {data} = await API.post(api_url+'products/test-order',{
+      const {data} = await API.post('products/test-order',{
         cart:cart.map((product)=>{
           return {
             product:product._id,

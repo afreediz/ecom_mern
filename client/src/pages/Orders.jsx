@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import OrdersCard from '../components/utilities/OrdersCard'
 import SidebarLayout from '../components/user/SidebarLayout'
-import { api_url } from '../datas'
 import API from '../services/api'
 import { toast } from 'react-toastify'
 

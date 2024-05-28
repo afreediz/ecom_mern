@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import axios from 'axios'
-import { api_url } from '../../datas'
 import {useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {userContext} from '../../context/user'
@@ -34,7 +33,7 @@ const Register = () => {
   const register = async(e)=> {
     e.preventDefault()
     try{
-      await axios.post(api_url+'auth/register',{...data})
+      await axios.post('auth/register',{...data})
       toast.success("User Registration successfull")
       navigate('/login')
     }catch({response}){

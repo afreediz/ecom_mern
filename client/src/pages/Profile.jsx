@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import SidebarLayout from '../components/user/SidebarLayout'
-import axios from 'axios'
-import { api_url } from '../datas'
 import { toast } from 'react-toastify'
 import API from '../services/api'
 
@@ -11,7 +9,7 @@ const Profile = () => {
   useEffect(()=>{
     async function getData(){
       try{
-        const response = await API.get(api_url+'user/profile',{
+        const response = await API.get('user/profile',{
           headers:{
             "Authorization":localStorage.getItem("token")
           }

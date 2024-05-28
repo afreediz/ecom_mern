@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react'
-import { api_url } from '../../datas';
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import { userContext } from '../../context/user';
@@ -31,7 +30,7 @@ const Login = () => {
   const login = async(e) => {
     e.preventDefault();
     try{
-      const response = await axios.post(api_url+'auth/login',{
+      const response = await axios.post('auth/login',{
         ...data
       })
       setUser(response.data.user)

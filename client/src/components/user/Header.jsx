@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { userContext } from '../../context/user'
-import { api_url } from '../../datas'
-import axios from 'axios'
 import { FaBars, FaTimes, FaShoppingCart, FaCat } from 'react-icons/fa';
 import { cartContext } from '../../context/cart'
+import API from '../../services/api'
 
 const Header = () => {
   const {user, setUser} = useContext(userContext)
@@ -21,7 +20,7 @@ const Header = () => {
   useEffect(()=>{
     async function getCategory(){
       try{
-        const {data} = await axios.get(api_url+'category')
+        const {data} = await API.get('/category')
         setCategories(data.categories)
       }catch(error){
         console.log(error);

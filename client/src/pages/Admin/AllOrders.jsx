@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import API from '../../services/api';
-import { api_url, products } from '../../datas';
 
 const AllOrders = () => {
   // // Sample orders data (replace with actual data from your backend)
@@ -56,6 +55,7 @@ const AllOrders = () => {
             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Order ID</th>
             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">User</th>
             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Products</th>
+            <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Payment Status</th>
             <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Shipping Status</th>
           </tr>
@@ -78,6 +78,7 @@ const AllOrders = () => {
                   </div>
                 })
               }</td>
+              <td className="px-6 py-4 whitespace-nowrap">{format_date(order.createdAt)}</td>
               <td className="px-6 py-4 whitespace-nowrap">{order.payment}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <select
