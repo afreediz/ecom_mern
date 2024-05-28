@@ -88,12 +88,12 @@ const Dashboard = () => {
         <div className="overflow-x-auto">
           <table className="min-w-full">
             <thead>
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Index</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Products</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Payment Status</th>
+              <tr className='bg-gray-800 border-2 border-slate-100'>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Index</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Order ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">User</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Products</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Payment Status</th>
               </tr>
             </thead>
             <tbody>

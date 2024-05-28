@@ -22,6 +22,7 @@ import API from './services/api'
 import CategoryProducts from './pages/CategoryProducts'
 import SearchProducts from './pages/SearchProducts'
 import AllProducts from './pages/Admin/AllProducts'
+import AllCategories from './pages/Admin/AllCategories'
 
 const App = () => {
   const [loading, setLoading] = useState(true)
@@ -66,6 +67,7 @@ const App = () => {
           <Route path='products' element={<AllProducts />} />
           <Route path='orders' element={<AllOrders />} />
           <Route path='users' element={<AllUsers />} />
+          <Route path='categories' element={<AllCategories />} />
         </Route>:<>Sorry, You dont have access to this page.</>
         }
         <Route path='*' element={<div className=''>Not found</div>} />

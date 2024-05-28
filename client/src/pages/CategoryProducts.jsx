@@ -40,7 +40,13 @@ const CategoryProducts = () => {
           <div className="flex justify-center items-center mt-8">
             {page > 1 && (
               <button
-                onClick={() => { setPage(page - 1); }}
+                onClick={() => { 
+                  setPage(page - 1); 
+                  window.scrollTo({
+                    top:0,
+                    behavior:"smooth"
+                  })
+                }}
                 className="border-2 border-gray-300 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-200"
               >
                 Prev
@@ -49,7 +55,13 @@ const CategoryProducts = () => {
             <span className="text-2xl text-gray-500 px-4 py-2">Page: {page}</span>
             {products && products.length === 8 && (
               <button
-                onClick={() => { setPage(page + 1); }}
+                onClick={() => {
+                   setPage(page + 1); 
+                    window.scrollTo({
+                      top:0,
+                      behavior:"smooth"
+                    })
+                  }}
                 className="text-2xl text-blue-500 px-4 py-2 rounded-lg hover:bg-blue-100"
               >
                 Next

@@ -40,37 +40,53 @@ const Cart = () => {
     }
   }
   return (
-    <div className='grid grid-cols-8'>
-      <div className="products col-span-5">
-        <h1>Products</h1>
-        {
-          cart?.map((p, index)=>{
-            return(<CartCard product={p} key={index} />)
-          })
-        }
-      </div>
-      <div className="summary col-span-3">
-        <h1>Cart summary</h1>
-        <h2>No. of products : {cart?.length}</h2>
-        <div className="costs">
-          <h2>individual costs</h2>
+    <div className='grid grid-cols-1 gap-8 md:grid-cols-8 md:gap-8'>
+      {/* Summary Section (For Mobile View) */}
+      <div className="summary md:col-span-3 md:bg-gray-100 md:p-6 md:rounded-lg md:order-2">
+        <h1 className="text-3xl font-semibold mb-4">Cart Summary</h1>
+        <h2 className="text-lg mb-2">No. of Products: {cart?.length}</h2>
+        
+        {/* Individual Costs */}
+        <div className="costs mb-4">
+          <h2 className="text-lg mb-2">Individual Costs</h2>
           <div className="individual-costs">
-            {cart?.map((p, index)=>{
-              return(
-                <div key={index}>
-                  <span>{p.name} * {p.cart_quantity} : {p.price*p.cart_quantity}</span> 
-                </div>
-              )})
-            }  
+            {cart?.map((product, index) => (
+              <div key={index} className="flex justify-between mb-1">
+                <span>{product.name} * {product.cart_quantity}: ${product.price * product.cart_quantity}</span>
+              </div>
+            ))}
           </div>
-          <h3>Shipping charge : {cart.length > 0 ? shipping_charge : 0}</h3>
-          <h2>Grand total : {cart.length > 0 ? totalPrice() : 0}</h2>
+          
+          {/* Shipping Charge */}
+          <h3 className="text-lg mb-2">Shipping Charge: ${cart.length > 0 ? shipping_charge : 0}</h3>
+          
+          {/* Grand Total */}
+          <h2 className="text-lg mb-2">Grand Total: ${cart.length > 0 ? totalPrice() : 0}</h2>
         </div>
-        {!user && "login to checkout"} <br />
-        <button disabled={!user || cart.length == 0?true:false} onClick={checkout} className={`p-4 ${cart.length == 0?'bg-slate-500':user?'bg-green-500':'bg-slate-500'} text-white`}>PAY</button>
+        
+        {/* Checkout Button */}
+        {!user && <p className="text-red-500 mb-4">Please login to checkout</p>}
+        <button
+          onClick={checkout}
+          className={`w-full py-3 bg-green-500 text-white font-semibold rounded-md ${
+            !user || cart.length === 0 ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+          disabled={!user || cart.length === 0}
+        >
+          PAY
+        </button>
+      </div>
+
+      {/* Products Section */}
+      <div className="products md:col-span-5">
+        <h1 className="text-3xl font-semibold mb-4">Products</h1>
+        {/* Display cart items */}
+        {cart?.map((product, index) => (
+          <CartCard key={index} product={product} />
+        ))}
       </div>
     </div>
-  )
+  );
 }
 
 export default Cart
