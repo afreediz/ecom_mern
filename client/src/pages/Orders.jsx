@@ -63,6 +63,7 @@ const Orders = () => {
             />
           ))
         ))}
+        {orders && orders.length == 0 ?<div className='text-3xl text-center'>No Orders Found</div>:""}
       </div>
     </SidebarLayout>
   );

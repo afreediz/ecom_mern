@@ -60,7 +60,7 @@ const Cart = () => {
           <h3 className="text-lg mb-2">Shipping Charge: ${cart.length > 0 ? shipping_charge : 0}</h3>
           
           {/* Grand Total */}
-          <h2 className="text-lg mb-2">Grand Total: ${cart.length > 0 ? totalPrice() : 0}</h2>
+          <h2 className="text-lg mb-2">Grand Total: {cart.length > 0 ? totalPrice() : 0}</h2>
         </div>
         
         {/* Checkout Button */}

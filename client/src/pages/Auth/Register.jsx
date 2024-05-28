@@ -3,6 +3,7 @@ import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {userContext} from '../../context/user'
+import API from '../../services/api'
 
 const Register = () => {
   const {user} = useContext(userContext)
@@ -33,25 +34,76 @@ const Register = () => {
   const register = async(e)=> {
     e.preventDefault()
     try{
-      await axios.post('auth/register',{...data})
+      await API.post('auth/register',{...data})
       toast.success("User Registration successfull")
       navigate('/login')
-    }catch({response}){
-      console.log(response?.data.message)
+    }catch(error){
+      toast.error(error.response?.data.message)
+      console.log(error)
       // throw error;
     }
   }
   return (
-    <div className='mx-auto w-1/3 border-2 border-slate-500'>
-      <h1 className='flex justify-center font-medium'>Register form</h1>
-      <div className="inputs p-4">
+<div className='flex justify-center items-center bg-gray-100'>
+      <div className='w-full max-w-md p-8 bg-white rounded-lg shadow-md'>
+        <h1 className='text-3xl font-semibold text-center text-gray-700 mb-6'>Register Form</h1>
         <form onSubmit={register}>
-          <input type="text" value={data.name} name='name' onChange={onchange} className='w-full border-b-2 border-slate-300 p-2 mb-2' placeholder='Name' />
-          <input type="text" value={data.email} name='email' onChange={onchange} className='w-full border-b-2 border-slate-300 p-2 mb-2' placeholder='Email' />
-          <input type="text" value={data.password} name='password' onChange={onchange} className='w-full border-b-2 border-slate-300 p-2 mb-2' placeholder='Password' />
-          <input type="text" value={data.phone} name='phone' onChange={onchange} className='w-full border-b-2 border-slate-300 p-2 mb-2' placeholder='Phone' />
-          <input type="text" value={data.address} name='address' onChange={onchange} className='w-full border-b-2 border-slate-300 p-2 mb-2' placeholder='Address' />
-          <button className='w-full py-2 bg-green-600 text-white font-normal'>Register</button>
+          <div className='mb-4'>
+            <input 
+              type="text" 
+              name='name' 
+              value={data.name} 
+              onChange={onchange} 
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
+              placeholder='Name' 
+            />
+          </div>
+          <div className='mb-4'>
+            <input 
+              type="text" 
+              name='email' 
+              value={data.email} 
+              onChange={onchange} 
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
+              placeholder='Email' 
+            />
+          </div>
+          <div className='mb-4'>
+            <input 
+              type="text" 
+              name='password' 
+              value={data.password} 
+              onChange={onchange} 
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
+              placeholder='Password' 
+            />
+          </div>
+          <div className='mb-4'>
+            <input 
+              type="text" 
+              name='phone' 
+              value={data.phone} 
+              onChange={onchange} 
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
+              placeholder='Phone' 
+            />
+          </div>
+          <div className='mb-6'>
+            <input 
+              type="text" 
+              name='address' 
+              value={data.address} 
+              onChange={onchange} 
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
+              placeholder='Address' 
+            />
+          </div>
+          <button 
+            type='submit' 
+            className='w-full py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors'
+          >
+            Register
+          </button>
         </form>
       </div>
     </div>

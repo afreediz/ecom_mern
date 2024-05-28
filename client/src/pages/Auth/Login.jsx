@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import { userContext } from '../../context/user';
+import API from '../../services/api';
 
 const Login = () => {
   const navigate = useNavigate()
@@ -30,9 +31,10 @@ const Login = () => {
   const login = async(e) => {
     e.preventDefault();
     try{
-      const response = await axios.post('auth/login',{
+      const response = await API.post('auth/login',{
         ...data
       })
+      console.log(response);
       setUser(response.data.user)
       toast.success("User Login successfull")
       localStorage.setItem('token',response.data.token)
@@ -42,17 +44,41 @@ const Login = () => {
         navigate('/')
       }
     }catch(error){
-      console.log(error.response?.data.message)
+      toast.error(error.response?.data.message)
+      console.log(error)
     }
   }
   return (
-    <div className='mx-auto w-1/3 border-2 border-slate-500'>
-      <h1 className='flex justify-center font-medium'>Login form</h1>
-      <div className="inputs p-4">
+<div className='flex justify-center items-center bg-gray-100'>
+      <div className='w-full max-w-md p-8 bg-white rounded-lg shadow-md'>
+        <h1 className='text-3xl font-semibold text-center text-gray-700 mb-6'>Login Form</h1>
         <form onSubmit={login}>
-          <input type="text" className='w-full' placeholder='Email' name='email' value={data.email} onChange={onchange} />
-          <input type="password" className='w-full' placeholder='Password' name='password' value={data.password} onChange={onchange} />
-          <button className='w-full py-2 bg-green-600 text-white font-normal'>Login</button>
+          <div className='mb-4'>
+            <input 
+              type="text" 
+              name='email' 
+              value={data.email} 
+              onChange={onchange} 
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
+              placeholder='Email' 
+            />
+          </div>
+          <div className='mb-6'>
+            <input 
+              type="password" 
+              name='password' 
+              value={data.password} 
+              onChange={onchange} 
+              className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
+              placeholder='Password' 
+            />
+          </div>
+          <button 
+            type='submit' 
+            className='w-full py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors'
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>
