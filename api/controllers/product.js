@@ -171,13 +171,21 @@ const testCreateOrder = asyncErrorHandler(async(req, res)=>{
     res.status(200).json({success:true, message:"Order placed successfully"})
 })
 
-const getAllOrders = asyncErrorHandler(async(req, res)=>{
+const getOrders = asyncErrorHandler(async(req, res)=>{
     const user = req.user._id
     const orders = await Order.find({user}).populate({
         path:'products.product',
         select:'name shortdesc price'
     })
     res.status(200).json({success:true, orders:orders})
+})
+
+const getAllOrders = asyncErrorHandler(async(req, res)=>{
+    const orders = await Order.find({}).populate({
+        path:'products.product user',
+        select:'name shortdesc price'
+    })
+    res.status(200).json({success:true, message:"All orders",orders:orders})
 })
 
 
@@ -196,5 +204,6 @@ module.exports = {
     categoryProducts,
     categoryProductsCount,
     testCreateOrder,
-    getAllOrders
+    getOrders,
+    getAllOrders,
 }
