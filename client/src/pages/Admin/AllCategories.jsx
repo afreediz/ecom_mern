@@ -3,6 +3,7 @@ import API from '../../services/api';
 
 const AllCategories = () => {
   // Fake categories data
+  const [displayAdd, setDisplayAdd] = useState(false)
   const [categories, setCategories] = useState()
   useEffect(()=>{
     async function getCategory(){
@@ -19,6 +20,9 @@ const AllCategories = () => {
   return (
     <div>
       <h1 className="text-3xl font-semibold mb-4">Categories</h1>
+      <div className="flex justify-end px-8 my-2">
+        <button onClick={()=>setDisplayAdd(!displayAdd)} className="py-3 px-6 bg-green-600 text-white font-bold rounded">Add product</button>
+      </div>
       <table className="min-w-full bg-gray-800 text-white divide-y divide-gray-200 shadow-md rounded-lg overflow-hidden">
         <thead className="">
           <tr>
