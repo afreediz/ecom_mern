@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API from '../../services/api';
+import CreateCategory from './CreateCategory';
 
 const AllCategories = () => {
   // Fake categories data
@@ -18,10 +19,10 @@ const AllCategories = () => {
     getCategory()
   },[])
   return (
-    <div>
+    <div className='relative'>
       <h1 className="text-3xl font-semibold mb-4">Categories</h1>
       <div className="flex justify-end px-8 my-2">
-        <button onClick={()=>setDisplayAdd(!displayAdd)} className="py-3 px-6 bg-green-600 text-white font-bold rounded">Add product</button>
+        <button onClick={()=>setDisplayAdd(!displayAdd)} className="py-3 px-6 bg-green-600 text-white font-bold rounded">Add Category</button>
       </div>
       <table className="min-w-full bg-gray-800 text-white divide-y divide-gray-200 shadow-md rounded-lg overflow-hidden">
         <thead className="">
@@ -55,6 +56,9 @@ const AllCategories = () => {
           ))}
         </tbody>
       </table>
+      <div className="">
+        {displayAdd && <CreateCategory setDisplayAdd={setDisplayAdd} />}
+      </div>
     </div>
   );
 }

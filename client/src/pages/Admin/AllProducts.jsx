@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import API from '../../services/api';
+import CreateProduct from './CreateProduct';
 const ProductTable = () => {
   const [displayAdd, setDisplayAdd] = useState(false)
   const [products, setProducts] = useState([])
@@ -18,7 +19,7 @@ const ProductTable = () => {
   console.log(products);
 
   return (
-    <div className="">
+    <div className="relative">
         <h1>All products</h1>
         <div className="flex flex-col">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -67,6 +68,9 @@ const ProductTable = () => {
           </div>
         </div>
       </div>
+    </div>
+    <div className="w-full">
+    {displayAdd && <CreateProduct setDisplayAdd={setDisplayAdd} />}
     </div>
     </div>
   );
