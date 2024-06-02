@@ -23,6 +23,7 @@ import CategoryProducts from './pages/CategoryProducts'
 import SearchProducts from './pages/SearchProducts'
 import AllProducts from './pages/Admin/AllProducts'
 import AllCategories from './pages/Admin/AllCategories'
+import AdminProductDetails from './pages/Admin/ProductDetails'
 
 const App = () => {
   const [loading, setLoading] = useState(true)
@@ -65,6 +66,7 @@ const App = () => {
           <Route path='create-category' element={<CreateCategory />} />
           <Route path='create-product' element={<CreateProduct />} />
           <Route path='products' element={<AllProducts />} />
+          <Route path='products/:slug' element={<AdminProductDetails />} />
           <Route path='orders' element={<AllOrders />} />
           <Route path='users' element={<AllUsers />} />
           <Route path='categories' element={<AllCategories />} />

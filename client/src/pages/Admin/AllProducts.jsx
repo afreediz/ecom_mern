@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import API from '../../services/api';
 import CreateProduct from './CreateProduct';
+import { useNavigate } from 'react-router-dom';
 const ProductTable = () => {
   const [displayAdd, setDisplayAdd] = useState(false)
+  const [displayProduct, setDisplayProduct] = useState(false)
   const [products, setProducts] = useState([])
+  const navigate = useNavigate()
   useEffect(()=>{
     async function getProducts(){
       try{
@@ -56,8 +59,7 @@ const ProductTable = () => {
                   <td className="px-6 py-4 whitespace-nowrap">{product.price}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{product.category.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button className="text-green-600 hover:text-green-900 mr-2">View</button>
-                    <button className="text-indigo-600 hover:text-indigo-900 mr-2">Edit</button>
+                    <button onClick={()=>navigate(`/admin/products/${product.slug}`)} className="text-green-600 hover:text-green-900 mr-2">View</button>
                     <button className="text-red-600 hover:text-red-900">Delete</button>
                   </td>
                 </tr>
