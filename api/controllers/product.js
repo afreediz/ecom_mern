@@ -52,7 +52,8 @@ const updateProduct = asyncErrorHandler(async(req, res)=>{
 })
 const deleteProduct = asyncErrorHandler(async(req, res)=>{
     const id = req.params.id
-    await Product.findByIdAndDelete(id).select('-photo')
+    console.log('deleting ', id);
+    await Product.findByIdAndDelete(id)
 
     res.status(200).json({
         success:true,

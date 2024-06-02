@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import API from '../../services/api';
 import CreateProduct from './CreateProduct';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 const ProductTable = () => {
   const [displayAdd, setDisplayAdd] = useState(false)
   const [displayProduct, setDisplayProduct] = useState(false)
@@ -20,6 +21,16 @@ const ProductTable = () => {
     getProducts()
   },[])
   console.log(products);
+  const handleDelete = async (id) => {
+    try{
+      const {data} = await API.delete(`products/${id}`)
+      console.log(data);
+      setProducts((prev)=>prev.filter((product)=>product._id !== id))
+      toast.success(data.message)
+    }catch({response}){
+      console.log(response?.data.message);
+    }
+  }
 
   return (
     <div className="relative">
@@ -60,7 +71,7 @@ const ProductTable = () => {
                   <td className="px-6 py-4 whitespace-nowrap">{product.category.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <button onClick={()=>navigate(`/admin/products/${product.slug}`)} className="text-green-600 hover:text-green-900 mr-2">View</button>
-                    <button className="text-red-600 hover:text-red-900">Delete</button>
+                    <button onClick={()=>handleDelete(product._id)} className="text-red-600 hover:text-red-900">Delete</button>
                   </td>
                 </tr>
               ))}
