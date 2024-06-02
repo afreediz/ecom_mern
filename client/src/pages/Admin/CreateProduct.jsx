@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoMdClose } from "react-icons/io";
-const CreateProduct = ({setDisplayAdd}) => {
+import { toast } from 'react-toastify';
+import API from '../../services/api';
+const CreateProduct = ({setDisplayAdd, setProducts}) => {
   const [product, setProduct] = useState({
     name: '',
     price: '',
     category: '',
-    shortDesc: '',
-    longDesc: '',
+    shortdesc: '',
+    description: '',
     imageUrl: '',
     imageFile: null,
   });
 
-  const categories = ['Electronics', 'Books', 'Clothing', 'Sports']; // Sample categories
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const { data } = await API.get('/category')
+        setCategories(data.categories)
+      } catch ({ response }) {
+        console.log(response?.data.message)
+      }
+    }
+    getCategories();
+  }, [])
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,14 +37,22 @@ const CreateProduct = ({setDisplayAdd}) => {
     setProduct({ ...product, imageFile: e.target.files[0] });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission logic here
+    try{
+      const {data} = await API.post('products', product)
+      console.log('ters', data);
+      setProducts((prev)=>[...prev, {...data.product,category:categories.find((category)=>category._id === product.category)}])
+      setDisplayAdd(false)
+      toast.success(data.message)
+    }catch({response}){
+      console.log(response?.data.message)
+    }
   };
 
   return (
     <div className="absolute inset-0 flex justify-center bg-gray-100">
-      <div className="w-full p-8 pt-0 bg-white rounded-lg shadow-md">
+      <div className="w-full p-8 pt-0 bg-gray-100">
         <div className="flex justify-between items-center">
           <i></i>
           <h1 className="text-3xl font-semibold text-center text-gray-700 mb-1">Create Product</h1>
@@ -73,7 +96,7 @@ const CreateProduct = ({setDisplayAdd}) => {
             >
               <option value="">Select Category</option>
               {categories.map((category, index) => (
-                <option key={index} value={category}>{category}</option>
+                <option key={index} value={category._id}>{category.name}</option>
               ))}
             </select>
           </div>
@@ -82,8 +105,8 @@ const CreateProduct = ({setDisplayAdd}) => {
             <label className="block text-gray-700 font-medium mb-2" htmlFor="shortDesc">Short Description</label>
             <textarea
               id="shortDesc"
-              name="shortDesc"
-              value={product.shortDesc}
+              name="shortdesc"
+              value={product.shortdesc}
               onChange={handleChange}
               className="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Short Description"
@@ -95,8 +118,8 @@ const CreateProduct = ({setDisplayAdd}) => {
             <label className="block text-gray-700 font-medium mb-2" htmlFor="longDesc">Long Description</label>
             <textarea
               id="longDesc"
-              name="longDesc"
-              value={product.longDesc}
+              name="description"
+              value={product.ddescriptionesc}
               onChange={handleChange}
               className="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Long Description"

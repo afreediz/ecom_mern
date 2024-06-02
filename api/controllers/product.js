@@ -29,6 +29,7 @@ const getProduct = asyncErrorHandler(async(req, res)=>{
 
 const createProduct = asyncErrorHandler(async(req, res)=>{
     const { name, description, price, category, quantity, photo, shipping, shortdesc } = req.body
+    console.log(req.body);
     if( !name || !description || !price || !category || !shortdesc) throw new CustomError('Necessary details are not filled', 404)
 
     const product = await new Product({name, slug:slugify(name), shortdesc,description, price, category, quantity, photo, shipping}).save()

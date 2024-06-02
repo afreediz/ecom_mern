@@ -17,7 +17,7 @@ const CreateCategory = ({setDisplayAdd}) => {
 
   return (
     <div className="absolute inset-0 flex justify-center bg-gray-100">
-      <div className="w-full p-8 pt-0 bg-white rounded-lg shadow-md">
+      <div className="w-full p-8 pt-0">
         <div className="flex justify-between items-center">
           <i></i>
           <h1 className="text-3xl font-semibold text-center text-gray-700 mb-1">Create Category</h1>

@@ -83,7 +83,7 @@ const ProductTable = () => {
       </div>
     </div>
     <div className="w-full">
-    {displayAdd && <CreateProduct setDisplayAdd={setDisplayAdd} />}
+    {displayAdd && <CreateProduct setProducts={setProducts} setDisplayAdd={setDisplayAdd} />}
     </div>
     </div>
   );
