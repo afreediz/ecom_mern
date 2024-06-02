@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
-const CreateCategory = ({setDisplayAdd}) => {
+import { toast } from 'react-toastify';
+import API from '../../services/api';
+const CreateCategory = ({setDisplayAdd, setCategories}) => {
   const [product, setProduct] = useState({
     name: '',
   });
@@ -10,10 +12,20 @@ const CreateCategory = ({setDisplayAdd}) => {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission logic here
-  };
+    try {
+      const { data } = await API.post('/category', product);
+      console.log(data);
+      setCategories((prev)=>{
+        return [data.category, ...prev]
+      });
+      setDisplayAdd(false)
+      toast.success("Category created successfully");
+    } catch ({ response }) {
+      console.log(response?.data.message);
+    }
+  }
 
   return (
     <div className="absolute inset-0 flex justify-center bg-gray-100">
