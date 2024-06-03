@@ -68,6 +68,7 @@ const AdminProductDetails = () => {
         ...product
       })
       console.log(data);
+      setUpdateable(false)
       toast.success(data.message)
     }catch({response}){
       console.log(response?.data.message);
@@ -89,7 +90,7 @@ const AdminProductDetails = () => {
         <input onChange={onChange} name="shortdesc" value={product && product.shortdesc} className="  border-none outline-none w-full text-lg mb-8 bg-transparent"/>
         <textarea onChange={onChange} name="description" value={product && product.description} className="  border-none outline-none w-full text-lg mb-8 bg-transparent" />
         <select onChange={onChange} name="category" value={product && product.category._id} className="border-none outline-none w-full text-lg mb-8 bg-transparent">
-          <option value={product && product.category._id}> { product && product.category.name}</option>
+          <option className=' bg-gray-900 p-2 text-white' value={product && product.category._id}> { product && product.category.name}</option>
           {categories && categories.map((category) => (
             <option  className=' bg-gray-900 p-2 text-white' key={category.name} value={category._id}>
               {category.name}
