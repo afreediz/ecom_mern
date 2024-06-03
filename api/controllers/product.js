@@ -155,10 +155,10 @@ const categoryProductsCount = asyncErrorHandler(async(req, res)=>{
     })
 })
 const orderStatus = asyncErrorHandler(async(req, res)=>{
-    const { orderId } = req.params
+    const { id } = req.params
     const { status } = req.body
 
-    const order = await Order.findByIdAndUpdate(orderId, {status}, {new:true, runValidators:true})
+    const order = await Order.findByIdAndUpdate(id, {status}, {new:true, runValidators:true})
 
     res.status(200).json({
         success:true,

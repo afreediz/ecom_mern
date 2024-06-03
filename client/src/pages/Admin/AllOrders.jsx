@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import API, { format_date }  from '../../services/api';
+import {toast} from 'react-toastify'
 const AllOrders = () => {
   // // Sample orders data (replace with actual data from your backend)
   // const [orders, setOrders] = useState([
@@ -25,15 +26,17 @@ const AllOrders = () => {
   console.log("orders ", orders);
 
   // Function to handle updating shipping status
-  const handleShippingStatusChange = (orderId, newStatus) => {
+  const handleShippingStatusChange = async(orderId, newStatus) => {
     // Update the orders state with the new shipping status
-    const updatedOrders = orders.map(order => {
-      if (order.orderid === orderId) {
-        return { ...order, shippingStatus: newStatus };
-      }
-      return order;
-    });
-    setOrders(updatedOrders);
+    try{
+      await API.put(`products/order-status/${orderId}`, {status: newStatus})
+      setOrders((prev)=>{
+        return prev.map((order)=>order._id === orderId ? {...order, status: newStatus} : order)
+      })
+      toast.success("Shipping status updated successfully")
+    }catch({response}){
+      console.log(response?.data.message)
+    }
   };
 
   return (
@@ -74,13 +77,15 @@ const AllOrders = () => {
               <td className="px-6 py-4 whitespace-nowrap">
                 <select
                   value={order.shippingStatus}
-                  onChange={(e) => handleShippingStatusChange(order.orderid, e.target.value)}
+                  onChange={(e) => handleShippingStatusChange(order._id, e.target.value)}
                   className="block w-full py-2 px-4 border border-gray-300 bg-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 >
-                  <option value="Shipped">Shipped</option>
+                  <option value="Shipped">{order.status}</option>
                   <option value="Processing">Processing</option>
+                  <option value="Shipped">Shipped</option>
                   <option value="Delivered">Delivered</option>
                   <option value="Cancelled">Cancelled</option>
+                  <option value="Deleted">Delete</option>
                 </select>
               </td>
             </tr>)}
