@@ -14,7 +14,7 @@ const AllOrders = () => {
   useEffect(()=>{
     async function getOrders(){
       try{
-        const res = await API.get("user/all-orders")
+        const res = await API.get("orders/all")
         console.log(res);
         setOrders(res.data.orders)
       }catch({response}){
@@ -28,14 +28,26 @@ const AllOrders = () => {
   // Function to handle updating shipping status
   const handleShippingStatusChange = async(orderId, newStatus) => {
     // Update the orders state with the new shipping status
-    try{
-      await API.put(`products/order-status/${orderId}`, {status: newStatus})
-      setOrders((prev)=>{
-        return prev.map((order)=>order._id === orderId ? {...order, status: newStatus} : order)
-      })
-      toast.success("Shipping status updated successfully")
-    }catch({response}){
-      console.log(response?.data.message)
+    if (newStatus == "Delete"){
+      try{
+        await API.delete(`orders/${orderId}`)
+        setOrders((prev)=>{
+          return prev.filter((order)=>order._id !== orderId)
+        })
+        return toast.success("Order deleted successfully")
+      }catch({response}){
+        console.log(response?.data.message)
+      }
+    }else{
+      try{
+        await API.put(`orders/${orderId}`, {status: newStatus})
+        setOrders((prev)=>{
+          return prev.map((order)=>order._id === orderId ? {...order, status: newStatus} : order)
+        })
+        toast.success("Shipping status updated successfully")
+      }catch({response}){
+        console.log(response?.data.message)
+      }
     }
   };
 
@@ -84,8 +96,8 @@ const AllOrders = () => {
                   <option value="Processing">Processing</option>
                   <option value="Shipped">Shipped</option>
                   <option value="Delivered">Delivered</option>
-                  <option value="Cancelled">Cancelled</option>
-                  <option value="Deleted">Delete</option>
+                  <option value="Canceled">Cancelled</option>
+                  <option value="Delete">Delete</option>
                 </select>
               </td>
             </tr>)}

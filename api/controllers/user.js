@@ -2,7 +2,6 @@ const asyncErrorHandler = require("express-async-handler")
 const CustomError = require('../utils/CustomError')
 
 const User = require('../models/user')
-const Order = require('../models/order')
 
 const getUser = asyncErrorHandler(async(req, res)=>{
     res.status(200).json({
@@ -42,17 +41,6 @@ const deleteProfile = asyncErrorHandler(async(req, res)=>{
         message:"User profile deleted successfully",
     })
 })
-const orders = asyncErrorHandler(async(req, res)=>{
-    const id = req.user._id
-
-    const orders = await Order.find({user:id}).populate("user", "name").populate("products", "-photo")
-
-    res.status(200).json({
-        success:true,
-        message:"Orders",
-        orders
-    })
-})
 
 // admin operations
 const getAdmin = asyncErrorHandler(async(req, res)=>{
@@ -62,13 +50,7 @@ const getAdmin = asyncErrorHandler(async(req, res)=>{
         authorized:true
     })
 })
-const allOrders = asyncErrorHandler(async(req, res)=>{
-    const orders = await Order.find({}).populate({
-        path:'products.product user',
-        select:'name shortdesc price'
-    }).sort({createdAt:-1})
-    res.status(200).json({success:true, message:"All orders",orders:orders})
-})
+
 const getAllUsers = asyncErrorHandler(async(req, res)=>{
     const users = await User.find({}).sort({createdAt:-1})
     res.status(200).json({
@@ -78,4 +60,4 @@ const getAllUsers = asyncErrorHandler(async(req, res)=>{
     })
 })
 
-module.exports = {getUser, allOrders, getAdmin, profile, orders, allOrders, updateProfile, deleteProfile, getAllUsers }
+module.exports = {getUser, getAdmin, profile, updateProfile, deleteProfile, getAllUsers }

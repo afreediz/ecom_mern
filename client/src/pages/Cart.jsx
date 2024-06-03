@@ -24,7 +24,7 @@ const Cart = () => {
   }
   const checkout = async()=>{
     try{
-      const {data} = await API.post('products/test-order',{
+      const {data} = await API.post('/orders',{
         cart:cart.map((product)=>{
           return {
             product:product._id,

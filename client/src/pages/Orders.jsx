@@ -9,8 +9,9 @@ const Orders = () => {
   useEffect(()=>{
     async function getOrders(){
       try{
-        const {data} = await API.get("products/test-getorder")
-        setOrders(data.orders)
+        const res = await API.get("orders/")
+        console.log(res);
+        setOrders(res.data.orders)
       }catch({response}){
         console.log(response?.data.message)
       }

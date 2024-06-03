@@ -4,7 +4,6 @@ const slugify = require('slugify')
 
 const Product = require('../models/product')
 const Category = require("../models/category")
-const Order = require("../models/order")
 
 const getAllProducts = asyncErrorHandler(async(req, res)=>{
     const products = await Product.find({}).populate('category').select('_id name shortdesc price slug').sort({createdAt:-1})
@@ -154,35 +153,6 @@ const categoryProductsCount = asyncErrorHandler(async(req, res)=>{
         total
     })
 })
-const orderStatus = asyncErrorHandler(async(req, res)=>{
-    const { id } = req.params
-    const { status } = req.body
-
-    const order = await Order.findByIdAndUpdate(id, {status}, {new:true, runValidators:true})
-
-    res.status(200).json({
-        success:true,
-        message:"Order updated succesfully",
-        order
-    })
-})
-
-const testCreateOrder = asyncErrorHandler(async(req, res)=>{
-    const { cart } = req.body
-    await Order.create({user:req.user._id,products:cart})
-    res.status(200).json({success:true, message:"Order placed successfully"})
-})
-
-const getOrders = asyncErrorHandler(async(req, res)=>{
-    const user = req.user._id
-    const orders = await Order.find({user}).populate({
-        path:'products.product',
-        select:'name shortdesc price'
-    })
-    res.status(200).json({success:true, orders:orders})
-})
-
-
 
 module.exports = { 
     getAllProducts, 
@@ -190,7 +160,6 @@ module.exports = {
     createProduct, 
     updateProduct, 
     deleteProduct, 
-    orderStatus, 
     filterProducts,
     getProductCount,
     productList,
@@ -198,6 +167,4 @@ module.exports = {
     productsRelated,
     categoryProducts,
     categoryProductsCount,
-    testCreateOrder,
-    getOrders,
 }
