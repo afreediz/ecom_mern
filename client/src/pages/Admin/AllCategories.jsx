@@ -19,18 +19,7 @@ const AllCategories = () => {
     }
     getCategory()
   },[])
-  async function hanldeUpdate(e, id){
-    e.preventDefault()
-    
-    try{
-      const res = await API.put(`/category/${id}`, {
-        name: e.target.name.value
-      })
-      console.log(res);
-    }catch({response}){
-      console.log(response?.data.message)
-    }
-  }
+
   return (
     <div className='relative'>
       <h1 className="text-3xl font-semibold mb-4">Categories</h1>
@@ -64,7 +53,7 @@ const AllCategories = () => {
                 <form action="" onSubmit={async(e)=>{
                   e.preventDefault()
                     try{
-                      const res = await API.put(`/category/${category._id}`, {
+                      await API.put(`/category/${category._id}`, {
                         name: category.name
                       })
                       toast.success("Category updated successfully")
@@ -86,7 +75,18 @@ const AllCategories = () => {
                 </form>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                <button className="text-red-600 hover:text-red-900">Delete</button>
+                <form action="" onSubmit={async(e)=>{
+                  try{
+                    e.preventDefault()
+                    await API.delete(`/category/${category._id}`)
+                    setCategories((prev)=>prev.filter((item)=>item._id != category._id))
+                    toast.success("Category deleted successfully")
+                  }catch({response}){
+                    console.log(response?.data.message)
+                  }
+                }}>
+                  <button className="text-red-600 hover:text-red-900">Delete</button>
+                </form>
               </td>
             </tr>
           ))}
