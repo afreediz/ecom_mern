@@ -37,6 +37,8 @@ const login = asyncErrorHandler(async(req, res)=>{
     const user = await User.findOne({email})
     if(!user) throw new CustomError("User does not exist", 404)
 
+    if(user.status == "inactive") throw new CustomError("Your account is inactive", 400)
+
     if(!await comparePassword(password, user.password)) throw new CustomError("Password does not match", 400)
 
     const token = generateToken({_id:user._id})

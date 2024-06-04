@@ -34,11 +34,32 @@ const updateProfile = asyncErrorHandler(async(req, res)=>{
 })
 const deleteProfile = asyncErrorHandler(async(req, res)=>{
     const id = req.user._id
-    await User.findByIdAndDelete(id)
+    await User.deleteOne({_id:id})
     
     res.status(200).json({
         success:true,
         message:"User profile deleted successfully",
+    })
+})
+const deleteUser = asyncErrorHandler(async(req, res)=>{
+    const id = req.params.id
+    await User.deleteOne({_id:id})
+    
+    res.status(200).json({
+        success:true,
+        message:"User deleted successfully",
+    })
+})
+const userStatus = asyncErrorHandler(async(req, res)=>{
+    const { id } = req.params
+    const { status } = req.body
+
+    const user = await User.findByIdAndUpdate(id, {status}, {new:true, runValidators:true})
+
+    res.status(200).json({
+        success:true,
+        message:"User updated succesfully",
+        user
     })
 })
 
@@ -60,4 +81,4 @@ const getAllUsers = asyncErrorHandler(async(req, res)=>{
     })
 })
 
-module.exports = {getUser, getAdmin, profile, updateProfile, deleteProfile, getAllUsers }
+module.exports = {getUser, getAdmin, profile, updateProfile, deleteProfile, getAllUsers, userStatus, deleteUser }

@@ -79,7 +79,7 @@ const Header = () => {
         </div>
         {user ? (
           <>
-            <Link to="/dashboard"><li className=' hidden lg:block hover:text-gray-400'>Dashboard</li></Link>
+            <Link to="/profile"><li className=' hidden lg:block hover:text-gray-400'>Dashboard</li></Link>
             <button onClick={logout} className=' hidden lg:block px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600'>Logout</button>
           </>
         ) : (

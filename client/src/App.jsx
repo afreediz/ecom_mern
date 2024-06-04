@@ -13,7 +13,6 @@ import AllOrders from './pages/Admin/AllOrders'
 import AllUsers from './pages/Admin/AllUsers'
 import CreateCategory from './pages/Admin/CreateCategory'
 import CreateProduct from './pages/Admin/CreateProduct'
-import UserDashboard from './pages/Dashboard'
 import {ToastContainer, toast} from 'react-toastify'
 import { userContext } from './context/user'
 import { useContext, useEffect, useState } from 'react'
@@ -36,6 +35,7 @@ const App = () => {
         setLoading(false)
       }catch(error){
         setLoading(false)
+        toast.error(error.response.data.message)
         console.log(error);
       }   
     }
@@ -54,7 +54,6 @@ const App = () => {
           <Route path='search/:query' element={<SearchProducts />} />
           <Route path='cart' element={<Cart />} />
           {user && <>
-            <Route path='dashboard' element={<UserDashboard />} />
             <Route path='profile' element={<Profile />} />
             <Route path='orders' element={<Orders />} />
             </>

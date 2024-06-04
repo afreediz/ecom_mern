@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import SidebarLayout from '../components/user/SidebarLayout'
 import { toast } from 'react-toastify'
 import API from '../services/api'
+import { useNavigate } from 'react-router-dom'
 
 const Profile = () => {
   const [data, setData] = useState()
   const [updated, setUpdated] = useState(false)
+  const navigate = useNavigate()
   useEffect(()=>{
     async function getData(){
       try{
@@ -43,6 +45,18 @@ const Profile = () => {
       }
     })
   }
+  const deleteAccount = async() => {
+    try{
+      const response = await API.delete('user/profile')
+      localStorage.removeItem("token")
+      navigate('/login')
+      toast.success(response?.data.message)
+      window.location.reload()
+    }catch(error){
+      console.log(error);
+      toast.error(error.response?.data.message)
+    }
+  }
   return (
     <SidebarLayout className='text-xl'>
       <form onSubmit={onsubmit} className="space-y-4 bg-white p-6 shadow-lg rounded-lg">
@@ -64,6 +78,9 @@ const Profile = () => {
         </div>
         <button type='submit' disabled={!updated} className={`py-2 px-5 ${updated ? "bg-green-600" : "bg-gray-300"} text-white font-medium rounded-lg`} >
           Update
+        </button>
+        <button type='button' onClick={deleteAccount} className='py-2 px-5 mx-4 bg-red-600 text-white font-medium rounded-lg' >
+          Delete Account
         </button>
       </form>
     </SidebarLayout>

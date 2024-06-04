@@ -68,10 +68,6 @@ const AllOrders = () => {
         </thead>
         <tbody className="divide-y divide-gray-600">
           {orders && orders.map((order, index)=>{
-            // let products = ""
-            // order.products.map(({product})=>{
-            //   products = product.name + " "
-            // })
             return (
               <tr key={order.orderid}>
               <td className="px-6 py-4 whitespace-nowrap">{index}</td>

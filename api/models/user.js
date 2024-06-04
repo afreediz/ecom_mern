@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const Order = require('./order')
 
 const userSchema = mongoose.Schema({
     name:{
@@ -27,7 +28,21 @@ const userSchema = mongoose.Schema({
         type:String,
         enum:['user','admin'],
         default:'user'
+    },
+    status:{
+        type:String,
+        enum:['active','inactive'],
+        default:'active'
     }
 }, {timestamps:true})
+
+userSchema.pre('deleteOne', { document: false, query: true }, async function(next) {
+    try {
+        await Order.deleteMany({ user: this._conditions._id });
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = mongoose.model('users', userSchema)

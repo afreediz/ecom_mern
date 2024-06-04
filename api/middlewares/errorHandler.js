@@ -9,7 +9,7 @@ module.exports = (err, req, res, next)=> {
         case "CastError":
             err.message = "Please provide a valid id"
         case "TokenExpiredError":
-            err.message = "jwt expired"
+            err.message = "Session expired. Please signin again"
         case "JsonWebTokenError":
             err.message = "Signin required"
         default:
