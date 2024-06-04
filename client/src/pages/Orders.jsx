@@ -18,6 +18,20 @@ const Orders = () => {
     }
     getOrders()
   },[])
+  const cancelOrder = async(id) => {
+    try{
+      const {data} = await API.put(`orders/cancel/${id}`)
+      setOrders(orders.filter((order)=>{
+        if(order._id == id){
+          order.status = "Canceled"
+        }
+        return order
+      }))
+      toast.success(data.message)
+    }catch({response}){
+      console.log(response?.data.message)
+    }
+  }
   const format_date = (date)=> {
     const day = new Date(date).getDate()
     const month = new Date(date).getMonth()
@@ -37,6 +51,7 @@ const Orders = () => {
               <th className='py-2 px-4 border border-gray-300'>Date</th>
               <th className='py-2 px-4 border border-gray-300'>Payment</th>
               <th className='py-2 px-4 border border-gray-300'>Status</th>
+              <th className='py-2 px-4 border border-gray-300'>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -47,6 +62,14 @@ const Orders = () => {
                 <td className='py-2 px-4 border-r border-gray-300'>{format_date(order.createdAt)}</td>
                 <td className='py-2 px-4 border-r border-gray-300'>{order.payment}</td>
                 <td className='py-2 px-4 border-r border-gray-300'>{order.status}</td>
+                <td className='py-2 px-4 border-r border-gray-300'>
+                  <button 
+                    disabled={order.status == 'Delivered' || order.status == 'Canceled'}
+                    onClick={() => cancelOrder(order._id)}
+                    className={`${order.status == 'Delivered' || order.status == 'Canceled' ? 'text-gray-500 cursor-not-allowed ' : ' hover:text-red-700 text-red-500'}`}>
+                    Cancel
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>

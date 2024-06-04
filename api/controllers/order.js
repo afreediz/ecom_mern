@@ -32,6 +32,16 @@ const allOrders = asyncErrorHandler(async(req, res)=>{
     res.status(200).json({success:true, message:"All orders",orders:orders})
 })
 
+const cancelOrder = asyncErrorHandler(async(req, res)=>{
+    const { id } = req.params
+    const order = await Order.findByIdAndUpdate(id, {status:"Canceled"}, {new:true, runValidators:true})
+    res.status(200).json({
+        success:true,
+        message:"Order cancelled succesfully",
+        order
+    })
+})
+
 const orderStatus = asyncErrorHandler(async(req, res)=>{
     const { id } = req.params
     const { status } = req.body
@@ -45,4 +55,4 @@ const orderStatus = asyncErrorHandler(async(req, res)=>{
     })
 })
 
-module.exports = { orderStatus, createOrder, userOrders, allOrders, deleteOrder }
+module.exports = { orderStatus, createOrder, userOrders, allOrders, deleteOrder, cancelOrder }

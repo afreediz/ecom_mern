@@ -5,8 +5,7 @@ import { FaSearch, FaUser } from 'react-icons/fa';
 
 
 const Header = () => {
-  const { user, setUser } = useContext(userContext);
-  const [searchQuery, setSearchQuery] = useState('');
+  const {setUser } = useContext(userContext);
   const navigate = useNavigate();
 
   const logout = () => {

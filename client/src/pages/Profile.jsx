@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { userContext } from '../context/user'
 import SidebarLayout from '../components/user/SidebarLayout'
 import { toast } from 'react-toastify'
 import API from '../services/api'
@@ -8,6 +9,7 @@ const Profile = () => {
   const [data, setData] = useState()
   const [updated, setUpdated] = useState(false)
   const navigate = useNavigate()
+  const {setUser} = useContext(userContext)
   useEffect(()=>{
     async function getData(){
       try{
@@ -49,9 +51,9 @@ const Profile = () => {
     try{
       const response = await API.delete('user/profile')
       localStorage.removeItem("token")
+      setUser(null)
       navigate('/login')
       toast.success(response?.data.message)
-      window.location.reload()
     }catch(error){
       console.log(error);
       toast.error(error.response?.data.message)
