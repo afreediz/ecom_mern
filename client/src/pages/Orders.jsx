@@ -10,6 +10,7 @@ const Orders = () => {
     async function getOrders(){
       try{
         const {data} = await API.get("orders/")
+        console.log(data);
         setOrders(data.orders)
       }catch({response}){
         console.log(response?.data.message)

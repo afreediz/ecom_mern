@@ -80,7 +80,7 @@ const AllOrders = () => {
               <td className="px-6 py-4 whitespace-nowrap">{
                 order.products.map((ordered_product_details)=>{
                   return <div className="">
-                    <div className='bg-gray-900 p-2 rounded my-1'>{ordered_product_details.product.name} - {ordered_product_details.cart_quantity}</div>
+                    <div className='bg-gray-900 p-2 rounded my-1'>{ordered_product_details.product ? ordered_product_details.product.name : "Product no longer available"} - {ordered_product_details.cart_quantity}</div>
                   </div>
                 })
               }</td>
