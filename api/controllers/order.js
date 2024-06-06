@@ -54,5 +54,38 @@ const orderStatus = asyncErrorHandler(async(req, res)=>{
         order
     })
 })
+const dashboardDetails = asyncErrorHandler(async(req, res)=>{
+    const orders_count = await Order.estimatedDocumentCount()
+    const recent_orders = await Order.find({}).populate({
+        path:'products.product user',
+        select:'name shortdesc price'
+    }).limit(6).sort({createdAt:-1})
+    const orders = await Order.aggregate([
+        {
+            $group: {
+                _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+                number_of_orders: { $sum: 1 }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                day: "$_id",
+                number_of_orders: 1
+            }
+        },
+        {
+            $sort: { day: 1 }
+        }
+    ]);
+    console.log("orders ", orders);
+    res.status(200).json({
+        success:true, 
+        message:"Dashboard orders details", 
+        orders_count,
+        orders:orders,
+        recent_orders:recent_orders
+    })
+})
 
-module.exports = { orderStatus, createOrder, userOrders, allOrders, deleteOrder, cancelOrder }
+module.exports = { orderStatus, createOrder, userOrders, allOrders, deleteOrder, cancelOrder, dashboardDetails }

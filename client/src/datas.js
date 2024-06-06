@@ -2,48 +2,32 @@ export const api_url = 'http://localhost:3002/api/'
 
 export const users = [
     {
-        day: "2024-05-01",
-        number_of_users : 10
-    },{
-        day: "2024-05-02",
-        number_of_users : 60
-    },{
-        day: "2024-05-03",
-        number_of_users : 100
-    },{
-        day: "2024-05-04",
-        number_of_users : 70
+        "number_of_users": 2,
+        "day": "2024-06-04"
+    },
+    {
+        "number_of_users": 1,
+        "day": "2024-06-06"
     }
 ]
 
 export const orders = [
-    {
-        day: "2024-05-01",
-        number_of_orders : 2
-    },{
-        day: "2024-05-01",
-        number_of_orders : 10
-    },{
-        day: "2024-05-01",
-        number_of_orders : 50
-    },{
-        day: "2024-05-01",
-        number_of_orders : 45
-    }
+    { number_of_orders: 2, day: '2024-06-04' },
+    { number_of_orders: 1, day: '2024-06-06' },
+    { number_of_orders: 1, day: '2024-06-07' }
 ]
 
 export const products = [
     {
-        category:"Electronics",
-        number_of_products : 10
-    },{
-        category:"Clothes",
-        number_of_products : 60
-    },{
-        category:"Food",
-        number_of_products : 50
-    },{
-        category:"Books",
-        number_of_products : 70
-    }
+        "number_of_products": 1,
+        "category": "general"
+      },
+      {
+        "number_of_products": 2,
+        "category": "gym-equipments"
+      },
+      {
+        "number_of_products": 2,
+        "category": "mens"
+      }
 ]

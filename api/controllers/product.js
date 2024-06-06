@@ -153,7 +153,44 @@ const categoryProductsCount = asyncErrorHandler(async(req, res)=>{
         total
     })
 })
-
+const dashboardDetails = asyncErrorHandler(async(req, res)=>{
+    const products_count = await Product.estimatedDocumentCount()
+    const products = await Product.aggregate([
+        {
+            $group: {
+                _id: "$category",
+                number_of_products: { $sum: 1 }
+            }
+        },
+        {
+            $lookup: {
+                from: "categories", // the collection name for Category model
+                localField: "_id",
+                foreignField: "_id",
+                as: "categoryDetails"
+            }
+        },
+        {
+            $unwind: "$categoryDetails"
+        },
+        {
+            $project: {
+                _id: 0,
+                category: "$categoryDetails.slug",
+                number_of_products: 1
+            }
+        },
+        {
+            $sort: { category: 1 }
+        }
+    ]);
+    res.status(200).json({
+        success:true,
+        message:"Dashboard product details",
+        products_count,
+        products
+    })
+})
 module.exports = { 
     getAllProducts, 
     getProduct, 
@@ -167,4 +204,5 @@ module.exports = {
     productsRelated,
     categoryProducts,
     categoryProductsCount,
+    dashboardDetails
 }

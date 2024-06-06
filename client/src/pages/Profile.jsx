@@ -13,7 +13,7 @@ const Profile = () => {
   useEffect(()=>{
     async function getData(){
       try{
-        const response = await API.get('user/profile',{
+        const response = await API.get('users/profile',{
           headers:{
             "Authorization":localStorage.getItem("token")
           }
@@ -28,7 +28,7 @@ const Profile = () => {
   const onsubmit = async(e) => {
     e.preventDefault()
     try{
-      const response = await API.put('user/profile', {
+      const response = await API.put('users/profile', {
         ...data
       })
       toast.success(response?.data.message)
@@ -49,7 +49,7 @@ const Profile = () => {
   }
   const deleteAccount = async() => {
     try{
-      const response = await API.delete('user/profile')
+      const response = await API.delete('users/profile')
       localStorage.removeItem("token")
       setUser(null)
       navigate('/login')

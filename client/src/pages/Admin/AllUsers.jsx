@@ -7,7 +7,7 @@ const AllUsers = () => {
   useEffect(()=>{
     async function getUsers(){
       try{
-        const res = await API.get("user/all-users")
+        const res = await API.get("users/all-users")
         console.log(res);
         setUsers(res.data.users)
       }catch({response}){
@@ -20,7 +20,7 @@ const AllUsers = () => {
     // Update the orders state with the new shipping status
     if (newStatus == "Delete"){
       try{
-        await API.delete(`user/${userId}`)
+        await API.delete(`users/${userId}`)
         setUsers((prev)=>{
           return prev.filter((user)=>user._id !== userId)
         })
@@ -30,7 +30,7 @@ const AllUsers = () => {
       }
     }else{
       try{
-        await API.put(`user/status/${userId}`, {status: newStatus})
+        await API.put(`users/status/${userId}`, {status: newStatus})
         setUsers((prev)=>{
           return prev.map((user)=>user._id === userId ? {...user, status: newStatus} : user)
         })

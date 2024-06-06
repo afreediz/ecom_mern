@@ -1,9 +1,7 @@
 import React from 'react'
-// import { cart } from '../datas'
 import CartCard from '../components/utilities/CartCard'
 import { useAuth } from '../context/user'
 import { useCart } from '../context/cart'
-import axios from 'axios'
 import { toast } from 'react-toastify'
 import API from '../services/api'
 
@@ -11,6 +9,7 @@ const Cart = () => {
   const {user} = useAuth()
   const {cart, setCart} = useCart();
   const shipping_charge = 500
+  console.log(cart);
   const totalPrice = ()=> {
     let total = 0;
     cart?.map((p)=>{

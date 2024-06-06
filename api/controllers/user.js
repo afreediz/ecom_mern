@@ -71,7 +71,6 @@ const getAdmin = asyncErrorHandler(async(req, res)=>{
         authorized:true
     })
 })
-
 const getAllUsers = asyncErrorHandler(async(req, res)=>{
     const users = await User.find({}).sort({createdAt:-1})
     res.status(200).json({
@@ -80,5 +79,32 @@ const getAllUsers = asyncErrorHandler(async(req, res)=>{
         users
     })
 })
+const dashboardDetails = asyncErrorHandler(async(req, res)=>{
+    const users_count = await User.estimatedDocumentCount()
+    const users = await User.aggregate([
+        {
+            $group: {
+                _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+                number_of_users: { $sum: 1 }
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                day: "$_id",
+                number_of_users: 1
+            }
+        },
+        {
+            $sort: { day: 1 }
+        }
+    ]);
+    res.status(200).json({
+        success:true,
+        message:"Dashboard details",
+        users_count,
+        users
+    })
+})
 
-module.exports = {getUser, getAdmin, profile, updateProfile, deleteProfile, getAllUsers, userStatus, deleteUser }
+module.exports = {getUser, getAdmin, profile, updateProfile, deleteProfile, getAllUsers, userStatus, deleteUser, dashboardDetails }

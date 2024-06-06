@@ -3,6 +3,7 @@ import { FaCube, FaUser, FaClipboardList } from 'react-icons/fa'; // Import icon
 import ProductsChart from "../../components/Admin/Charts/Products";
 import UsersChart from "../../components/Admin/Charts/Users";
 import OrdersChart from "../../components/Admin/Charts/Orders";
+import API, {format_date} from '../../services/api';
 
 import {
   Chart as ChartJS,
@@ -18,24 +19,29 @@ import {
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, PointElement, LineElement);
 
 const Dashboard = () => {
-  const [totalProducts, setTotalProducts] = useState(0);
-  const [totalUsers, setTotalUsers] = useState(0);
-  const [totalOrders, setTotalOrders] = useState(0);
+  const [products, setProducts] = useState();
+  const [users, setUsers] = useState();
+  const [orders, setOrders] = useState();
 
   useEffect(() => {
-    // Fetch total products, users, and orders data from your backend
-    // Example API call or calculation
-    setTotalProducts(100);
-    setTotalUsers(50);
-    setTotalOrders(200);
+    async function fetchData() {
+      const res1 = await API.get("products/dashboard")
+      setProducts(res1.data)
+      const res2 = await API.get("users/dashboard")
+      setUsers(res2.data)
+      const res3 = await API.get("orders/dashboard")
+      setOrders(res3.data)
+    }
+    fetchData();
   }, []);
+  console.log(products, users, orders);
 
-  const data = [
-    { index: 1, orderid: 'ORD001', user: 'John Doe', products: 'Product A, Product B', paymentStatus: 'Paid' },
-    { index: 2, orderid: 'ORD002', user: 'Jane Smith', products: 'Product C', paymentStatus: 'Pending' },
-    { index: 3, orderid: 'ORD003', user: 'Alice Johnson', products: 'Product D, Product E', paymentStatus: 'Failed' },
-    // Add more rows as needed
-  ];
+  // const data = [
+  //   { index: 1, orderid: 'ORD001', user: 'John Doe', products: 'Product A, Product B', paymentStatus: 'Paid' },
+  //   { index: 2, orderid: 'ORD002', user: 'Jane Smith', products: 'Product C', paymentStatus: 'Pending' },
+  //   { index: 3, orderid: 'ORD003', user: 'Alice Johnson', products: 'Product D, Product E', paymentStatus: 'Failed' },
+  //   // Add more rows as needed
+  // ];
 
   return (
     <div className="mx-4">
@@ -46,7 +52,7 @@ const Dashboard = () => {
             <FaCube className="text-3xl mr-4" />
             <div>
               <div className="text-sm text-gray-500">Total Products</div>
-              <div className="text-2xl font-bold">{totalProducts}</div>
+              <div className="text-2xl font-bold">{products && products.products_count}</div>
             </div>
           </div>
         </div>
@@ -55,7 +61,7 @@ const Dashboard = () => {
             <FaUser className="text-3xl mr-4" />
             <div>
               <div className="text-sm text-gray-500">Total Users</div>
-              <div className="text-2xl font-bold">{totalUsers}</div>
+              <div className="text-2xl font-bold">{users && users.users_count}</div>
             </div>
           </div>
         </div>
@@ -64,7 +70,7 @@ const Dashboard = () => {
             <FaClipboardList className="text-3xl mr-4" />
             <div>
               <div className="text-sm text-gray-500">Total Orders</div>
-              <div className="text-2xl font-bold">{totalOrders}</div>
+              <div className="text-2xl font-bold">{orders && orders.orders_count}</div>
             </div>
           </div>
         </div>
@@ -72,15 +78,15 @@ const Dashboard = () => {
       <div className="grid grid-cols-5 gap-2 mt-8">
         <div className="bg-gray-900 text-white rounded-lg p-6 col-span-2">
           <h2 className="text-xl font-semibold mb-4">Orders Chart</h2>
-          <OrdersChart />
+          { orders && <OrdersChart orders={orders.orders} />}
         </div>
         <div className="bg-gray-900 text-white rounded-lg p-6 col-span-2">
           <h2 className="text-xl font-semibold mb-4">Users Chart</h2>
-          <UsersChart />
+          { users && <UsersChart users={users.users} />}
         </div>
         <div className="bg-gray-900 text-white rounded-lg p-6 col-span-1">
           <h2 className="text-xl font-semibold mb-4">Products Chart</h2>
-          <ProductsChart />
+          { products && <ProductsChart products={products.products} />}
         </div>
       </div>
       <div className="mt-8">
@@ -93,25 +99,28 @@ const Dashboard = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Order ID</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">User</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Products</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Date</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Payment Status</th>
               </tr>
             </thead>
-            <tbody>
-              {data.map((row, index) => (
-                <tr key={index} className="bg-gray-800">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{row.index}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{row.orderid}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{row.user}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{row.products}</td>
-                  <td className={`px-6 py-4 whitespace-nowrap text-sm ${
-                    row.paymentStatus === 'Paid' ? 'text-green-500' : 
-                    row.paymentStatus === 'Pending' ? 'text-yellow-500' : 
-                    'text-red-500'
-                  }`}>
-                    {row.paymentStatus}
-                  </td>
-                </tr>
-              ))}
+            <tbody className=' bg-gray-800 text-white'>
+            {orders && orders.recent_orders.map((order, index)=>{
+              return (
+                <tr key={order.orderid}>
+                <td className="px-6 py-4 whitespace-nowrap">{index}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{order.user.name}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{
+                  order.products.map((ordered_product_details)=>{
+                    return <div className="">
+                      <div className='bg-gray-900 p-2 rounded my-1'>{ordered_product_details.product ? ordered_product_details.product.name : "Product no longer available"} - {ordered_product_details.cart_quantity}</div>
+                    </div>
+                  })
+                }</td>
+                <td className="px-6 py-4 whitespace-nowrap">{format_date(order.createdAt)}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{order.payment}</td>
+              </tr>
+            )})}
             </tbody>
           </table>
         </div>

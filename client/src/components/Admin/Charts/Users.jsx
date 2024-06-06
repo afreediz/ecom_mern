@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Bar } from "react-chartjs-2";
-import { users } from '../../../datas';
 
 export const BarChart = ({ chartData }) => {
   return (
@@ -25,7 +24,7 @@ export const BarChart = ({ chartData }) => {
 };
 
 
-function UsersChart() {
+function UsersChart({users}) {
     const [chartData, setChartData] = useState({
       labels: users.map((user) => user.day),
       datasets: [

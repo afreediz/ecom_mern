@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Pie } from "react-chartjs-2";
-import { products } from '../../../datas';
 
 function PieChart({ chartData }) {
   return (
@@ -21,7 +20,8 @@ function PieChart({ chartData }) {
   );
 }
 
-function ProductsChart() {
+function ProductsChart({products}) {
+  console.log(products);
     const [chartData, setChartData] = useState({
       labels: products.map((product) => product.category),
       datasets: [

@@ -30,7 +30,7 @@ const App = () => {
   useEffect(()=>{
     async function checkAuth(){
       try{
-        const {data} = await API.get('user/get-user')
+        const {data} = await API.get('users/get-user')
         setUser(data.user)
         setLoading(false)
       }catch(error){

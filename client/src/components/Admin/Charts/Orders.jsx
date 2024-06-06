@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Line } from "react-chartjs-2";
-import { orders } from "../../../datas";
 
 function LineChart({ chartData }) {
   return (
@@ -23,7 +22,7 @@ function LineChart({ chartData }) {
     </div>
   );
 }
-function OrdersChart(){
+function OrdersChart({orders}){
     const [chartData, setChartData] = useState({
         labels: orders.map((order) => order.day),
         datasets: [
