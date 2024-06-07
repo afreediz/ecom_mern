@@ -2,9 +2,10 @@ const router = require('express').Router()
 
 const { isAuthenticated, isAdmin } = require('../middlewares/isAuth')
 const { orderStatus, createOrder, userOrders, allOrders, deleteOrder, cancelOrder, dashboardDetails } = require('../controllers/order')
+const { orderValidation } = require('../helpers/validators')
 
 router.get('/', isAuthenticated, userOrders)
-router.post('/', isAuthenticated, createOrder)
+router.post('/', isAuthenticated, orderValidation, createOrder)
 router.put('/cancel/:id', isAuthenticated, cancelOrder)
 
 // feature cancel for user and delete for admin

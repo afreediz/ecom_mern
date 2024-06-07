@@ -1,6 +1,5 @@
 const asyncErrorHandler = require("express-async-handler")
 const CustomError = require('../utils/CustomError')
-
 const User = require('../models/user')
 const { hashPassword, comparePassword } = require("../helpers/auth")
 const { generateToken } = require("../helpers/jwt")
