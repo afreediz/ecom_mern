@@ -2,8 +2,29 @@ const { body, validationResult } = require('express-validator')
 const asyncErrorHandler = require("express-async-handler")
 const CustomError = require('../utils/CustomError')
 
+const sanitizeAllFields = (req, res, next) => {
+    // Iterate over all fields in req.body and apply trim and escape
+    Object.keys(req.body).forEach(key => {
+        if (typeof req.body[key] === 'string') {
+            req.body[key] = req.body[key].trim().replace(/[&<>"'/]/g, function (s) {
+                const entityMap = {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;',
+                    '/': '&#x2F;'
+                };
+                return entityMap[s];
+            });
+        }
+    });
+    next();
+};
+
 const loginValidation = [
-    body('email').isEmail(),
+    sanitizeAllFields,
+    body('email').isEmail().normalizeEmail(),
     body('password').isLength({ min: 1   }),
     // Middleware to handle the validation results
     asyncErrorHandler((req, res, next) => {
@@ -25,6 +46,7 @@ const loginValidation = [
 ];
 
 const registerValidation = [
+    sanitizeAllFields,
     body('name').isLength({ min: 3 }).withMessage('Name must be at least 3 characters'),
     body('email').isEmail().withMessage('Email is not valid'),
     body('phone').matches(/^\+?[1-9]\d{1,14}$/),
@@ -54,6 +76,7 @@ const registerValidation = [
 ];
 
 const orderValidation = [
+    sanitizeAllFields,
     body('cart').isArray({ min: 1 }).withMessage('Cart must be an array with at least one item'),
     body('cart.*.product').not().isEmpty().withMessage('Product ID must not be empty'),
     body('cart.*.cart_quantity').isInt({ min: 1 }).withMessage('Quantity must be at least 1'),
