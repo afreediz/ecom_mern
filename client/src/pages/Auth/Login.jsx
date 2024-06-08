@@ -55,8 +55,9 @@ const Login = () => {
         <form onSubmit={login}>
           <div className='mb-4'>
             <input 
-              type="text" 
+              type="email" 
               name='email' 
+              required 
               value={data.email} 
               onChange={onchange} 
               className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
@@ -67,6 +68,8 @@ const Login = () => {
             <input 
               type="password" 
               name='password' 
+              required 
+              minLength={8}
               value={data.password} 
               onChange={onchange} 
               className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 

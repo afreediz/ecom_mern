@@ -29,7 +29,7 @@ function UsersChart({users}) {
       labels: users.map((user) => user.day),
       datasets: [
         {
-          label: "Products",
+          label: "Users",
           data: users.map((user) => user.number_of_users),
           backgroundColor: ["red", "green", "blue", "yellow"],
         },

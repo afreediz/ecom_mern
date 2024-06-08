@@ -28,7 +28,7 @@ function ProductsChart({products}) {
         {
           label: "Products",
           data: products.map((product) => product.number_of_products),
-          backgroundColor: ["red", "green", "blue", "yellow"],
+          backgroundColor: ["red", "green", "blue", "yellow", "purple", "orange"],
         },
       ],
     });

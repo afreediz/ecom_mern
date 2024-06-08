@@ -52,6 +52,7 @@ const Register = () => {
             <input 
               type="text" 
               name='name' 
+              minLength={3}
               value={data.name} 
               onChange={onchange} 
               className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
@@ -60,7 +61,7 @@ const Register = () => {
           </div>
           <div className='mb-4'>
             <input 
-              type="text" 
+              type="email" 
               name='email' 
               value={data.email} 
               onChange={onchange} 
@@ -70,8 +71,9 @@ const Register = () => {
           </div>
           <div className='mb-4'>
             <input 
-              type="text" 
+              type="password" 
               name='password' 
+              minLength={8}
               value={data.password} 
               onChange={onchange} 
               className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
@@ -80,8 +82,9 @@ const Register = () => {
           </div>
           <div className='mb-4'>
             <input 
-              type="text" 
+              type="number" 
               name='phone' 
+              minLength={10}
               value={data.phone} 
               onChange={onchange} 
               className='w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500' 
