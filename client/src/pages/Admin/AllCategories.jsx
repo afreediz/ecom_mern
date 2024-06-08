@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import API from '../../services/api';
 import CreateCategory from './CreateCategory';
 import { toast } from 'react-toastify';
@@ -7,6 +8,7 @@ const AllCategories = () => {
   // Fake categories data
   const [displayAdd, setDisplayAdd] = useState(false)
   const [categories, setCategories] = useState()
+  const navigate = useNavigate()
   useEffect(()=>{
     async function getCategory(){
       try{
@@ -75,6 +77,8 @@ const AllCategories = () => {
                 </form>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <div className=" flex gap-2">
+                <button className="text-blue-600 hover:text-blue-900" onClick={()=>{navigate('/category/'+category.slug)}}>view</button>
                 <form action="" onSubmit={async(e)=>{
                   try{
                     e.preventDefault()
@@ -87,6 +91,7 @@ const AllCategories = () => {
                 }}>
                   <button className="text-red-600 hover:text-red-900">Delete</button>
                 </form>
+                </div>
               </td>
             </tr>
           ))}
