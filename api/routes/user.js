@@ -2,17 +2,16 @@ const router = require('express').Router()
 const { getUser, getAdmin, orders, allOrders, profile, updateProfile, deleteProfile, getAllUsers, userStatus, deleteUser, dashboardDetails } = require('../controllers/user')
 const { isAuthenticated, isAdmin } = require('../middlewares/isAuth')
 
-router.get('/get-user', isAuthenticated, getUser) // done
-router.get('/profile', isAuthenticated, profile) // done
-router.put('/profile', isAuthenticated, updateProfile) // done
-router.delete('/profile', isAuthenticated, deleteProfile) // done
-// router.get('/orders', isAuthenticated, orders)
+router.get('/get-user', isAuthenticated, getUser)
+router.get('/profile', isAuthenticated, profile)
+router.put('/profile', isAuthenticated, updateProfile)
+router.delete('/profile', isAuthenticated, deleteProfile)
 
-// admin routes
-router.get('/get-admin', isAuthenticated, isAdmin, getAdmin) // done
-router.get('/dashboard', isAuthenticated, isAdmin, dashboardDetails) // done
-router.delete('/:id', isAuthenticated, isAdmin, deleteUser) // done
-router.put('/status/:id', isAuthenticated, isAdmin, userStatus) // done
-router.get('/all-users', isAuthenticated, isAdmin, getAllUsers) // done
+// admin
+router.get('/get-admin', isAuthenticated, isAdmin, getAdmin)
+router.get('/dashboard', isAuthenticated, isAdmin, dashboardDetails)
+router.delete('/:id', isAuthenticated, isAdmin, deleteUser)
+router.put('/status/:id', isAuthenticated, isAdmin, userStatus)
+router.get('/all-users', isAuthenticated, isAdmin, getAllUsers)
 
 module.exports = router

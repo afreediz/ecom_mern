@@ -2,20 +2,20 @@ const { getAllProducts, testCreateOrder, getProduct, createProduct, getOrders, u
 const { isAdmin, isAuthenticated } = require('../middlewares/isAuth')
 const router = require('express').Router()
 
-router.get('/count', getProductCount) // done
-router.get('/list/:page', productList) // done
-router.get('/search/:keyword', productSearch) // done
-router.get('/related-products/:pid/:cid', productsRelated) // done
-router.get('/category/:slug/count', categoryProductsCount) // done
-router.get('/category/:slug/:page', categoryProducts) // done
-router.get('/', getAllProducts) // done
+router.get('/count', getProductCount)
+router.get('/list/:page', productList)
+router.get('/search/:keyword', productSearch)
+router.get('/related-products/:pid/:cid', productsRelated)
+router.get('/category/:slug/count', categoryProductsCount)
+router.get('/category/:slug/:page', categoryProducts)
+router.get('/', getAllProducts)
 
 // admin operations
-router.get('/dashboard', isAuthenticated, isAdmin, dashboardDetails) // done
-router.post('/', isAuthenticated, isAdmin, createProduct) // done
-router.put('/:id', isAuthenticated, isAdmin, updateProduct) // done
-router.delete('/:id', isAuthenticated, isAdmin, deleteProduct) // done
+router.get('/dashboard', isAuthenticated, isAdmin, dashboardDetails)
+router.post('/', isAuthenticated, isAdmin, createProduct)
+router.put('/:id', isAuthenticated, isAdmin, updateProduct)
+router.delete('/:id', isAuthenticated, isAdmin, deleteProduct)
 
-router.get('/:slug', getProduct) // done
+router.get('/:slug', getProduct)
 
 module.exports = router
