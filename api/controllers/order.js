@@ -76,6 +76,9 @@ const dashboardDetails = asyncErrorHandler(async(req, res)=>{
         },
         {
             $sort: { day: 1 }
+        },
+        {
+            $limit: 20
         }
     ]);
     console.log("orders ", orders);

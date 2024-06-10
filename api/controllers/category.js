@@ -10,7 +10,7 @@ const getCategory = asyncErrorHandler(async(req, res)=>{
     res.status(200).json({
         success:true,
         message:"Category",
-        categories
+        category
     })
 })
 const getAllCategory = asyncErrorHandler(async(req, res)=>{

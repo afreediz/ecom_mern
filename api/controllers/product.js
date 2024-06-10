@@ -181,7 +181,10 @@ const dashboardDetails = asyncErrorHandler(async(req, res)=>{
             }
         },
         {
-            $sort: { category: 1 }
+            $sort: { number_of_products: -1 }
+        },
+        {
+            $limit: 20
         }
     ]);
     res.status(200).json({

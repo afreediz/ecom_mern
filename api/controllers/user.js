@@ -97,6 +97,9 @@ const dashboardDetails = asyncErrorHandler(async(req, res)=>{
         },
         {
             $sort: { day: 1 }
+        },
+        {
+            $limit: 20
         }
     ]);
     res.status(200).json({
