@@ -37,7 +37,7 @@ const Dashboard = () => {
   return (
     <div className="mx-4">
       <h1 className="text-3xl font-semibold mb-8">Dashboard</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:w-full lg:grid-cols-3 gap-6">
         <div className="bg-gray-900 text-white rounded-lg p-6 flex items-center justify-between">
           <div className="flex items-center">
             <FaCube className="text-3xl mr-4" />
@@ -66,7 +66,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-5 gap-2 mt-8">
+      <div className="grid lg:grid-cols-5 gap-2 mt-8">
         <div className="bg-gray-900 text-white rounded-lg p-6 col-span-2">
           <h2 className="text-xl font-semibold mb-4">Orders Chart</h2>
           { orders && <OrdersChart orders={orders.orders} />}

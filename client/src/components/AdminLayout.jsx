@@ -12,7 +12,7 @@ const AdminLayout = () => {
         <div className="col-span-2">
           <Sidebar />
         </div>
-        <div className="col-span-10 p-4">
+        <div className="col-span-10 p-4 overflow-y-scroll">
           <Outlet />
         </div>
       </div>
