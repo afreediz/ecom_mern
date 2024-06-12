@@ -33,7 +33,7 @@ const AllCategories = () => {
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
               Index
             </th>
-            <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+            <th scope="col" className=" max-md:hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
               ID
             </th>
             <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
@@ -49,7 +49,7 @@ const AllCategories = () => {
           {categories && categories.map((category, index) => (
             <tr key={index} className="">
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{index+1}</td>
-              <td className="px-6 py-4 whitespace-nowrap text-sm ">{category._id}</td>
+              <td className=" max-md:hidden px-6 py-4 whitespace-nowrap text-sm ">{category._id}</td>
               <td className="px-6 py-4 whitespace-nowrap text-sm ">
                 <form action="" onSubmit={async(e)=>{
                   e.preventDefault()

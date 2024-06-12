@@ -82,12 +82,12 @@ const Dashboard = () => {
       </div>
       <div className="mt-8">
         <h2 className="text-xl font-semibold mb-4">Recent Orders</h2>
-        <div className="overflow-x-auto">
+        <div className="">
           <table className="min-w-full">
             <thead>
               <tr className='bg-gray-800 border-2 border-slate-100'>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Index</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Order ID</th>
+                <th className="max-md:hidden px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Order ID</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">User</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Products</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-slate-100 uppercase tracking-wider">Date</th>
@@ -99,7 +99,7 @@ const Dashboard = () => {
               return (
                 <tr key={order.orderid}>
                 <td className="px-6 py-4 whitespace-nowrap">{index+1}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{order._id}</td>
+                <td className="max-md:hidden px-6 py-4 whitespace-nowrap">{order._id}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{order.user.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{
                   order.products.map((ordered_product_details)=>{

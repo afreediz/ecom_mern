@@ -59,7 +59,7 @@ const Header = () => {
       </form>
       <div className='list flex items-center space-x-4 sm:flex'>
         <Link to="/"><li className=' hidden lg:block hover:text-gray-400'>Home</li></Link>
-        <div className="relative">
+        <div className="max-sm:hidden lg:relative ">
           <select
             onChange={navigateCategory}
             className="text-white bg-gray-800 border border-gray-600 px-4 py-2 rounded-lg shadow-lg appearance-none focus:outline-none focus:ring-2"
@@ -108,7 +108,7 @@ const Header = () => {
                 navigateCategory(e);
                 setMenuOpen(false);
               }}
-              className="text-black bg-white border border-gray-600 px-4 py-2 rounded-lg shadow-lg appearance-none focus:outline-none focus:ring-2 "
+              className=" text-black bg-white border border-gray-600 px-4 py-2 rounded-lg shadow-lg appearance-none focus:outline-none focus:ring-2 "
             >
               <option value="all">All categories</option>
               {categories && categories.map((category, index) => (
@@ -125,7 +125,7 @@ const Header = () => {
           </div>
           {user ? (
             <>
-              <Link to="/dashboard" onClick={() => setMenuOpen(false)} className='hover:text-gray-400 mb-4'>Dashboard</Link>
+              <Link to="/profile" onClick={() => setMenuOpen(false)} className='hover:text-gray-400 mb-4'>Dashboard</Link>
               <button onClick={() => {
                 logout();
                 setMenuOpen(false);

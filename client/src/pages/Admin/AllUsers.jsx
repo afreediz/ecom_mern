@@ -50,7 +50,7 @@ const AllUsers = () => {
           <thead>
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Index</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
+              <th className=" max-md:hidden px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Username</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Username</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Joined Date</th>
@@ -61,7 +61,7 @@ const AllUsers = () => {
           {users && users.map((user,index) => (
             <tr key={user.id}>
               <td className="px-6 py-4 whitespace-nowrap">{index+1}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{user._id}</td>
+              <td className=" max-md:hidden px-6 py-4 whitespace-nowrap">{user._id}</td>
               <td className="px-6 py-4 whitespace-nowrap">{user.name}</td>
               <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
               <td className="px-6 py-4 whitespace-nowrap">{format_date(user.createdAt)}</td>

@@ -1,4 +1,4 @@
-export const api_url = 'http://localhost:3002/api/'
+export const api_url = 'https://rdsn21zk-3002.inc1.devtunnels.ms/api/'
 
 export const users = [
     {
