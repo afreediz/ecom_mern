@@ -35,19 +35,24 @@ const createProduct = asyncErrorHandler(async(req, res)=>{
         
     const result = await uploadImage(image)
     console.log(result.url);
-    const product = await new Product({name, slug:slugify(name), shortdesc,description, price, category, quantity, image:result.url}).save()
-
-    res.status(200).json({
-        success:true,
-        message:"Product added successfully",
-        product
-    })
+    try{
+        const product = await new Product({name, slug:slugify(name), shortdesc,description, price, category, quantity, image:result.url}).save()
+        res.status(200).json({
+            success:true,
+            message:"Product added successfully",
+            product
+        })
+    }catch(err){
+        await deleteImage(result.url)
+        throw new CustomError(err.message, 500)
+    }
 })
 const updateProduct = asyncErrorHandler(async(req, res)=>{
     const id = req.params.id
     const { name, description, price, category, quantity, image, old_image, shortdesc } = req.body
     var result = image
     if(image !== old_image){ 
+        console.log(old_image);
         console.log('deleted')
         await deleteImage(old_image)
         result = await uploadImage(image)
@@ -62,8 +67,9 @@ const updateProduct = asyncErrorHandler(async(req, res)=>{
 })
 const deleteProduct = asyncErrorHandler(async(req, res)=>{
     const id = req.params.id
-    console.log('deleting ', id);
-    await Product.findByIdAndDelete(id)
+    const {image} = await Product.findOne({_id:id}).select('image')
+    deleteImage(image)
+    await Product.deleteOne({_id:id})
 
     res.status(200).json({
         success:true,

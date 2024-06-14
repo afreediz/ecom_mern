@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const cloudinary = require('cloudinary')
 
 const productSchema = mongoose.Schema({
     name:{
@@ -33,12 +34,7 @@ const productSchema = mongoose.Schema({
     image:{
         type:String,
         required:true
-    },
-    imageId:{
-        type:String,
-        required:true
     }
 }, {timstamps:true})
-
 
 module.exports = mongoose.model('products', productSchema)

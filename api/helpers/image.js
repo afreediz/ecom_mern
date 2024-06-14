@@ -13,6 +13,7 @@ const uploadImage = async(image) => {
     return result
 }
 const deleteImage = async(image_url) => {
+    console.log('delted ', image_url);
     await cloudinary.uploader.destroy(image_url, { invalidate: true })
 }
 
