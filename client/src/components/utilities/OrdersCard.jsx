@@ -1,11 +1,12 @@
 import React from 'react'
 
 const OrdersCard = ({product, quantity, order_id, order_date}) => {
+  console.log(product);
   return (
     <div className='w-full border border-gray-300 rounded-lg my-4 bg-white shadow-md'>
       <div className="product grid grid-cols-1 md:grid-cols-5 gap-4 p-4">
         <div className="col-span-1">
-          {product ? <img src="https://via.placeholder.com/150" alt={product.name} className="w-full h-auto rounded-lg" /> : <img src={product.image ? product.image :"https://via.placeholder.com/150"} alt="product image" className="w-full h-auto rounded-lg" />}
+          {product ? <img src={product.image ? product.image :"https://via.placeholder.com/150"} alt={product.name} className="w-full h-auto rounded-lg" /> : <img src={product.image ? product.image :"https://via.placeholder.com/150"} alt="product image" className="w-full h-auto rounded-lg" />}
         </div>
         <div className="col-span-4 space-y-2">
           <h2 className='text-lg font-semibold text-gray-700'>Order ID: <span className='text-gray-500'>{order_id}</span></h2>

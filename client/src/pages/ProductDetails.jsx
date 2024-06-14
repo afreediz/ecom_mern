@@ -33,7 +33,7 @@ const ProductDetails = () => {
           className='py-2 px-4 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition duration-300'
           onClick={() => {
             cartOperations.addToCart(
-              { _id: product._id, name: product.name, price: product.price, shortdesc: product.shortdesc },
+              { _id: product._id, name: product.name, price: product.price, shortdesc: product.shortdesc, image: product.image },
               context
             );
             toast.success('Added to cart');
