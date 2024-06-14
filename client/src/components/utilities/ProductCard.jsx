@@ -2,13 +2,13 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart, cartOperations } from '../../context/cart'
 import {toast} from 'react-toastify'
-import ProductImage from './productimage.webp'
+
 const ProductCard = ({data}) => {
   const context = useCart()
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
       <div className="image">
-        <img src={data.image ? data.image : ProductImage} alt={data.name} className="w-full h-48 object-cover" />
+        <img src={data.image ? data.image : "https://via.placeholder.com/150"} alt={data.name} className="w-full h-48 object-cover" />
       </div>
       <div className="p-4">
         <div className="title">

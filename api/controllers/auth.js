@@ -2,7 +2,7 @@ const asyncErrorHandler = require("express-async-handler")
 const CustomError = require('../utils/CustomError')
 const User = require('../models/user')
 const { hashPassword, comparePassword } = require("../helpers/auth")
-const { generateToken } = require("../helpers/jwt")
+const { generateToken, validateToken } = require("../helpers/jwt")
 
 const register = asyncErrorHandler(async(req, res)=>{
     const { name, email, password, address, phone } = req.body
@@ -13,22 +13,26 @@ const register = asyncErrorHandler(async(req, res)=>{
     const isExist = await User.findOne({email})
     if(isExist) throw new CustomError('User already exists, Please Login or try with a different email address')
 
+    const token = generateToken({name, email, password, phone, address}, "1hr")
+
+    // send(token)
+
+    res.status(200).json({success:true, message:`Verification email has successfull sended to your email ${email}`,token})
+})
+
+const verifyUser = asyncErrorHandler(async(req, res)=>{
+    const {token} = req.params
+    const {name, email, password, phone, address} = validateToken(token)
+
     const hashedPassword = await hashPassword(password)
 
-    const user = await new User({
+    await new User({
         name, email:email.toLowerCase(), password:hashedPassword, phone, address
     }).save()
 
-    res.status(200).json({success:true, message:"User registration successfull",
-        user:{
-            _id:user._id,
-            email:user.email,
-            phone:user.phone,
-            address:user.address,
-            answer:user.answer
-        }
-    })
+    res.status(200).json({success:true, message:"User registration successfull"})
 })
+
 const login = asyncErrorHandler(async(req, res)=>{
     const {email, password} = req.body
     if(!email || !password) throw new CustomError("Necessary details are not filled", 404)
@@ -40,7 +44,7 @@ const login = asyncErrorHandler(async(req, res)=>{
 
     if(!await comparePassword(password, user.password)) throw new CustomError("Password does not match", 400)
 
-    const token = generateToken({_id:user._id})
+    const token = generateToken({_id:user._id}, "7d")
 
     res.status(200).json({
         success:true,
@@ -60,5 +64,6 @@ const forgetPassword = asyncErrorHandler(async(req, res)=>{
 module.exports = {
     register,
     login,
-    forgetPassword
+    forgetPassword,
+    verifyUser
 }

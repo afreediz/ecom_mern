@@ -53,7 +53,7 @@ const registerValidation = [
     body('password').isLength({ min: 8 }),
     asyncErrorHandler((req, res, next) => {
         const errors = validationResult(req);
-        console.log("found ", errors);
+        console.log(errors);
         if (!errors.isEmpty()) {
             errors.array().forEach(error => {
                 if (error.path === 'name') {
