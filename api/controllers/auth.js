@@ -3,6 +3,7 @@ const CustomError = require('../utils/CustomError')
 const User = require('../models/user')
 const { hashPassword, comparePassword } = require("../helpers/auth")
 const { generateToken, validateToken } = require("../helpers/jwt")
+const { sendVerificationEmail } = require("../helpers/mail")
 
 const register = asyncErrorHandler(async(req, res)=>{
     const { name, email, password, address, phone } = req.body
@@ -15,22 +16,11 @@ const register = asyncErrorHandler(async(req, res)=>{
 
     const token = generateToken({name, email, password, phone, address}, "1hr")
 
-    // send(token)
+    const verification_link = `${process.env.BACKEND}/api/auth/verify/${token}`
+
+    await sendVerificationEmail(email, verification_link)
 
     res.status(200).json({success:true, message:`Verification email has successfull sended to your email ${email}`,token})
-})
-
-const verifyUser = asyncErrorHandler(async(req, res)=>{
-    const {token} = req.params
-    const {name, email, password, phone, address} = validateToken(token)
-
-    const hashedPassword = await hashPassword(password)
-
-    await new User({
-        name, email:email.toLowerCase(), password:hashedPassword, phone, address
-    }).save()
-
-    res.status(200).json({success:true, message:"User registration successfull"})
 })
 
 const login = asyncErrorHandler(async(req, res)=>{
@@ -57,8 +47,77 @@ const login = asyncErrorHandler(async(req, res)=>{
         token
     })
 })
+
 const forgetPassword = asyncErrorHandler(async(req, res)=>{
     //
+})
+
+const verifyUser = asyncErrorHandler(async(req, res)=>{
+    const {token} = req.params
+    const {name, email, password, phone, address} = validateToken(token)
+
+    const hashedPassword = await hashPassword(password)
+
+    await new User({
+        name, email:email.toLowerCase(), password:hashedPassword, phone, address
+    }).save()
+
+    res.status(200).send(`
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Successful</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            color: #1a1a1a;
+        }
+        .container p {
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .container a {
+            display: inline-block;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #1a1a1a;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .container a:hover {
+            background-color: #1a1a2a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verification Successful</h1>
+        <p>Your email has been successfully verified.</p>
+        <a href="${process.env.FRONTEND}/login">Click here to login</a>
+    </div>
+</body>
+</html>
+
+        `)
 })
 
 module.exports = {
