@@ -9,7 +9,7 @@ const CartCard = ({product}) => {
       {/* Image Section */}
       <div className="image sm:col-span-1 col-span-5">
         <img
-          src="https://via.placeholder.com/150"
+          src={product.image ? product.image :"https://via.placeholder.com/150"}
           alt={product.name}
           className="w-full h-full object-cover rounded-lg"
         />

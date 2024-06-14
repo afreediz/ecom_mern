@@ -4,6 +4,7 @@ const slugify = require('slugify')
 
 const Product = require('../models/product')
 const Category = require("../models/category")
+const uploadImage = require("../helpers/image")
 
 const getAllProducts = asyncErrorHandler(async(req, res)=>{
     const products = await Product.find({}).populate('category').select('_id name shortdesc price slug').sort({createdAt:-1})
@@ -27,11 +28,14 @@ const getProduct = asyncErrorHandler(async(req, res)=>{
 })
 
 const createProduct = asyncErrorHandler(async(req, res)=>{
-    const { name, description, price, category, quantity, photo, shipping, shortdesc } = req.body
+    console.log(req.headers);
     console.log(req.body);
-    if( !name || !description || !price || !category || !shortdesc) throw new CustomError('Necessary details are not filled', 404)
-
-    const product = await new Product({name, slug:slugify(name), shortdesc,description, price, category, quantity, photo, shipping}).save()
+    const { name, description, price, category, quantity, image, shortdesc } = req.body
+    if( !name || !description || !price || !category || !shortdesc || !image ) throw new CustomError('Necessary details are not filled', 404)
+        
+    const result = await uploadImage(image)
+    console.log(result.url);
+    const product = await new Product({name, slug:slugify(name), shortdesc,description, price, category, quantity, image:result.url}).save()
 
     res.status(200).json({
         success:true,

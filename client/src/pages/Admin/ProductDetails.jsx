@@ -7,6 +7,7 @@ const AdminProductDetails = () => {
     const [choosenCategory, setChoosenCategory] = useState()
     const [categories, setCategories] = useState([])
     const [updateable, setUpdateable] = useState(false)
+    const [image, setImage] = useState(null);
     const navigate = useNavigate()
     
     const { slug } = useParams()
@@ -15,8 +16,11 @@ const AdminProductDetails = () => {
       try{
         const {data} = await API.get(`products/${slug}`)
         setChoosenCategory(data.product.category._id)
+        setImage(data.product.image)
         console.log(data);
-        setProduct(data.product)
+        const {_id, category, name, price, shortdesc, description} = data.product
+        setProduct({_id, category, name, price, shortdesc, description})
+        console.log('here ',data.product);
       }catch({response}){
         console.log(response?.data.message);
       }
@@ -32,7 +36,6 @@ const AdminProductDetails = () => {
     getProduct()
     getCategories()
   },[])
-  console.log(choosenCategory);
 
   const onChange = (e) => {
     setUpdateable(true)
@@ -40,10 +43,6 @@ const AdminProductDetails = () => {
       ...product,
       [e.target.name]: e.target.value
     })
-  }
-  const onCategoryChange = (e) => {
-    setUpdateable(true)
-    setChoosenCategory(e.target.value)
   }
 
   const handleDelete = async () => {
@@ -65,7 +64,7 @@ const AdminProductDetails = () => {
     e.preventDefault()
     try{
       const {data} = await API.put(`products/${product._id}`, {
-        ...product
+        ...product, image
       })
       console.log(data);
       setUpdateable(false)
@@ -74,15 +73,35 @@ const AdminProductDetails = () => {
       console.log(response?.data.message);
     }
   }
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+    reader.readAsDataURL(file);
+  };
   
   console.log(product);
   return (
     <div className='grid grid-cols-1 md:grid-cols-6 gap-8 p-8 bg-gray-900 text-white w-screen'>
       <div className="image w-full md:col-span-2 flex justify-center items-center relative">
         <div className=" absolute w-full h-full bg-transparent opacity-0 hover:bg-black hover:opacity-60 z-10 transition-all flex justify-center items-center hover:backdrop-blur-lg">
-            <div className="outline outline-1 outline-white p-4 hover:outline-red-900 hover:text-red-900">choose an image</div>
+            {/* <input type='file' onChange={handleFileChange} className="outline border-none outline-1 outline-white p-4 hover:outline-red-900 hover:text-red-900 bg-transparent text-white text-center" placeholder='choose an image' /> */}
+            <input
+          type="file"
+          id="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          style={{ display: 'none' }} // Hide the actual input element
+        />
+        <label htmlFor="file" className="custom-file-upload">
+          <div className="outline border-none outline-1 outline-white p-4 hover:outline-red-500 hover:text-red-500 bg-transparent text-white text-center">
+            choose an image
+          </div>
+        </label>
         </div>
-        <img src="https://via.placeholder.com/150"  alt={product && product.name} className="max-w-full rounded-lg shadow-lg" />
+        <img src={product && image ? image :"https://via.placeholder.com/150"}  alt={product && product.name} className="max-w-full rounded-lg shadow-lg" />
       </div>
       <div className="md:col-span-4 w-full">
         <input onChange={onChange} name="name" value={product && product.name} className=" bg-transparent border-none outline-none text-4xl font-bold mb-4" />

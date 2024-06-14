@@ -21,7 +21,7 @@ const ProductDetails = () => {
   return (
     product?<div className='grid grid-cols-1 md:grid-cols-6 gap-8 p-8 bg-gray-900 text-white'>
     <div className="image col-span-2 flex justify-center items-center">
-      <img src="https://via.placeholder.com/150"  alt={product && product.name} className="max-w-full rounded-lg shadow-lg" />
+      <img src={product.image ? product.image :"https://via.placeholder.com/150"}  alt={product && product.name} className="max-w-full rounded-lg shadow-lg" />
     </div>
     <div className="col-span-4">
       <h2 className="text-4xl font-bold mb-4">{product && product.name}</h2>

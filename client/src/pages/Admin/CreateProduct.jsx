@@ -9,9 +9,10 @@ const CreateProduct = ({setDisplayAdd, setProducts}) => {
     category: '',
     shortdesc: '',
     description: '',
-    imageUrl: '',
-    imageFile: null,
   });
+  const [image, setImage] = useState(null);
+  console.log(product);
+  console.log(image);
 
   const [categories, setCategories] = useState([]);
 
@@ -34,13 +35,26 @@ const CreateProduct = ({setDisplayAdd, setProducts}) => {
   };
 
   const handleFileChange = (e) => {
-    setProduct({ ...product, imageFile: e.target.files[0] });
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async(e) => {
+    // const formData = new FormData();
+    // formData.append('name', product.name);
+    // formData.append('price', product.price);
+    // formData.append('category', product.category);
+    // formData.append('shortdesc', product.shortdesc);
+    // formData.append('description', product.description);
+    // formData.append('image', image);
     e.preventDefault();
     try{
-      const {data} = await API.post('products', product)
+      console.log('sending');
+      const {data} = await API.post('products', {...product, image})
       console.log('ters', data);
       setProducts((prev)=>[...prev, {...data.product,category:categories.find((category)=>category._id === product.category)}])
       setDisplayAdd(false)
@@ -58,7 +72,7 @@ const CreateProduct = ({setDisplayAdd, setProducts}) => {
           <h1 className="text-3xl font-semibold text-center text-gray-700 mb-1">Create Product</h1>
           <IoMdClose className='text-2xl' onClick={() => setDisplayAdd(false)} />
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType='multipart/form-data'>
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2" htmlFor="name">Product Name</label>
             <input
@@ -75,7 +89,7 @@ const CreateProduct = ({setDisplayAdd, setProducts}) => {
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2" htmlFor="price">Price</label>
             <input
-              type="text"
+              type="number"
               id="price"
               name="price"
               value={product.price}
@@ -128,24 +142,11 @@ const CreateProduct = ({setDisplayAdd, setProducts}) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2" htmlFor="imageUrl">Image URL</label>
-            <input
-              type="text"
-              id="imageUrl"
-              name="imageUrl"
-              value={product.imageUrl}
-              onChange={handleChange}
-              className="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Image URL"
-            />
-          </div>
-
-          <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-2" htmlFor="imageFile">Upload Image</label>
             <input
               type="file"
               id="imageFile"
-              name="imageFile"
+              name="image"
               onChange={handleFileChange}
               className="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
