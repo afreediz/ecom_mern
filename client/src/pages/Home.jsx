@@ -2,20 +2,18 @@ import React, { useEffect, useState } from 'react'
 import ProductCard from '../components/utilities/ProductCard'
 import API from '../services/api'
 import FilterSidebar from '../components/utilities/FilterSidebar'
+import { toast } from 'react-toastify'
 
 const Home = () => {
   const [products, setProducts] = useState([])
   const [allProducts, setAllProducts] = useState([])
   const [page, setPage] = useState(1)
   const [totalProducts, setTotalProducts] = useState(0)
-  console.log(totalProducts);
   useEffect(()=>{
     async function getProducts(){
-      console.log('getting');
       try{
         const {data} = await API.get(`products/list/${page}`)
         const res = await API.get(`products/count`)
-        console.log(data);
         setProducts([
           ...products,
           ...data.products
@@ -26,12 +24,12 @@ const Home = () => {
         ])
         setTotalProducts(res.data.total)
       }catch(error){
-        console.log(error);
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getProducts()
   },[page])
-  console.log(products);
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div className="flex flex-col lg:flex-row lg:space-x-4">

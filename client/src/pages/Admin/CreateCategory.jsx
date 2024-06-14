@@ -16,14 +16,14 @@ const CreateCategory = ({setDisplayAdd, setCategories}) => {
     e.preventDefault();
     try {
       const { data } = await API.post('/category', product);
-      console.log(data);
       setCategories((prev)=>{
         return [data.category, ...prev]
       });
       setDisplayAdd(false)
       toast.success("Category created successfully");
-    } catch ({ response }) {
-      console.log(response?.data.message);
+    } catch (error) {
+      toast.error(error.response?.data.message)
+      console.log(error)
     }
   }
 

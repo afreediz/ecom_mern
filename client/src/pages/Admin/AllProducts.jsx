@@ -12,23 +12,22 @@ const ProductTable = () => {
     async function getProducts(){
       try{
         const {data} = await API.get(`products/`)
-        console.log(data);
         setProducts(data.products)
       }catch(error){
-        console.log(error);
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getProducts()
   },[])
-  console.log(products);
   const handleDelete = async (id) => {
     try{
       const {data} = await API.delete(`products/${id}`)
-      console.log(data);
       setProducts((prev)=>prev.filter((product)=>product._id !== id))
       toast.success(data.message)
-    }catch({response}){
-      console.log(response?.data.message);
+    }catch(error){
+      toast.error(error.response?.data.message)
+      console.log(error)
     }
   }
 

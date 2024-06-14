@@ -19,20 +19,20 @@ const AdminProductDetails = () => {
         const {data} = await API.get(`products/${slug}`)
         setImage(data.product.image)
         setOldImage(data.product.image)
-        console.log(data);
         const {_id, category, name, price, shortdesc, description, quantity} = data.product
         setProduct({_id, category, name, price, shortdesc, description, quantity})
-        console.log('here ',data.product);
-      }catch({response}){
-        console.log(response?.data.message);
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     const getCategories = async () => {
         try {
             const { data } = await API.get('/category')
             setCategories(data.categories)
-        } catch ({ response }) {
-            console.log(response?.data.message)
+        } catch (error) {
+          toast.error(error.response?.data.message)
+          console.log(error)
         }
     }
     getProduct()
@@ -50,11 +50,11 @@ const AdminProductDetails = () => {
   const handleDelete = async () => {
     try{
       const {data} = await API.delete(`products/${product._id}`)
-      console.log(data);
       navigate('/admin/products')
       toast.success(data.message)
-    }catch({response}){
-      console.log(response?.data.message);
+    }catch(error){
+      toast.error(error.response?.data.message)
+      console.log(error)
     }
   }
 
@@ -65,11 +65,11 @@ const AdminProductDetails = () => {
         ...product, image, old_image
       })
       navigate(`/admin/products/${slugify(product.name)}`)
-      console.log(data);
       setUpdateable(false)
       toast.success(data.message)
-    }catch({response}){
-      console.log(response?.data.message);
+    }catch(error){
+      toast.error(error.response?.data.message)
+      console.log(error)
     }
   }
   const handleFileChange = (e) => {
@@ -82,7 +82,6 @@ const AdminProductDetails = () => {
     reader.readAsDataURL(file);
   };
   
-  console.log(product);
   return (
     <div className='grid grid-cols-1 md:grid-cols-6 gap-8 p-8 bg-gray-900 text-white w-screen'>
       <div className="image w-full md:col-span-2 flex justify-center items-center relative">

@@ -34,7 +34,6 @@ const Login = () => {
       const response = await API.post('auth/login',{
         ...data
       })
-      console.log(response);
       setUser(response.data.user)
       toast.success("User Login successfull")
       localStorage.setItem('token',response.data.token)

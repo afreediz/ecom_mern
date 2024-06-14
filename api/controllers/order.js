@@ -6,7 +6,6 @@ const Product = require("../models/product")
 
 const createOrder = asyncErrorHandler(async(req, res)=>{
     const { cart } = req.body
-    console.log(cart);
     for (let p of cart){
         const product = await Product.findById(p.product)
 
@@ -15,7 +14,6 @@ const createOrder = asyncErrorHandler(async(req, res)=>{
         if(product.quantity < p.cart_quantity) throw new CustomError("Product quantity is not available", 400)
 
         product.quantity -= p.cart_quantity
-        console.log(product);
         await product.save()
     }
     await Order.create({user:req.user._id,products:cart})
@@ -94,7 +92,6 @@ const dashboardDetails = asyncErrorHandler(async(req, res)=>{
             $limit: 20
         }
     ]);
-    console.log("orders ", orders);
     res.status(200).json({
         success:true, 
         message:"Dashboard orders details", 

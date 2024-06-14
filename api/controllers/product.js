@@ -28,13 +28,10 @@ const getProduct = asyncErrorHandler(async(req, res)=>{
 })
 
 const createProduct = asyncErrorHandler(async(req, res)=>{
-    console.log(req.headers);
-    console.log(req.body);
     const { name, description, price, category, quantity, image, shortdesc } = req.body
     if( !name || !description || !price || !category || !shortdesc || !image ) throw new CustomError('Necessary details are not filled', 404)
         
     const result = await uploadImage(image)
-    console.log(result.url);
     try{
         const product = await new Product({name, slug:slugify(name), shortdesc,description, price, category, quantity, image:result.url}).save()
         res.status(200).json({
@@ -52,8 +49,6 @@ const updateProduct = asyncErrorHandler(async(req, res)=>{
     const { name, description, price, category, quantity, image, old_image, shortdesc } = req.body
     var result = image
     if(image !== old_image){ 
-        console.log(old_image);
-        console.log('deleted')
         await deleteImage(old_image)
         result = await uploadImage(image)
     }

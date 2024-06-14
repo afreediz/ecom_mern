@@ -8,15 +8,14 @@ const AllOrders = () => {
     async function getOrders(){
       try{
         const res = await API.get("orders/all")
-        console.log(res);
         setOrders(res.data.orders)
-      }catch({response}){
-        console.log(response?.data.message)
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getOrders()
   },[])
-  console.log("orders ", orders);
 
   const handleShippingStatusChange = async(orderId, newStatus) => {
     if (newStatus == "Delete"){
@@ -26,8 +25,9 @@ const AllOrders = () => {
           return prev.filter((order)=>order._id !== orderId)
         })
         return toast.success("Order deleted successfully")
-      }catch({response}){
-        console.log(response?.data.message)
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }else{
       try{
@@ -36,8 +36,9 @@ const AllOrders = () => {
           return prev.map((order)=>order._id === orderId ? {...order, status: newStatus} : order)
         })
         toast.success("Shipping status updated successfully")
-      }catch({response}){
-        console.log(response?.data.message)
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
   };

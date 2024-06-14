@@ -8,10 +8,10 @@ const AllUsers = () => {
     async function getUsers(){
       try{
         const res = await API.get("users/all-users")
-        console.log(res);
         setUsers(res.data.users)
-      }catch({response}){
-        console.log(response?.data.message)
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getUsers()
@@ -24,8 +24,9 @@ const AllUsers = () => {
           return prev.filter((user)=>user._id !== userId)
         })
         return toast.success("user deleted successfully")
-      }catch({response}){
-        console.log(response?.data.message)
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }else{
       try{
@@ -34,8 +35,9 @@ const AllUsers = () => {
           return prev.map((user)=>user._id === userId ? {...user, status: newStatus} : user)
         })
         toast.success("User status updated successfully")
-      }catch({response}){
-        console.log(response?.data.message)
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
   };

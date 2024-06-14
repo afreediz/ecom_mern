@@ -11,10 +11,8 @@ const CreateProduct = ({setDisplayAdd, setProducts}) => {
     description: '',
     quantity:''
   });
-  const [image, setImage] = useState(null);
-  console.log(product);
-  console.log(image);
 
+  const [image, setImage] = useState(null);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -22,8 +20,9 @@ const CreateProduct = ({setDisplayAdd, setProducts}) => {
       try {
         const { data } = await API.get('/category')
         setCategories(data.categories)
-      } catch ({ response }) {
-        console.log(response?.data.message)
+      } catch (error) {
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getCategories();
@@ -45,23 +44,15 @@ const CreateProduct = ({setDisplayAdd, setProducts}) => {
   };
 
   const handleSubmit = async(e) => {
-    // const formData = new FormData();
-    // formData.append('name', product.name);
-    // formData.append('price', product.price);
-    // formData.append('category', product.category);
-    // formData.append('shortdesc', product.shortdesc);
-    // formData.append('description', product.description);
-    // formData.append('image', image);
     e.preventDefault();
     try{
-      console.log('sending');
       const {data} = await API.post('products', {...product, image})
-      console.log('ters', data);
       setProducts((prev)=>[...prev, {...data.product,category:categories.find((category)=>category._id === product.category)}])
       setDisplayAdd(false)
       toast.success(data.message)
-    }catch({response}){
-      console.log(response?.data.message)
+    }catch(error){
+      toast.error(error.response?.data.message)
+      console.log(error)
     }
   };
 

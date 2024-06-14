@@ -3,6 +3,7 @@ import ProductCard from '../components/utilities/ProductCard'
 import API from '../services/api'
 import FilterSidebar from '../components/utilities/FilterSidebar'
 import { useParams } from 'react-router-dom'
+import {toast} from 'react-toastify'
 
 const SearchProducts = () => {
     const [products, setProducts] = useState()
@@ -10,13 +11,13 @@ const SearchProducts = () => {
     const {query} = useParams()
   useEffect(()=>{
     async function getSearchResults(){
-        console.log('searching');
         try{
           const {data} = await API.get(`products/search/${query}`)
           setAllProducts(data.products)
           setProducts(data.products)
         }catch(error){
-          console.log(error);
+          toast.error(error.response?.data.message)
+          console.log(error)
         }
     }
     getSearchResults()

@@ -4,6 +4,7 @@ import { userContext } from '../../context/user'
 import { FaBars, FaTimes, FaShoppingCart, FaCat } from 'react-icons/fa';
 import { cartContext } from '../../context/cart'
 import API from '../../services/api'
+import { toast } from 'react-toastify'
 
 const Header = () => {
   const {user, setUser} = useContext(userContext)
@@ -23,7 +24,8 @@ const Header = () => {
         const {data} = await API.get('/category')
         setCategories(data.categories)
       }catch(error){
-        console.log(error);
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getCategory()

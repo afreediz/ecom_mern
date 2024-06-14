@@ -10,10 +10,10 @@ const Orders = () => {
     async function getOrders(){
       try{
         const {data} = await API.get("orders/")
-        console.log(data);
         setOrders(data.orders)
-      }catch({response}){
-        console.log(response?.data.message)
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getOrders()
@@ -28,8 +28,9 @@ const Orders = () => {
         return order
       }))
       toast.success(data.message)
-    }catch({response}){
-      console.log(response?.data.message)
+    }catch(error){
+      toast.error(error.response?.data.message)
+      console.log(error)
     }
   }
   const format_date = (date)=> {

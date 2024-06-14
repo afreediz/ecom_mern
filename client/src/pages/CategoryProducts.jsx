@@ -3,6 +3,7 @@ import ProductCard from '../components/utilities/ProductCard'
 import API from '../services/api'
 import FilterSidebar from '../components/utilities/FilterSidebar'
 import { useParams } from 'react-router-dom'
+import {toast} from 'react-toastify'
 
 const CategoryProducts = () => {
   const [products, setProducts] = useState()
@@ -14,11 +15,11 @@ const CategoryProducts = () => {
       try{
         const {data} = await API.get(`products/category/${slug}/${page}`)
         const res = await API.get(`products/category/${slug}/count`)
-        console.log(res);
         setProducts(data.products)
         setAllProducts(data.products)
-      }catch({response}){
-        console.log(response?.data.message);
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getProducts()

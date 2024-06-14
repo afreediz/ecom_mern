@@ -21,7 +21,6 @@ function PieChart({ chartData }) {
 }
 
 function ProductsChart({products}) {
-  console.log(products);
     const [chartData, setChartData] = useState({
       labels: products.map((product) => product.category),
       datasets: [

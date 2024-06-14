@@ -12,8 +12,9 @@ const ProductDetails = () => {
       try{
         const {data} = await API.get(`products/${slug}`)
         setProduct(data.product)
-      }catch({response}){
-        console.log(response?.data.message);
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getProduct()

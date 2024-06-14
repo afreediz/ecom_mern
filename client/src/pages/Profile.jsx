@@ -19,8 +19,9 @@ const Profile = () => {
           }
         })
         setData(response.data.user)
-      }catch({response}){
-        console.log(response?.data.error)
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getData()
@@ -55,8 +56,8 @@ const Profile = () => {
       navigate('/login')
       toast.success(response?.data.message)
     }catch(error){
-      console.log(error);
       toast.error(error.response?.data.message)
+      console.log(error);
     }
   }
   return (

@@ -9,7 +9,6 @@ const Cart = () => {
   const {user} = useAuth()
   const {cart, setCart} = useCart();
   const shipping_charge = 500
-  console.log(cart);
   const totalPrice = ()=> {
     let total = 0;
     cart?.map((p)=>{
@@ -33,9 +32,9 @@ const Cart = () => {
       })
       toast.success(data.message)
       setCart([])
-    }catch({response}){
-      toast.error(response?.data.message)
-      console.log(response?.data.message)
+    }catch(error){
+      toast.error(error.response?.data.message)
+      console.log(error)
     }
   }
   return (

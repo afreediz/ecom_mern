@@ -12,10 +12,10 @@ const AllCategories = () => {
     async function getCategory(){
       try{
         const res = await API.get("/category")
-        console.log(res);
         setCategories(res.data.categories)
-      }catch({response}){
-        console.log(response?.data.message)
+      }catch(error){
+        toast.error(error.response?.data.message)
+        console.log(error)
       }
     }
     getCategory()
@@ -58,8 +58,9 @@ const AllCategories = () => {
                         name: category.name
                       })
                       toast.success("Category updated successfully")
-                    }catch({response}){
-                      console.log(response?.data.message)
+                    }catch(error){
+                      toast.error(error.response?.data.message)
+                      console.log(error)
                     }
                 }}>
                   <input className=' bg-transparent border-none outline-none' type="text" value={category.name} onChange={(e)=>{
@@ -84,8 +85,9 @@ const AllCategories = () => {
                     await API.delete(`/category/${category._id}`)
                     setCategories((prev)=>prev.filter((item)=>item._id != category._id))
                     toast.success("Category deleted successfully")
-                  }catch({response}){
-                    console.log(response?.data.message)
+                  }catch(error){
+                    toast.error(error.response?.data.message)
+                    console.log(error)
                   }
                 }}>
                   <button className="text-red-600 hover:text-red-900">Delete</button>
