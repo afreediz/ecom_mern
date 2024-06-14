@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import API from '../../services/api'
 import {toast} from 'react-toastify'
+import slugify from 'slugify'
+
 const AdminProductDetails = () => {
     const [product, setProduct] = useState()
     const [choosenCategory, setChoosenCategory] = useState()
@@ -57,15 +59,12 @@ const AdminProductDetails = () => {
   }
 
   const handleUpdate = async (e) => {
-    console.log({
-        category:choosenCategory,
-        ...product
-    });
     e.preventDefault()
     try{
       const {data} = await API.put(`products/${product._id}`, {
         ...product, image
       })
+      navigate(`/admin/products/${slugify(product.name)}`)
       console.log(data);
       setUpdateable(false)
       toast.success(data.message)
@@ -74,6 +73,7 @@ const AdminProductDetails = () => {
     }
   }
   const handleFileChange = (e) => {
+    setUpdateable(true)
     const file = e.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -104,7 +104,10 @@ const AdminProductDetails = () => {
         <img src={product && image ? image :"https://via.placeholder.com/150"}  alt={product && product.name} className="max-w-full rounded-lg shadow-lg" />
       </div>
       <div className="md:col-span-4 w-full">
-        <input onChange={onChange} name="name" value={product && product.name} className=" bg-transparent border-none outline-none text-4xl font-bold mb-4" />
+        <input onChange={(e)=>(
+          onChange(e)
+
+        )} name="name" value={product && product.name} className=" bg-transparent border-none outline-none text-4xl font-bold mb-4" />
         <div className=" flex items-center text-2xl font-semibold mb-4">$<input onChange={onChange} name="price" type='number' value={`${product && product.price}`} className="bg-transparent border-none outline-none"/></div>
         <input onChange={onChange} name="shortdesc" value={product && product.shortdesc} className="  border-none outline-none w-full text-lg mb-8 bg-transparent"/>
         <textarea onChange={onChange} name="description" value={product && product.description} className="  border-none outline-none w-full text-lg mb-8 bg-transparent" />
