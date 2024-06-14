@@ -2,9 +2,22 @@ const asyncErrorHandler = require("express-async-handler")
 const CustomError = require('../utils/CustomError')
 
 const Order = require("../models/order")
+const Product = require("../models/product")
 
 const createOrder = asyncErrorHandler(async(req, res)=>{
     const { cart } = req.body
+    console.log(cart);
+    for (let p of cart){
+        const product = await Product.findById(p.product)
+
+        if(!product) throw new CustomError("Product not found", 400)
+
+        if(product.quantity < p.cart_quantity) throw new CustomError("Product quantity is not available", 400)
+
+        product.quantity -= p.cart_quantity
+        console.log(product);
+        await product.save()
+    }
     await Order.create({user:req.user._id,products:cart})
     res.status(200).json({success:true, message:"Order placed successfully"})
 })

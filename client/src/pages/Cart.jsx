@@ -34,6 +34,7 @@ const Cart = () => {
       toast.success(data.message)
       setCart([])
     }catch({response}){
+      toast.error(response?.data.message)
       console.log(response?.data.message)
     }
   }

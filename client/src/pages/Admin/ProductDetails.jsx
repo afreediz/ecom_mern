@@ -20,8 +20,8 @@ const AdminProductDetails = () => {
         setImage(data.product.image)
         setOldImage(data.product.image)
         console.log(data);
-        const {_id, category, name, price, shortdesc, description} = data.product
-        setProduct({_id, category, name, price, shortdesc, description})
+        const {_id, category, name, price, shortdesc, description, quantity} = data.product
+        setProduct({_id, category, name, price, shortdesc, description, quantity})
         console.log('here ',data.product);
       }catch({response}){
         console.log(response?.data.message);
@@ -109,6 +109,10 @@ const AdminProductDetails = () => {
 
         )} name="name" value={product && product.name} className=" bg-transparent border-none outline-none text-4xl font-bold mb-4" />
         <div className=" flex items-center text-2xl font-semibold mb-4">$<input onChange={onChange} name="price" type='number' value={`${product && product.price}`} className="bg-transparent border-none outline-none"/></div>
+        <div className=" flex items-center mb-4">
+        <span>quantity</span>
+        <input onChange={onChange} name="quantity" value={product && product.quantity} className="  border-none outline-none w-full mt-2 bg-transparent"/>
+        </div>
         <input onChange={onChange} name="shortdesc" value={product && product.shortdesc} className="  border-none outline-none w-full text-lg mb-8 bg-transparent"/>
         <textarea onChange={onChange} name="description" value={product && product.description} className="  border-none outline-none w-full text-lg mb-8 bg-transparent" />
         <select onChange={onChange} name="category" value={product && product.category._id} className="border-none outline-none w-full text-lg mb-8 bg-transparent">

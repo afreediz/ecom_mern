@@ -7,7 +7,7 @@ const Category = require("../models/category")
 const {uploadImage, deleteImage} = require("../helpers/image")
 
 const getAllProducts = asyncErrorHandler(async(req, res)=>{
-    const products = await Product.find({}).populate('category').select('_id name shortdesc price slug').sort({createdAt:-1})
+    const products = await Product.find({}).populate('category').select('_id name shortdesc price slug quantity').sort({createdAt:-1})
 
     res.status(200).json({
         success:true,

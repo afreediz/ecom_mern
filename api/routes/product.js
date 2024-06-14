@@ -1,7 +1,6 @@
-const { getAllProducts, testCreateOrder, getProduct, createProduct, getOrders, updateProduct, deleteProduct, orderStatus, getProductCount, productList, productSearch, productsRelated, categoryProducts, categoryProductsCount, dashboardDetails } = require('../controllers/product')
+const { getAllProducts, getProduct, createProduct, getOrders, updateProduct, deleteProduct, orderStatus, getProductCount, productList, productSearch, productsRelated, categoryProducts, categoryProductsCount, dashboardDetails } = require('../controllers/product')
 const { isAdmin, isAuthenticated } = require('../middlewares/isAuth')
 const router = require('express').Router()
-const upload = require('../utils/multer')
 
 router.get('/count', getProductCount)
 router.get('/list/:page', productList)

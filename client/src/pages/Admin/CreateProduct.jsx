@@ -9,6 +9,7 @@ const CreateProduct = ({setDisplayAdd, setProducts}) => {
     category: '',
     shortdesc: '',
     description: '',
+    quantity:''
   });
   const [image, setImage] = useState(null);
   console.log(product);
@@ -93,6 +94,18 @@ const CreateProduct = ({setDisplayAdd, setProducts}) => {
               id="price"
               name="price"
               value={product.price}
+              onChange={handleChange}
+              className="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Price"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2" htmlFor="price">Quantity</label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              value={product.quantity}
               onChange={handleChange}
               className="w-full px-3 py-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Price"

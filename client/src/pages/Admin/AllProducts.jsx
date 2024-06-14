@@ -52,6 +52,9 @@ const ProductTable = () => {
                   Name
                 </th>
                 <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider">
+                  Quantity
+                </th>
+                <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider">
                   Price
                 </th>
                 <th scope="col" className="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider">
@@ -67,6 +70,7 @@ const ProductTable = () => {
                 <tr key={index} className="">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{index+1}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{product.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{product.quantity}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{product.price}</td>
                   <td className="px-6 py-4 whitespace-nowrap">{product.category.name}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
