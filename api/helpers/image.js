@@ -12,5 +12,8 @@ const uploadImage = async(image) => {
     const result = await cloudinary.uploader.upload(image, { folder: 'images' });
     return result
 }
+const deleteImage = async(image_url) => {
+    await cloudinary.uploader.destroy(image_url, { invalidate: true })
+}
 
-module.exports = uploadImage
+module.exports = {uploadImage, deleteImage}

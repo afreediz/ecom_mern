@@ -4,7 +4,7 @@ const slugify = require('slugify')
 
 const Product = require('../models/product')
 const Category = require("../models/category")
-const uploadImage = require("../helpers/image")
+const {uploadImage, deleteImage} = require("../helpers/image")
 
 const getAllProducts = asyncErrorHandler(async(req, res)=>{
     const products = await Product.find({}).populate('category').select('_id name shortdesc price slug').sort({createdAt:-1})
@@ -45,8 +45,13 @@ const createProduct = asyncErrorHandler(async(req, res)=>{
 })
 const updateProduct = asyncErrorHandler(async(req, res)=>{
     const id = req.params.id
-    const { name, description, price, category, quantity, image, shortdesc } = req.body
-    const result = await uploadImage(image)
+    const { name, description, price, category, quantity, image, old_image, shortdesc } = req.body
+    var result = image
+    if(image !== old_image){ 
+        console.log('deleted')
+        await deleteImage(old_image)
+        result = await uploadImage(image)
+    }
     const product = await Product.findByIdAndUpdate(id, {$set:{name, slug:slugify(name), shortdesc,description, price, category, quantity, image:result.url}}, {runValidators:true, new:true})
 
     res.status(200).json({

@@ -6,10 +6,10 @@ import slugify from 'slugify'
 
 const AdminProductDetails = () => {
     const [product, setProduct] = useState()
-    const [choosenCategory, setChoosenCategory] = useState()
     const [categories, setCategories] = useState([])
     const [updateable, setUpdateable] = useState(false)
     const [image, setImage] = useState(null);
+    const [old_image, setOldImage] = useState(null);
     const navigate = useNavigate()
     
     const { slug } = useParams()
@@ -17,8 +17,8 @@ const AdminProductDetails = () => {
         async function getProduct(){
       try{
         const {data} = await API.get(`products/${slug}`)
-        setChoosenCategory(data.product.category._id)
         setImage(data.product.image)
+        setOldImage(data.product.image)
         console.log(data);
         const {_id, category, name, price, shortdesc, description} = data.product
         setProduct({_id, category, name, price, shortdesc, description})
@@ -62,7 +62,7 @@ const AdminProductDetails = () => {
     e.preventDefault()
     try{
       const {data} = await API.put(`products/${product._id}`, {
-        ...product, image
+        ...product, image, old_image
       })
       navigate(`/admin/products/${slugify(product.name)}`)
       console.log(data);
