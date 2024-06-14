@@ -26,4 +26,19 @@ const sendVerificationEmail = async (email, verificationLink) => {
   }
 };
 
-module.exports = { sendVerificationEmail };
+const sendResetPasswordEmail = async (email, resetLink) => {
+  try {
+    const info = await transporter.sendMail({
+      from: 'ecommerce@gmail.com',
+      to: email,
+      subject: 'Reset Password',
+      html: `<p>Please reset your password by clicking on the link below:</p>
+             <a href="${resetLink}">Reset Password</a>`,
+    });
+    console.log('Email sent: %s', info.messageId);
+  } catch (error) {
+    console.error('Error sending email: ', error);
+  }
+};
+
+module.exports = { sendVerificationEmail, sendResetPasswordEmail };
